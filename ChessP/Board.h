@@ -17,7 +17,6 @@ enum class PieceType
 };
 
 
-
 #define NUM_OF_PIECES 64
 #define ROW_COLUMN 8
 #define FIRST_ROW_OF_SOLDIERS 2
@@ -25,6 +24,9 @@ enum class PieceType
 #define FIRST_ROW 1
 #define LAST_ROW 8
 #define TO_CHAR 97
+
+#define IS_WHITE_PIECE(piece) (piece >= 'A' && piece <= 'Z')
+#define IS_BLACK_PIECE(piece) (piece >= 'a' && piece <= 'z')
 
 #define W_PAWN_CHAR 'P'
 #define B_PAWN_CHAR 'p'
@@ -43,6 +45,9 @@ enum class PieceType
 
 #define W_KING_CHAR 'K'
 #define B_KING_CHAR 'k'
+
+#define BLACK_CHAR 'B'
+#define WHITE_CHAR 'W'
 
 class Board : std::exception {
 public:

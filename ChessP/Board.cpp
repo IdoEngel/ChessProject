@@ -18,6 +18,29 @@ Board::Board(const bool forException) : _isForException(forException){
 	}
 }
 
+Board::Board(const Board& other) : _isForException(other._isForException) {
+	if (!this->_isForException) {
+
+		// create the 2d arr
+		this->_pieces = new Piece**[ROW_COLUMN];
+		int row = 0; // crreate a 2d arr
+		for (row = 0; row < ROW_COLUMN; row++) {
+			this->_pieces[row] = new Piece*[ROW_COLUMN];
+		}
+
+		// copy the pieces
+		int column = 0; // like 2d arr
+		for (row = 0; row < ROW_COLUMN; row++) {
+			for (column = 0; column < ROW_COLUMN; column++) {
+				this->_pieces[row][column] = other._pieces[row][column];
+			}
+		}
+	}
+	else {
+		this->_pieces = nullptr;
+	}
+}
+
 Board::~Board() {
 	int row = 0;
 	int column = 0;
@@ -39,7 +62,9 @@ Board::~Board() {
 	}
 }
 
+
 //Helping funcs
+
 void Board::createDefault() {
 	PieceType dict;
 
@@ -102,8 +127,67 @@ std::string Board::getCoordinate(const int row, const int column) {
 	return ret;
 }
 
+
+
 //Logic funcs
+
 const char* Board::what() const noexcept {
 	return "No error codes in the possition check are found";
 }
 
+bool Board::movePeice(const std::string& coordinate) noexcept {
+	bool happend = false;
+
+	int srcRow = coordinate[0] - TO_CHAR;
+	int srcColumn = coordinate[1] - '0';
+	int dstRow = coordinate[3] - TO_CHAR;
+	int dstColumn = coordinate[4] - '0';
+
+	// check if the move is valid
+	try {
+		isPositionValid(coordinate);
+	}
+	catch (const Board& e) { // error - move is valid
+		happend = true;
+		this->_pieces[dstRow][dstColumn] = this->_pieces[srcRow][srcColumn];
+		this->_pieces[srcRow][srcColumn] = nullptr;
+	}
+
+	return happend;
+}
+
+std::string Board::isPositionValid(const std::string& coordinate) {
+	std::string errCode = "";
+	bool isValid = true;
+
+	int srcRow = coordinate[0] - TO_CHAR;
+	int srcColumn = coordinate[1] - '0';
+	int dstRow = coordinate[3] - TO_CHAR;
+	int dstColumn = coordinate[4] - '0';
+
+	// check options for making the move invalid
+	if (srcRow == srcColumn && dstRow == dstColumn) { // error code 7 - same coordinate
+		isValid = false;
+		errCode = "7";
+	}
+	// error code 5 - index out of range
+	else if (ROW_COLUMN > srcRow || ROW_COLUMN > srcColumn || ROW_COLUMN > dstRow || ROW_COLUMN > dstColumn || // more then passible
+		srcRow < 1 || srcColumn < 1 || dstRow < 1 || dstColumn < 1) { // less then passible
+
+		isValid = false;
+		errCode = "5";
+	}
+	else if (this->_pieces[dstRow][dstColumn] != nullptr && this->_pieces[srcRow][srcColumn] != nullptr &&// error code 3 - dst coord with piece of the same color
+		// check if the dst piece is the same color as the src piece
+		(IS_BLACK_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_BLACK_PIECE(this->_pieces[srcRow][srcColumn]->getType()) || 
+		(IS_WHITE_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_WHITE_PIECE(this->_pieces[srcRow][srcColumn]->getType())) )) {
+
+		isValid = false;
+		errCode = "3";
+	}
+	else { // not error board-related found (RAISE error)
+		throw Board(true);
+	}
+
+	return errCode;
+}
