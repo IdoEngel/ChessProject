@@ -3,6 +3,50 @@
 #include <string>
 #include <exception>
 
+#include "Piece.h"
+#include "Bishop.h"
+#include "King.h"
+#include "Knigth.h"
+#include "Pawn.h"
+#include "Queen.h"
+#include "Rook.h"
+
+enum class columnDictBlack
+{
+	ROOK, KNIGTH, BISHOP, QUEEN, KING, BISHOP2, KNIGTH2, ROOK2
+};
+
+enum class columnDictWhite
+{
+	ROOK, KNIGTH, BISHOP, KING, QUEEN, BISHOP2, KNIGTH2, ROOK2
+};
+
+#define NUM_OF_PIECES 64
+#define ROW_COLUMN 8
+#define FIRST_ROW_OF_SOLDIERS 2
+#define SECOND_ROW_OF_SOLDIERS 7
+#define FIRST_ROW 1
+#define LAST_ROW 8
+#define TO_CHAR 97
+
+#define W_PAWN_CHAR 'P'
+#define B_PAWN_CHAR 'p'
+
+#define W_ROOK_CHAR 'R'
+#define B_ROOK_CHAR 'r'
+
+#define W_KNIGHT_CHAR 'K'
+#define B_KNIGHT_CHAR 'k'
+
+#define W_BISHOP_CHAR 'B'
+#define B_BISHOP_CHAR 'b'
+
+#define W_QUEEN_CHAR 'Q'
+#define B_QUEEN_CHAR 'q'
+
+#define W_KING_CHAR 'K'
+#define B_KING_CHAR 'k'
+
 class Board : std::exception {
 public:
 
@@ -34,6 +78,19 @@ public:
 	output: msg error - "No error codes found"*/
 	const char* what() const noexcept override;
 
+protected:
+
+	/*Create default board (all pieces in the loction of starting game)
+	No input or output*/
+	void createDefault();
+
 private:
-	Piece* _pieces;
+	Piece*** _pieces;
+	const bool _isForException;
+
+	/*Get the coordinate base om row and column
+	input: int - row (the row), column (the column)
+	output: coordinate of the row and column (string)*/
+	std::string getCoordinate(const int row, const int column);
+
 };
