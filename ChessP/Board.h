@@ -75,6 +75,10 @@ public:
 	output: the error code if occured*/
 	std::string isPositionValid(const std::string& coordinate);
 
+	/*Get the peice in the loction mention
+	*/
+	Piece* getPiece(const int row, const int column) const;
+
 	/*RAISE if the 'isPositionValid' not found an error
 	input: none
 	output: msg error - "No error codes found"*/

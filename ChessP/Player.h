@@ -1,23 +1,25 @@
 #pragma once
 
-#define WHITE 'w'
-#define BLACK 'b'
+#define WHITE 'W'
+#define BLACK 'B'
+#define NONE ' ';
 
 class Player {
 public:
 
 	/*Constractor - creates in instance of the class
 	No input or output*/
+	Player(const char color);
+
+	//Constactor - default
 	Player();
 
-	//Distractor
-	~Player();
+	/*Get the color of the player*/
+	char getColor() const noexcept;
 
-	/*Checks if the player won in the game in the current time
-	input: Board - brd (the board to check if the player won
-	output: Am I won? (true if won) (bool typed)*/
-	bool amIWon(const Board& brd) noexcept;
+	bool isValidPlayer() const noexcept;
 
 private:
-	const char _color;
+	char _color;
+	bool _haveError;
 };

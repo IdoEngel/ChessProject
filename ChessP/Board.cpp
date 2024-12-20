@@ -191,3 +191,8 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 
 	return errCode;
 }
+
+
+Piece* Board::getPiece(const int row, const int column) const {
+	return this->_pieces[row][column];
+}
