@@ -11,15 +11,12 @@
 #include "Queen.h"
 #include "Rook.h"
 
-enum class columnDictBlack
+enum class PieceType
 {
 	ROOK, KNIGTH, BISHOP, QUEEN, KING, BISHOP2, KNIGTH2, ROOK2
 };
 
-enum class columnDictWhite
-{
-	ROOK, KNIGTH, BISHOP, KING, QUEEN, BISHOP2, KNIGTH2, ROOK2
-};
+
 
 #define NUM_OF_PIECES 64
 #define ROW_COLUMN 8

@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Board.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Board.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Bishop.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Bishop.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -29,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\King.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:King.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,11 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 116,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Piece.h",
               "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Piece.h",
               "RelativeDocumentMoniker": "Piece.h",
@@ -55,18 +59,17 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-12-20T10:59:12.083Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Board.h",
               "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Board.h",
               "RelativeDocumentMoniker": "Board.h",
               "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Board.h",
               "RelativeToolTip": "Board.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-12-20T08:49:29.608Z",
               "IsPinned": true,
@@ -74,80 +77,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Rook.h",
-              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Rook.h",
-              "RelativeDocumentMoniker": "Rook.h",
-              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Rook.h",
-              "RelativeToolTip": "Rook.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-20T11:08:09.026Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Queen.h",
-              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Queen.h",
-              "RelativeDocumentMoniker": "Queen.h",
-              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Queen.h",
-              "RelativeToolTip": "Queen.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-20T11:08:01.163Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Pawn.h",
-              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Pawn.h",
-              "RelativeDocumentMoniker": "Pawn.h",
-              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Pawn.h",
-              "RelativeToolTip": "Pawn.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-20T11:07:52.746Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Knigth.h",
-              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Knigth.h",
-              "RelativeDocumentMoniker": "Knigth.h",
-              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Knigth.h",
-              "RelativeToolTip": "Knigth.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-20T11:07:44.957Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "King.h",
-              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\King.h",
-              "RelativeDocumentMoniker": "King.h",
-              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\King.h",
-              "RelativeToolTip": "King.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-20T11:07:35.016Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Bishop.h",
-              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Bishop.h",
-              "RelativeDocumentMoniker": "Bishop.h",
-              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Bishop.h",
-              "RelativeToolTip": "Bishop.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-20T11:07:24.489Z",
+              "Title": "Board.cpp",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Board.cpp",
+              "RelativeDocumentMoniker": "Board.cpp",
+              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Board.cpp",
+              "RelativeToolTip": "Board.cpp",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAFcAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-20T12:04:54.146Z",
               "EditorCaption": ""
             },
             {
@@ -161,6 +99,79 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Rook.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Rook.h",
+              "RelativeDocumentMoniker": "Rook.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Rook.h",
+              "RelativeToolTip": "Rook.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-20T11:08:09.026Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Queen.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Queen.h",
+              "RelativeDocumentMoniker": "Queen.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Queen.h",
+              "RelativeToolTip": "Queen.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-20T11:08:01.163Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Pawn.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Pawn.h",
+              "RelativeDocumentMoniker": "Pawn.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Pawn.h",
+              "RelativeToolTip": "Pawn.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-20T11:07:52.746Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Knigth.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Knigth.h",
+              "RelativeDocumentMoniker": "Knigth.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Knigth.h",
+              "RelativeToolTip": "Knigth.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-20T11:07:44.957Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "King.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\King.h",
+              "RelativeDocumentMoniker": "King.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\King.h",
+              "RelativeToolTip": "King.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-20T11:07:35.016Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Bishop.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Bishop.h",
+              "RelativeDocumentMoniker": "Bishop.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\Desktop\\All\\Year Two\\Cpp\\ChessProject\\ChessP\\Bishop.h",
+              "RelativeToolTip": "Bishop.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-20T11:07:24.489Z",
+              "EditorCaption": ""
             }
           ]
         }

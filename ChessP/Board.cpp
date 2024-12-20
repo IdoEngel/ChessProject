@@ -41,8 +41,7 @@ Board::~Board() {
 
 //Helping funcs
 void Board::createDefault() {
-	columnDictBlack blackDict;
-	columnDictWhite whiteDict;
+	PieceType dict;
 
 	int row = 0;
 	int column = 0; // like 2d arr
@@ -56,65 +55,34 @@ void Board::createDefault() {
 			else if (SECOND_ROW_OF_SOLDIERS == row + 1) { //white
 				this->_pieces[row][column] = new Pown(getCoordinate(row, column), B_PAWN_CHAR);
 			}
-			else if (FIRST_ROW == row + 1) { // all other pieces, black
+			else if (FIRST_ROW == row+1 || LAST_ROW == row+1) { // all other pieces, black or white
 
-				blackDict = (columnDictBlack)column;
-				switch (blackDict)
+				dict = (PieceType)column;
+				switch (dict)
 				{
-				case columnDictBlack::ROOK:
-					this->_pieces[row][column] = new Rook(getCoordinate(row, column), B_ROOK_CHAR);
+				case PieceType::ROOK:
+					this->_pieces[row][column] = new Rook(getCoordinate(row, column),(FIRST_ROW == row+1 ? B_ROOK_CHAR : W_ROOK_CHAR));
 					break;
-				case columnDictBlack::KNIGTH:
-					this->_pieces[row][column] = new Knigth(getCoordinate(row, column), B_KNIGHT_CHAR);
+				case PieceType::KNIGTH:
+					this->_pieces[row][column] = new Knigth(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
 					break;
-				case columnDictBlack::BISHOP:
-					this->_pieces[row][column] = new Bishop(getCoordinate(row, column), B_BISHOP_CHAR);
+				case PieceType::BISHOP:
+					this->_pieces[row][column] = new Bishop(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
 					break;
-				case columnDictBlack::QUEEN:
-					this->_pieces[row][column] = new Queen(getCoordinate(row, column), B_QUEEN_CHAR);
+				case PieceType::QUEEN:
+					this->_pieces[row][column] = new Queen(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
 					break;
-				case columnDictBlack::KING:
-					this->_pieces[row][column] = new King(getCoordinate(row, column), B_KING_CHAR);
+				case PieceType::KING:
+					this->_pieces[row][column] = new King(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_KING_CHAR : W_KING_CHAR));
 					break;
-				case columnDictBlack::BISHOP2:
-					this->_pieces[row][column] = new Bishop(getCoordinate(row, column), B_BISHOP_CHAR);
+				case PieceType::BISHOP2:
+					this->_pieces[row][column] = new Bishop(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
 					break;
-				case columnDictBlack::KNIGTH2:
-					this->_pieces[row][column] = new Knigth(getCoordinate(row, column), B_KNIGHT_CHAR);
+				case PieceType::KNIGTH2:
+					this->_pieces[row][column] = new Knigth(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
 					break;
-				case columnDictBlack::ROOK2:
-					this->_pieces[row][column] = new Rook(getCoordinate(row, column), B_ROOK_CHAR);
-					break;
-				}
-			}
-			else if (LAST_ROW == row + 1) {
-
-				whiteDict = (columnDictWhite)column;
-				switch (whiteDict)
-				{
-				case columnDictWhite::ROOK:
-					this->_pieces[row][column] = new Rook(getCoordinate(row, column), W_ROOK_CHAR);
-					break;
-				case columnDictWhite::KNIGTH:
-					this->_pieces[row][column] = new Knigth(getCoordinate(row, column), W_KNIGHT_CHAR);
-					break;
-				case columnDictWhite::BISHOP:
-					this->_pieces[row][column] = new Bishop(getCoordinate(row, column), W_BISHOP_CHAR);
-					break;
-				case columnDictWhite::KING:
-					this->_pieces[row][column] = new King(getCoordinate(row, column), W_KING_CHAR);
-					break;
-				case columnDictWhite::QUEEN:
-					this->_pieces[row][column] = new Queen(getCoordinate(row, column), W_QUEEN_CHAR);
-					break;
-				case columnDictWhite::BISHOP2:
-					this->_pieces[row][column] = new Bishop(getCoordinate(row, column), W_BISHOP_CHAR);
-					break;
-				case columnDictWhite::KNIGTH2:
-					this->_pieces[row][column] = new Knigth(getCoordinate(row, column), W_KNIGHT_CHAR);
-					break;
-				case columnDictWhite::ROOK2:
-					this->_pieces[row][column] = new Rook(getCoordinate(row, column), W_ROOK_CHAR);
+				case PieceType::ROOK2:
+					this->_pieces[row][column] = new Rook(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_ROOK_CHAR : W_ROOK_CHAR));
 					break;
 				}
 			}
