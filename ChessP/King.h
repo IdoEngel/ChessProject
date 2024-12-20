@@ -8,10 +8,10 @@ public:
 	void setPosition(const std::string& position) const;   //setter of position//
 	std::string getPositon() const;   //getter of cosition//
 	/*
-	returns if the dst position is valid for the king movement.
+	returns if the dst position is valid for the bishop movement.
 	boolian value.
 	*/
-	bool possibleMoves(const std::string& dstPosition) const override;
+	bool isPossibleMove(const std::string& dstPosition, const Board& board) const override;
 private:
 	std::string _position;
 };

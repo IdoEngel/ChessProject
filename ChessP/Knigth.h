@@ -7,11 +7,12 @@ public:
 	~Knigth();   //distractor//
 	void setPosition(const std::string& position) const;    //setter of positions//
 	std::string getPositon() const;   //getter of position//
+
 	/*
-	returns if the dst position is valid for the knigth movement.
+	returns if the dst position is valid for the bishop movement.
 	boolian value.
 	*/
-	bool possibleMoves(const std::string& dstPosition) const override;
+	bool isPossibleMove(const std::string& dstPosition, const Board& board) const override;
 private:
 	std::string _position;
 };

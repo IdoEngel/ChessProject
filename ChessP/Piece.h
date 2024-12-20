@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include "Board.h"
+
 class Piece 
 {
 public:
@@ -13,7 +15,7 @@ public:
 	pure virtual function - returns if the dst position is valid, based on the moves
 	that allowed for each piece.
 	*/
-	virtual bool possibleMoves(const std::string& dstPosition) const = 0;
+	virtual bool isPossibleMove(const std::string& dstPosition, const Board& board) const = 0;
 private:
 	char _type;
 };
