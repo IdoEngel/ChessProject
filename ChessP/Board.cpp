@@ -139,9 +139,9 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 	bool happend = false;
 
 	int srcRow = coordinate[0] - TO_CHAR;
-	int srcColumn = coordinate[1] - '0';
+	int srcColumn = coordinate[1] - NUM_STR_TO_INT;
 	int dstRow = coordinate[3] - TO_CHAR;
-	int dstColumn = coordinate[4] - '0';
+	int dstColumn = coordinate[4] - NUM_STR_TO_INT;
 
 	// check if the move is valid
 	try {
@@ -161,9 +161,9 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 	bool isValid = true;
 
 	int srcRow = coordinate[0] - TO_CHAR;
-	int srcColumn = coordinate[1] - '0';
+	int srcColumn = coordinate[1] - NUM_STR_TO_INT;
 	int dstRow = coordinate[3] - TO_CHAR;
-	int dstColumn = coordinate[4] - '0';
+	int dstColumn = coordinate[4] - NUM_STR_TO_INT;
 
 	// check options for making the move invalid
 	if (srcRow == srcColumn && dstRow == dstColumn) { // error code 7 - same coordinate

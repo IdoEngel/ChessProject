@@ -24,6 +24,7 @@ enum class PieceType
 #define FIRST_ROW 1
 #define LAST_ROW 8
 #define TO_CHAR 97
+#define NUM_STR_TO_INT (int)'0'
 
 #define IS_WHITE_PIECE(piece) (piece >= 'A' && piece <= 'Z')
 #define IS_BLACK_PIECE(piece) (piece >= 'a' && piece <= 'z')
@@ -84,6 +85,11 @@ public:
 	output: msg error - "No error codes found"*/
 	const char* what() const noexcept override;
 
+	/*Get the coordinate base om row and column
+	input: int - row (the row), column (the column)
+	output: coordinate of the row and column (string)*/
+	std::string getCoordinate(const int row, const int column);
+
 protected:
 
 	/*Create default board (all pieces in the loction of starting game)
@@ -93,10 +99,5 @@ protected:
 private:
 	Piece*** _pieces;
 	const bool _isForException;
-
-	/*Get the coordinate base om row and column
-	input: int - row (the row), column (the column)
-	output: coordinate of the row and column (string)*/
-	std::string getCoordinate(const int row, const int column);
 
 };
