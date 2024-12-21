@@ -13,6 +13,7 @@
 #define BLACK_STR "B"
 
 #define CODE_2 "2"
+#define CODE_4 "4"
 
 class Game  : std::exception {
 public:
@@ -67,7 +68,7 @@ private:
 	output: is the king thretend?*/
 	bool isSelfCheck(const std::string kingCoordinate) const noexcept;
 
-	bool isWayClear(const std::vector<std::string>);
+	bool isWayClear(const std::vector<std::string> moves) const;
 
 	/*Get the current king to and return it
 	input: none

@@ -147,7 +147,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 			code = CODE_2;
 		}
 		else if (isSelfCheck(getCoordinates(getKing()))) {
-
+			code = CODE_4;
 		}
 	}
 
@@ -157,20 +157,48 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 bool Game::isSelfCheck(const std::string kingCoordinate) const noexcept {
 	bool isCheck = false;
 	std::string fullCoord = "";
-	std::string* allMoves = nullptr;
+	std::vector<std::string> allMoves;
 
 	int row = 0;
 	int column = 0;
 	for (row = 0; row < ROW_COLUMN; row++) {
 		for (column = 0; column < ROW_COLUMN; column++) {
-			if (this->_board->getPiece(row, column) != nullptr) { // make sure the piece is not nullptr
+			if (this->_board->getPiece(row, column) != nullptr && // make sure the piece is not nullptr
+				//make sure the piece is not the king
+				this->_board->getCoordinate(row, column) != kingCoordinate &&
+				// make sure the piece is not the same color as the king
+				(!(IS_BLACK_PIECE(this->_board->getPiece(row, column)->getType()) && IS_BLACK_PIECE(this->getCurrPlayerColor())) ||
+				 !(IS_WHITE_PIECE(this->_board->getPiece(row, column)->getType()) && IS_WHITE_PIECE(this->getCurrPlayerColor())) )) {
 
 				fullCoord = this->_board->getCoordinate(row, column) + kingCoordinate;
 				allMoves = this->_board->getPiece(row, column)->possibleMoves(fullCoord);
 
+				if (isWayClear(allMoves)) {
+					isCheck = true;
+				}
 			}
 		}
 	}
 
 	return isCheck;
+}
+
+
+bool Game::isWayClear(std::vector<std::string> moves) const {
+	bool isClear = true;
+
+	int dstRow = 0;
+	int dstColumn = 0;
+
+	int i = 0;
+	for (i = 0; i < moves.size(); i++) {
+		dstRow = (int)(moves[i][0] - TO_CHAR);
+		dstColumn = (int)(moves[i][1] - NUM_STR_TO_INT);
+
+		if (this->_board->getPiece(dstRow, dstColumn) != nullptr) {
+			isClear = false;
+		}
+	}
+
+	return isClear;
 }
