@@ -1,7 +1,7 @@
 #pragma once
 
 #define WHITE 'W'
-#define BLACK 'B'
+#define BLACK 'b'
 #define NONE ' ';
 
 class Player {

@@ -47,7 +47,7 @@ enum class PieceType
 #define W_KING_CHAR 'K'
 #define B_KING_CHAR 'k'
 
-#define BLACK_CHAR 'B'
+#define BLACK_CHAR 'b'
 #define WHITE_CHAR 'W'
 
 class Board : std::exception {

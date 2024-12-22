@@ -177,7 +177,8 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 		isValid = false;
 		errCode = "5";
 	}
-	else if (this->_pieces[dstRow][dstColumn] != nullptr && this->_pieces[srcRow][srcColumn] != nullptr &&// error code 3 - dst coord with piece of the same color
+	// error code 3 - dst coord with piece of the same color
+	else if (this->_pieces[dstRow][dstColumn] != nullptr && this->_pieces[srcRow][srcColumn] != nullptr &&
 		// check if the dst piece is the same color as the src piece
 		(IS_BLACK_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_BLACK_PIECE(this->_pieces[srcRow][srcColumn]->getType()) || 
 		(IS_WHITE_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_WHITE_PIECE(this->_pieces[srcRow][srcColumn]->getType())) )) {

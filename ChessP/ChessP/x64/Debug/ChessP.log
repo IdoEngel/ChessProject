@@ -1,1 +1,138 @@
 ﻿  Game.cpp
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(143,22): warning C4101: 'e': unreferenced local variable
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,5): error C2679: binary '=': no operator found which takes a right-hand operand of type 'std::string *' (or there is no acceptable conversion)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(1497,26):
+      could be 'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(std::initializer_list<_Ty>)'
+          with
+          [
+              _Ty=std::string
+          ]
+          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,5):
+          'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(std::initializer_list<_Ty>)': cannot convert argument 2 from 'std::string *' to 'std::initializer_list<_Ty>'
+          with
+          [
+              _Ty=std::string
+          ]
+              C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+              'std::initializer_list<_Ty>::initializer_list': no overloaded function could convert all the argument types
+          with
+          [
+              _Ty=std::string
+          ]
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\initializer_list(51,1):
+                  could be 'std::initializer_list<_Ty>::initializer_list(std::initializer_list<_Ty> &&)'
+          with
+          [
+              _Ty=std::string
+          ]
+                      C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                      'std::initializer_list<_Ty>::initializer_list(std::initializer_list<_Ty> &&)': cannot convert argument 1 from 'std::string *' to 'std::initializer_list<_Ty> &&'
+          with
+          [
+              _Ty=std::string
+          ]
+                          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                          Reason: cannot convert from 'std::string *' to 'std::initializer_list<_Ty>'
+          with
+          [
+              _Ty=std::string
+          ]
+                          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                          Conversion requires a second user-defined-conversion operator or constructor
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\initializer_list(51,1):
+                  or       'std::initializer_list<_Ty>::initializer_list(const std::initializer_list<_Ty> &)'
+          with
+          [
+              _Ty=std::string
+          ]
+                      C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                      'std::initializer_list<_Ty>::initializer_list(const std::initializer_list<_Ty> &)': cannot convert argument 1 from 'std::string *' to 'const std::initializer_list<_Ty> &'
+          with
+          [
+              _Ty=std::string
+          ]
+                          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                          Reason: cannot convert from 'std::string *' to 'const std::initializer_list<_Ty>'
+          with
+          [
+              _Ty=std::string
+          ]
+                          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                          Conversion requires a second user-defined-conversion operator or constructor
+                  C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                  while trying to match the argument list '(std::string *)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(1476,26):
+      or       'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(const std::vector<std::string,std::allocator<std::string>> &)'
+          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,5):
+          'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(const std::vector<std::string,std::allocator<std::string>> &)': cannot convert argument 2 from 'std::string *' to 'const std::vector<std::string,std::allocator<std::string>> &'
+              C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+              Reason: cannot convert from 'std::string *' to 'const std::vector<std::string,std::allocator<std::string>>'
+              C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+              'std::vector<std::string,std::allocator<std::string>>::vector': no overloaded function could convert all the argument types
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(650,5):
+                  could be 'std::vector<std::string,std::allocator<std::string>>::vector(std::initializer_list<_Ty>,const _Alloc &)'
+          with
+          [
+              _Ty=std::string,
+              _Alloc=std::allocator<std::string>
+          ]
+                      C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                      'std::vector<std::string,std::allocator<std::string>>::vector(std::initializer_list<_Ty>,const _Alloc &)': cannot convert argument 1 from 'std::string *' to 'std::initializer_list<_Ty>'
+          with
+          [
+              _Ty=std::string,
+              _Alloc=std::allocator<std::string>
+          ]
+          and
+          [
+              _Ty=std::string
+          ]
+                          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                          Conversion requires a second user-defined-conversion operator or constructor
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(623,5):
+                  or       'std::vector<std::string,std::allocator<std::string>>::vector(_Iter,_Iter,const _Alloc &)'
+          with
+          [
+              _Alloc=std::allocator<std::string>
+          ]
+                  C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                  while trying to match the argument list '(std::string *)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(729,26):
+      or       'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(std::vector<std::string,std::allocator<std::string>> &&) noexcept(<expr>)'
+          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,5):
+          'std::vector<std::string,std::allocator<std::string>> &std::vector<std::string,std::allocator<std::string>>::operator =(std::vector<std::string,std::allocator<std::string>> &&) noexcept(<expr>)': cannot convert argument 2 from 'std::string *' to 'std::vector<std::string,std::allocator<std::string>> &&'
+              C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+              Reason: cannot convert from 'std::string *' to 'std::vector<std::string,std::allocator<std::string>>'
+              C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+              'std::vector<std::string,std::allocator<std::string>>::vector': no overloaded function could convert all the argument types
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(650,5):
+                  could be 'std::vector<std::string,std::allocator<std::string>>::vector(std::initializer_list<_Ty>,const _Alloc &)'
+          with
+          [
+              _Ty=std::string,
+              _Alloc=std::allocator<std::string>
+          ]
+                      C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                      'std::vector<std::string,std::allocator<std::string>>::vector(std::initializer_list<_Ty>,const _Alloc &)': cannot convert argument 1 from 'std::string *' to 'std::initializer_list<_Ty>'
+          with
+          [
+              _Ty=std::string,
+              _Alloc=std::allocator<std::string>
+          ]
+          and
+          [
+              _Ty=std::string
+          ]
+                          C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                          Conversion requires a second user-defined-conversion operator or constructor
+                  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\include\vector(623,5):
+                  or       'std::vector<std::string,std::allocator<std::string>>::vector(_Iter,_Iter,const _Alloc &)'
+          with
+          [
+              _Alloc=std::allocator<std::string>
+          ]
+                  C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,66):
+                  while trying to match the argument list '(std::string *)'
+      C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(174,5):
+      while trying to match the argument list '(std::vector<std::string,std::allocator<std::string>>, std::string *)'
+  
