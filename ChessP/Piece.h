@@ -9,16 +9,19 @@
 class Piece
 {
 public:
-	Piece(const char type); 	//constractor//
+	Piece(const char type, const std::string& position); 	//constractor//
 	virtual ~Piece();    //distractor//
 	/*
 	this function returns the type
 	*/
 	char getType() const;
+	void setPosition(const std::string& position);   //setter of position//
+	std::string getPositon() const;   //getter of cosition//
 	/*
 	pure virtual function - returns the possible way to dst, points of the way in a vector.
 	*/
 	virtual std::vector<std::string> possibleMoves(const std::string& dstPosition) = 0;
 private:
+	std::string _position;
 	char _type;
 };

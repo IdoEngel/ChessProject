@@ -1,24 +1,16 @@
 #include "King.h"
-King::King(const std::string& position, const char type) : Piece(type)
+King::King(const std::string& position, const char type) : Piece(type, position)
 {
-	setPosition(position);
 }
 King::~King()
 {
-	this->_position.clear();
 	this->_way.clear();
 }
-void King::setPosition(const std::string& position)
-{
-	this->_position = position;
-}
-std::string King::getPositon() const
-{
-	return this->_position;
-}
+
 
 std::vector<std::string> King::possibleMoves(const std::string& dstPosition)
 {
+	this->_way.clear();
 	std::string currSquare = std::string(1, dstPosition[START_POSITION_LETTER]) + dstPosition[START_POSITION_NUMBER];
 	if (currSquare[START_POSITION_LETTER] == dstPosition[DST_POSITION_LETTER])
 	{
