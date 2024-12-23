@@ -67,7 +67,7 @@ Piece* Game::getKing() const noexcept {
 	return king;
 }
 
-std::string Game::getCoordinatesOfPiece(const Piece* piece) const noexcept {
+std::string Game::getCoordinatesOfPiece(const Piece* piece) const noexcept { //MAYBE transfer to Board (?)
 	char type = piece->getType();
 	std::string coordinates = "";
 	Piece* p = nullptr;
@@ -211,8 +211,14 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 			(lenOfPassibleMoves(coordinats) == 0)) { // invalid move (logicly)
 			code = CODE_6;
 		}
+		//code 4 - self check (first part - if king is moving)
 		else if ((((type == W_KING_CHAR) || (type == B_KING_CHAR))) && //if this is a king, continue to the check
 			isSelfChecked(coordinats)) { //getting the king of the current player
+			code = CODE_4;
+		}
+		// code 4 - self check (second part - if the king mo moving) - UNCHECKED
+		else if ((!((type == W_KING_CHAR) || (type == B_KING_CHAR))) && // not the king
+			(isSelfChecked(getCoordinatesOfPiece(getKing())))) {
 			code = CODE_4;
 		}
 	}
@@ -276,19 +282,25 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 
 	/*Not including the last index because the last contains the coord that might be
 	with piece that the curr player can eat - check later*/
-
+	
 	int i = 0;
+	int size = moves.size();
 	for (i = 0; i < moves.size() - 1; i++) { // not include the ladt index
 		/*dstRow = (int)(moves[i][0] - TO_CHAR);
 		dstColumn = (int)(moves[i][1] - NUM_STR_TO_INT) - 1;*/
+		try {
+			points = Board::strToCoords(moves.at(i));
 
-		points = Board::strToCoords(moves[i]);
+			dstRow = points.get()->at(SRC_START_INDEX);
+			dstColumn = points.get()->at(SRC_START_INDEX + 1);
 
-		dstRow = points.get()->at(SRC_START_INDEX);
-		dstColumn = points.get()->at(SRC_START_INDEX + 1);
-
-		if (this->_board->getPiece(dstRow, dstColumn) != nullptr) {
-			isClear = false;
+			if (this->_board->getPiece(dstRow, dstColumn) != nullptr) {
+				isClear = false;
+			}
+		}
+		catch (const std::out_of_range& e) {
+			break;
+			//none - catch if the vector is empty
 		}
 	}
 
@@ -297,17 +309,24 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 
 	//dstRow = (int)(moves[moves.size() - 1][0] - TO_CHAR);
 	//dstColumn = (int)(moves[moves.size() - 1][1] - NUM_STR_TO_INT) - 1;
-	points = Board::strToCoords(moves[moves.size() - 1]);
+	try {
+	
+		points = Board::strToCoords(moves.at(moves.size() - 1));
 
-	dstRow = points.get()->at(SRC_START_INDEX);
-	dstColumn = points.get()->at(SRC_START_INDEX + 1);
+		dstRow = points.get()->at(SRC_START_INDEX);
+		dstColumn = points.get()->at(SRC_START_INDEX + 1);
 
-	lastPiece = this->_board->getPiece(dstRow, dstColumn);
+		lastPiece = this->_board->getPiece(dstRow, dstColumn);
 
-	//check
-	if (lastPiece != nullptr && isCurrTurnMatchColorSelected(lastPiece)) { //if match - cannot get to the dest (base case is "isClear = true"
-		isClear = false;
+		//check
+		if (lastPiece != nullptr && isCurrTurnMatchColorSelected(lastPiece)) { //if match - cannot get to the dest (base case is "isClear = true"
+			isClear = false;
+		}
 	}
+	catch (const std::out_of_range& e) {
+		//none - catch if the vector is empty
+	}
+	
 
 	return isClear;
 }

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <vector>
+#include <stdexcept>
 #include <iostream>
 #include "Board.h"
 #include "Player.h"

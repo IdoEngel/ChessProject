@@ -17,7 +17,7 @@ using std::string;
 void main()
 {
 	Game g;
-	std::cout << g.play("a1a7") << std::endl;
+	std::cout << g.play("a1b7") << std::endl;
 	std::cout << g << std::endl;
 	std::cout << g.play("e8e7") << std::endl;
 	std::cout << g << std::endl;
