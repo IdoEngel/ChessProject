@@ -21,9 +21,9 @@ void main()
 	std::cout << g << std::endl;
 	std::cout << g.play("e8e7") << std::endl;
 	std::cout << g << std::endl;
-	std::cout << g.play("h1h2") << std::endl;
+	std::cout << g.play("c1e3") << std::endl;
 	std::cout << g << std::endl;
-	std::cout << g.play("a8a2") << std::endl;
+	std::cout << g.play("d8d3") << std::endl;
 	std::cout << g << std::endl;
 
 	//srand(time_t(NULL));
