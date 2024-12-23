@@ -100,20 +100,20 @@ void Board::createDefault() {
 					this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::BISHOP:
-					//this->_pieces[row][column] = new Bishop(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
-					this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Bishop(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
+					//this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::QUEEN:
-					//this->_pieces[row][column] = new Queen(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
-					this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Queen(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
+					//this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::KING:
 					this->_pieces[row][column] = new King(Board::coordsToStr(row, column), (FIRST_ROW == row + 1 ? B_KING_CHAR : W_KING_CHAR));
 					//this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::BISHOP2:
-					//this->_pieces[row][column] = new Bishop(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
-					this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Bishop(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
+					//this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::KNIGTH2:
 					//this->_pieces[row][column] = new Knigth(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
@@ -132,16 +132,6 @@ void Board::createDefault() {
 	}
 }
 
-std::string Board::getCoordinate(const int row, const int column) {
-	std::string ret = "";
-
-	ret += (char)(TO_CHAR + row);
-	ret += std::to_string(column + 1);
-
-	return ret;
-}
-
-
 
 //Logic funcs
 
@@ -151,16 +141,6 @@ const char* Board::what() const noexcept {
 
 bool Board::movePeice(const std::string& coordinate) noexcept {
 	bool happend = false;
-
-	//int srcRow = (int)(coordinate[0] - TO_CHAR);
-	//int srcColumn = (int)(coordinate[1] - NUM_STR_TO_INT) - 1; // fix the index
-	//int dstRow = (int)(coordinate[2] - TO_CHAR);
-	//int dstColumn = (int)(coordinate[3] - NUM_STR_TO_INT) - 1; // fix the index
-
-	//int srcColumn = (int)(coordinate[0] - TO_CHAR);
-	//int srcRow = (int)(coordinate[1] - NUM_STR_TO_INT) - 1; // fix the index
-	//int dstColumn = (int)(coordinate[2] - TO_CHAR);
-	//int dstRow = (int)(coordinate[3] - NUM_STR_TO_INT) - 1; // fix the index
 
 	intArr points = Board::strToCoords(coordinate);
 	int srcRow = points.get()->at(SRC_START_INDEX);
@@ -175,7 +155,7 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 	}
 	catch (const Board& e) { // error - move is valid
 		happend = true;
-		//this->_pieces[dstRow][dstColumn].
+		delete this->_pieces[dstRow][dstColumn]; //delete if needed
 		this->_pieces[dstRow][dstColumn] = this->_pieces[srcRow][srcColumn];
 		this->_pieces[srcRow][srcColumn] = nullptr;
 		p = this->_pieces[srcRow][srcColumn];

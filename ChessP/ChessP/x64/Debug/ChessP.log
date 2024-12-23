@@ -1,17 +1,3 @@
 ﻿  Board.cpp
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Board.cpp(150,22): warning C4101: 'e': unreferenced local variable
-  Game.cpp
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(143,22): warning C4101: 'e': unreferenced local variable
-  King.cpp
-  Piece.cpp
-  Player.cpp
-  Rook.cpp
-  Source.cpp
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Source.cpp(16,6): warning C4326: return type of 'main' should be 'int' instead of 'void'
-  stdafx.cpp
-  Generating Code...
-Board.obj : error LNK2019: unresolved external symbol "public: __cdecl Bishop::Bishop(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,char)" (??0Bishop@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@D@Z) referenced in function "protected: void __cdecl Board::createDefault(void)" (?createDefault@Board@@IEAAXXZ)
-Board.obj : error LNK2019: unresolved external symbol "public: __cdecl Knigth::Knigth(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,char)" (??0Knigth@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@D@Z) referenced in function "protected: void __cdecl Board::createDefault(void)" (?createDefault@Board@@IEAAXXZ)
-Board.obj : error LNK2019: unresolved external symbol "public: __cdecl Pown::Pown(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,char)" (??0Pown@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@D@Z) referenced in function "protected: void __cdecl Board::createDefault(void)" (?createDefault@Board@@IEAAXXZ)
-Board.obj : error LNK2019: unresolved external symbol "public: __cdecl Queen::Queen(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,char)" (??0Queen@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@D@Z) referenced in function "protected: void __cdecl Board::createDefault(void)" (?createDefault@Board@@IEAAXXZ)
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\x64\Debug\ChessP.exe : fatal error LNK1120: 4 unresolved externals
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Board.cpp(166,22): warning C4101: 'e': unreferenced local variable
+  ChessP.vcxproj -> C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\x64\Debug\ChessP.exe

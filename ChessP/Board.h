@@ -98,11 +98,6 @@ public:
 	output: msg error - "No error codes found"*/
 	const char* what() const noexcept override;
 
-	/*Get the coordinate base om row and column
-	input: int - row (the row), column (the column)
-	output: coordinate of the row and column (string)*/
-	std::string getCoordinate(const int row, const int column);
-
 	static intArr strToCoords(const std::string& coords);
 
 	static std::string coordsToStr(const int row, const int column);

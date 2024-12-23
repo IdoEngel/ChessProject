@@ -186,23 +186,33 @@ const char* Game::what() const noexcept {
 }
 
 std::string Game::codeForGraphics(const std::string& coordinats) const noexcept {
+	char type = ' ';
 	intArr points;
 	std::string code = CODE_0;
+	int row = 0;
+	int column = 0;
+
 	try {
 		code = this->_board->isPositionValid(coordinats);
 	}
 	catch (const Board& e) { // error - move is valid (no errors found)
 		points = Board::strToCoords(coordinats);
+		row = points.get()->at(SRC_START_INDEX);
+		column = points.get()->at(SRC_START_INDEX + 1);
+
+		type = this->_board->getPiece(row, column)->getType();
 
 		//check the src coord (match the color) - the second part of code 2
-		if (!isCurrTurnMatchColorSelected(this->_board->getPiece(points.get()->at(SRC_START_INDEX), points.get()->at(SRC_START_INDEX + 1)))) {
+		if (!isCurrTurnMatchColorSelected(this->_board->getPiece(row, column))) {
 			code = CODE_2;
 		}
 		// code 6 - the move of the piece is valid
-		else if (lenOfPassibleMoves(coordinats) == 0) {
+		else if (!isWayClear(this->_board->getPiece(row, column)->possibleMoves(coordinats)) ||
+			(lenOfPassibleMoves(coordinats) == 0)) { // invalid move (logicly)
 			code = CODE_6;
 		}
-		else if (isSelfChecked(getCoordinatesOfPiece(getKing()))) { //getting the king of the current player
+		else if ((((type == W_KING_CHAR) || (type == B_KING_CHAR))) && //if this is a king, continue to the check
+			isSelfChecked(coordinats)) { //getting the king of the current player
 			code = CODE_4;
 		}
 	}
@@ -211,6 +221,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 }
 
 bool Game::isSelfChecked(const std::string kingCoordinate) const noexcept {
+	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - 2);
 	bool isCheck = false;
 	std::string fullCoord = "";
 	std::vector<std::string> allMoves;
@@ -232,13 +243,13 @@ bool Game::isSelfChecked(const std::string kingCoordinate) const noexcept {
 
 			if (this->_board->getPiece(rowPiece, columnPiece) != nullptr && // make sure the piece is not nullptr
 				//make sure the piece is not the king
-				this->_board->getCoordinate(rowPiece, columnPiece) != kingCoordinate &&
+				Board::coordsToStr(row, column) != kingDest &&
 				// make sure the piece is not the same color as the king
 				//((IS_BLACK_PIECE(this->_board->getPiece(rowPiece, columnPiece)->getType()) && IS_BLACK_PIECE(this->getCurrPlayerColor())) ||
 				!isCurrTurnMatchColorSelected(this->_board->getPiece(rowPiece, columnPiece))) {
 				p = this->_board->getPiece(rowPiece, columnPiece);
 
-				fullCoord = Board::coordsToStr(row, column) + kingCoordinate;
+				fullCoord = Board::coordsToStr(row, column) + kingDest;
 				allMoves = this->_board->getPiece(rowPiece, columnPiece)->possibleMoves(fullCoord);
 
 				if (allMoves.size() != 0 && isWayClear(allMoves)) {
@@ -294,7 +305,7 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 	lastPiece = this->_board->getPiece(dstRow, dstColumn);
 
 	//check
-	if (isCurrTurnMatchColorSelected(lastPiece)) { //if match - cannot get to the dest (base case is "isClear = true"
+	if (lastPiece != nullptr && isCurrTurnMatchColorSelected(lastPiece)) { //if match - cannot get to the dest (base case is "isClear = true"
 		isClear = false;
 	}
 
