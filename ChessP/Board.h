@@ -1,7 +1,9 @@
+//board.h
 #pragma once
 
 #include <string>
 #include <exception>
+#include <memory>
 
 #include "Piece.h"
 #include "Bishop.h"
@@ -10,6 +12,8 @@
 #include "Pawn.h"
 #include "Queen.h"
 #include "Rook.h"
+
+typedef std::unique_ptr<std::vector<int>> intArr;
 
 enum class PieceType
 {
@@ -25,6 +29,10 @@ enum class PieceType
 #define LAST_ROW 8
 #define TO_CHAR 97
 #define NUM_STR_TO_INT (int)'0'
+
+#define SRC_START_INDEX 0
+#define DST_START_INDEX 2
+#define LEN_OF_TWO_COORDS 4
 
 #define IS_WHITE_PIECE(piece) (piece >= 'A' && piece <= 'Z')
 #define IS_BLACK_PIECE(piece) (piece >= 'a' && piece <= 'z')
@@ -50,6 +58,11 @@ enum class PieceType
 #define BLACK_CHAR 'b'
 #define WHITE_CHAR 'W'
 
+#define CODE_5 "5"
+#define CODE_7 "7"
+#define CODE_2 "2"
+#define CODE_3 "3"
+
 class Board : std::exception {
 public:
 
@@ -60,7 +73,7 @@ public:
 	Board(const bool forException = false);
 
 	/*Copy constractor for return types in functions*/
-	Board(const Board& other);
+	//Board(const Board& other);
 
 	//Distractor
 	~Board();
@@ -70,7 +83,7 @@ public:
 	output: is the move occured?*/
 	bool movePeice(const std::string& coordinate) noexcept;
 
-	/*Check if the src position the and dst position of the 'coordinate' is valid 
+	/*Check if the src position the and dst position of the 'coordinate' is valid
 		if not valid retrun the error - if valid RAISE an excpion (typed Board)
 	input: string - coordinate (coordinate with src and dst)
 	output: the error code if occured*/
@@ -89,6 +102,12 @@ public:
 	input: int - row (the row), column (the column)
 	output: coordinate of the row and column (string)*/
 	std::string getCoordinate(const int row, const int column);
+
+	static intArr strToCoords(const std::string& coords);
+
+	static std::string coordsToStr(const int row, const int column);
+
+	static std::string coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn);
 
 protected:
 

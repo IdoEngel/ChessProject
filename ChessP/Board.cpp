@@ -1,15 +1,19 @@
 #include "Board.h"
 
 //Constractors/Distractors
-Board::Board(const bool forException) : _isForException(forException){
+Board::Board(const bool forException) : _isForException(forException) {
 
 	if (!forException) { // if not for exception
 
-		this->_pieces = new Piece**[ROW_COLUMN];
+		this->_pieces = new Piece * *[ROW_COLUMN];
 
 		int row = 0; // crreate a 2d arr
+		int col = 0;
 		for (row = 0; row < ROW_COLUMN; row++) {
-			this->_pieces[row] = new Piece*[ROW_COLUMN];
+			this->_pieces[row] = new Piece * [ROW_COLUMN];
+			for (col = 0; col < ROW_COLUMN; col++) {
+				this->_pieces[row][col] = nullptr;
+			}
 		}
 		createDefault();
 	}
@@ -18,28 +22,28 @@ Board::Board(const bool forException) : _isForException(forException){
 	}
 }
 
-Board::Board(const Board& other) : _isForException(other._isForException) {
-	if (!this->_isForException) {
-
-		// create the 2d arr
-		this->_pieces = new Piece**[ROW_COLUMN];
-		int row = 0; // crreate a 2d arr
-		for (row = 0; row < ROW_COLUMN; row++) {
-			this->_pieces[row] = new Piece*[ROW_COLUMN];
-		}
-
-		// copy the pieces
-		int column = 0; // like 2d arr
-		for (row = 0; row < ROW_COLUMN; row++) {
-			for (column = 0; column < ROW_COLUMN; column++) {
-				this->_pieces[row][column] = other._pieces[row][column];
-			}
-		}
-	}
-	else {
-		this->_pieces = nullptr;
-	}
-}
+//Board::Board(const Board& other) : _isForException(other._isForException) {
+//	if (!this->_isForException) {
+//
+//		// create the 2d arr
+//		this->_pieces = new Piece**[ROW_COLUMN];
+//		int row = 0; // crreate a 2d arr
+//		for (row = 0; row < ROW_COLUMN; row++) {
+//			this->_pieces[row] = new Piece*[ROW_COLUMN];
+//		}
+//
+//		// copy the pieces
+//		int column = 0; // like 2d arr
+//		for (row = 0; row < ROW_COLUMN; row++) {
+//			for (column = 0; column < ROW_COLUMN; column++) {
+//				this->_pieces[row][column] = other._pieces[row][column];
+//			}
+//		}
+//	}
+//	else {
+//		this->_pieces = nullptr;
+//	}
+//}
 
 Board::~Board() {
 	int row = 0;
@@ -75,39 +79,49 @@ void Board::createDefault() {
 
 			// if the place of pown
 			if (FIRST_ROW_OF_SOLDIERS == row + 1) { // black
-				this->_pieces[row][column] = new Pown(getCoordinate(row, column), B_PAWN_CHAR);
+				//this->_pieces[row][column] = new Pown(Board::coordsToStr(row, column), B_PAWN_CHAR);
+				this->_pieces[row][column] = nullptr;
 			}
 			else if (SECOND_ROW_OF_SOLDIERS == row + 1) { //white
-				this->_pieces[row][column] = new Pown(getCoordinate(row, column), B_PAWN_CHAR);
+				//this->_pieces[row][column] = new Pown(Board::coordsToStr(row, column), B_PAWN_CHAR);
+				this->_pieces[row][column] = nullptr;
 			}
-			else if (FIRST_ROW == row+1 || LAST_ROW == row+1) { // all other pieces, black or white
+			else if (FIRST_ROW == row + 1 || LAST_ROW == row + 1) { // all other pieces, black or white
 
 				dict = (PieceType)column;
 				switch (dict)
 				{
 				case PieceType::ROOK:
-					this->_pieces[row][column] = new Rook(getCoordinate(row, column),(FIRST_ROW == row+1 ? B_ROOK_CHAR : W_ROOK_CHAR));
+					this->_pieces[row][column] = new Rook(Board::coordsToStr(row, column), (FIRST_ROW == row + 1 ? B_ROOK_CHAR : W_ROOK_CHAR));
+					//this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::KNIGTH:
-					this->_pieces[row][column] = new Knigth(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
+					//this->_pieces[row][column] = new Knigth(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
+					this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::BISHOP:
-					this->_pieces[row][column] = new Bishop(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
+					//this->_pieces[row][column] = new Bishop(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
+					this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::QUEEN:
-					this->_pieces[row][column] = new Queen(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
+					//this->_pieces[row][column] = new Queen(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
+					this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::KING:
-					this->_pieces[row][column] = new King(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_KING_CHAR : W_KING_CHAR));
+					this->_pieces[row][column] = new King(Board::coordsToStr(row, column), (FIRST_ROW == row + 1 ? B_KING_CHAR : W_KING_CHAR));
+					//this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::BISHOP2:
-					this->_pieces[row][column] = new Bishop(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
+					//this->_pieces[row][column] = new Bishop(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
+					this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::KNIGTH2:
-					this->_pieces[row][column] = new Knigth(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
+					//this->_pieces[row][column] = new Knigth(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
+					this->_pieces[row][column] = nullptr;
 					break;
 				case PieceType::ROOK2:
-					this->_pieces[row][column] = new Rook(getCoordinate(row, column), (FIRST_ROW == row+1 ? B_ROOK_CHAR : W_ROOK_CHAR));
+					this->_pieces[row][column] = new Rook(Board::coordsToStr(row, column), (FIRST_ROW == row + 1 ? B_ROOK_CHAR : W_ROOK_CHAR));
+					//this->_pieces[row][column] = nullptr;
 					break;
 				}
 			}
@@ -121,8 +135,8 @@ void Board::createDefault() {
 std::string Board::getCoordinate(const int row, const int column) {
 	std::string ret = "";
 
-	ret += std::to_string(TO_CHAR + row);
-	ret += std::to_string(column);
+	ret += (char)(TO_CHAR + row);
+	ret += std::to_string(column + 1);
 
 	return ret;
 }
@@ -138,10 +152,22 @@ const char* Board::what() const noexcept {
 bool Board::movePeice(const std::string& coordinate) noexcept {
 	bool happend = false;
 
-	int srcRow = coordinate[0] - TO_CHAR;
-	int srcColumn = coordinate[1] - NUM_STR_TO_INT;
-	int dstRow = coordinate[3] - TO_CHAR;
-	int dstColumn = coordinate[4] - NUM_STR_TO_INT;
+	//int srcRow = (int)(coordinate[0] - TO_CHAR);
+	//int srcColumn = (int)(coordinate[1] - NUM_STR_TO_INT) - 1; // fix the index
+	//int dstRow = (int)(coordinate[2] - TO_CHAR);
+	//int dstColumn = (int)(coordinate[3] - NUM_STR_TO_INT) - 1; // fix the index
+
+	//int srcColumn = (int)(coordinate[0] - TO_CHAR);
+	//int srcRow = (int)(coordinate[1] - NUM_STR_TO_INT) - 1; // fix the index
+	//int dstColumn = (int)(coordinate[2] - TO_CHAR);
+	//int dstRow = (int)(coordinate[3] - NUM_STR_TO_INT) - 1; // fix the index
+
+	intArr points = Board::strToCoords(coordinate);
+	int srcRow = points.get()->at(SRC_START_INDEX);
+	int srcColumn = points.get()->at(SRC_START_INDEX + 1);
+	int dstRow = points.get()->at(DST_START_INDEX);
+	int dstColumn = points.get()->at(DST_START_INDEX + 1);
+	Piece* p;
 
 	// check if the move is valid
 	try {
@@ -149,8 +175,10 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 	}
 	catch (const Board& e) { // error - move is valid
 		happend = true;
+		//this->_pieces[dstRow][dstColumn].
 		this->_pieces[dstRow][dstColumn] = this->_pieces[srcRow][srcColumn];
 		this->_pieces[srcRow][srcColumn] = nullptr;
+		p = this->_pieces[srcRow][srcColumn];
 	}
 
 	return happend;
@@ -160,31 +188,43 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 	std::string errCode = "";
 	bool isValid = true;
 
-	int srcRow = coordinate[0] - TO_CHAR;
-	int srcColumn = coordinate[1] - NUM_STR_TO_INT;
-	int dstRow = coordinate[3] - TO_CHAR;
-	int dstColumn = coordinate[4] - NUM_STR_TO_INT;
+	//int srcRow = (int)(coordinate[0] - TO_CHAR);
+	//int srcColumn = (int)(coordinate[1] - NUM_STR_TO_INT) - 1; // fix the index
+	//int dstRow = (int)(coordinate[2] - TO_CHAR);
+	//int dstColumn = (int)(coordinate[3] - NUM_STR_TO_INT) - 1; // fix the index
+
+	intArr points = Board::strToCoords(coordinate);
+
+	int srcRow = points.get()->at(SRC_START_INDEX);
+	int srcColumn = points.get()->at(SRC_START_INDEX + 1);
+	int dstRow = points.get()->at(DST_START_INDEX);
+	int dstColumn = points.get()->at(DST_START_INDEX + 1);
 
 	// check options for making the move invalid
 	if (srcRow == srcColumn && dstRow == dstColumn) { // error code 7 - same coordinate
 		isValid = false;
-		errCode = "7";
+		errCode = CODE_7;
 	}
 	// error code 5 - index out of range
-	else if (ROW_COLUMN > srcRow || ROW_COLUMN > srcColumn || ROW_COLUMN > dstRow || ROW_COLUMN > dstColumn || // more then passible
-		srcRow < 1 || srcColumn < 1 || dstRow < 1 || dstColumn < 1) { // less then passible
+	else if (!(ROW_COLUMN >= srcRow || ROW_COLUMN >= srcColumn || ROW_COLUMN >= dstRow || ROW_COLUMN >= dstColumn || // more then passible
+		srcRow < 0 || srcColumn < 0 || dstRow < 0 || dstColumn < 0)) { // less then passible
 
 		isValid = false;
-		errCode = "5";
+		errCode = CODE_5;
+	}
+	//code 2 - src coord is empty (part one of code 2)
+	else if (this->_pieces[srcRow][srcColumn] == nullptr) {
+		errCode = CODE_2;
+		isValid = false;
 	}
 	// error code 3 - dst coord with piece of the same color
 	else if (this->_pieces[dstRow][dstColumn] != nullptr && this->_pieces[srcRow][srcColumn] != nullptr &&
 		// check if the dst piece is the same color as the src piece
-		(IS_BLACK_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_BLACK_PIECE(this->_pieces[srcRow][srcColumn]->getType()) || 
-		(IS_WHITE_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_WHITE_PIECE(this->_pieces[srcRow][srcColumn]->getType())) )) {
+		(IS_BLACK_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_BLACK_PIECE(this->_pieces[srcRow][srcColumn]->getType()) ||
+			(IS_WHITE_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_WHITE_PIECE(this->_pieces[srcRow][srcColumn]->getType())))) {
 
 		isValid = false;
-		errCode = "3";
+		errCode = CODE_3;
 	}
 	else { // not error board-related found (RAISE error)
 		throw Board(true);
@@ -196,4 +236,52 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 
 Piece* Board::getPiece(const int row, const int column) const {
 	return this->_pieces[row][column];
+}
+
+
+
+intArr Board::strToCoords(const std::string& coords) {
+	intArr points = std::make_unique<std::vector<int>>(coords.length());
+	int arr[LEN_OF_TWO_COORDS] = { 0 };
+	int point = 0;
+
+	points.get()->resize(0); // no elements before
+	int i = 0;
+	for (i = 0; i < coords.length(); i++) {
+
+		if (!(i % 2 == 0)) { // a number
+			point = (int)((coords[i] - NUM_STR_TO_INT) - 1); // get pure index
+			point = (ROW_COLUMN - 1) - point; //fix index to the board 
+			arr[i] = point;
+		}
+		else { // a latter
+			arr[i] = (int)(coords[i] - TO_CHAR);
+		}
+	}
+
+	points.get()->push_back(arr[SRC_START_INDEX + 1]);
+	points.get()->push_back(arr[SRC_START_INDEX]);
+
+	if (coords.length() == LEN_OF_TWO_COORDS) { // there are 2 coords
+		points.get()->push_back(arr[DST_START_INDEX + 1]);
+		points.get()->push_back(arr[DST_START_INDEX]);
+	}
+
+
+
+
+	return points;
+}
+
+std::string Board::coordsToStr(const int row, const int column) {
+	std::string coord = "";
+
+	coord += (char)(row + TO_CHAR);
+	coord += std::to_string(column + 1);
+
+	return coord;
+}
+
+std::string Board::coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn) {
+	return (Board::coordsToStr(srcRow, srcColumn) + Board::coordsToStr(dstRow, dstColumn)); // use the function for one coord twice
 }

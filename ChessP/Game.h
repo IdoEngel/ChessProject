@@ -1,6 +1,8 @@
+//game.h
 #pragma once
 
 #include <vector>
+#include <iostream>
 #include "Board.h"
 #include "Player.h"
 #include "Pipe.h"
@@ -12,10 +14,11 @@
 #define WHITE_STR "W"
 #define BLACK_STR "B"
 
-#define CODE_2 "2"
+#define CODE_0 "0"
 #define CODE_4 "4"
+#define CODE_6 "6"
 
-class Game  : std::exception {
+class Game : std::exception {
 public:
 	/*Constractor - creates an instance of the class with the board peices in the defualt position
 	input: bool - forException (if instace created for excption no need to create all the peices, just the function 'what'.
@@ -36,7 +39,7 @@ public:
 	/*Plat one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
 	output: none*/
-	std::string play(const std::string& coordinates);
+	std::string play(const std::string& coordinates) noexcept;
 
 	/*prints the board by lines to the console
 	OPERATOR << FUNCTION*/
@@ -66,9 +69,12 @@ private:
 	/*is the king of the current player is thretend?
 	input: string - kingCoordinate (the king of the curr to check)
 	output: is the king thretend?*/
-	bool isSelfCheck(const std::string kingCoordinate) const noexcept;
+	bool isSelfChecked(const std::string kingCoordinate) const noexcept;
 
-	bool isWayClear(const std::vector<std::string> moves) const;
+	/*Checks all the coordinates in the vector are nullptr (no pieces on the way)
+	input: vector<string> - moves (the moves to check if nullptr)
+	output: is all the moves are null (the way is clear)*/
+	bool isWayClear(const std::vector<std::string> moves) const noexcept;
 
 	/*Get the current king to and return it
 	input: none
@@ -78,5 +84,10 @@ private:
 	/*get the coordinate of the piece
 	input: Piece - piece (the piece to get the coords)
 	output: string of the coord*/
-	std::string getCoordinates(const Piece* piece) const noexcept;
+	std::string getCoordinatesOfPiece(const Piece* piece) const noexcept;
+
+	/*Get the len of the passible moves (to check if the path is valid)
+	input: string - coord (the coord of the piece to create the passible
+	output: the len of the vector of passible moves*/
+	int lenOfPassibleMoves(const std::string& coord) const noexcept;
 };
