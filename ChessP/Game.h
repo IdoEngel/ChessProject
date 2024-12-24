@@ -16,8 +16,13 @@
 #define BLACK_STR "B"
 
 #define CODE_0 "0"
+#define CODE_1 "1"
 #define CODE_4 "4"
 #define CODE_6 "6"
+#define CODE_8 "8"
+
+#define MY_KING true
+#define OPPO_KING false //opponant king
 
 class Game : std::exception {
 public:
@@ -35,6 +40,9 @@ public:
 
 	/*Return the current player color - white always starts*/
 	char getCurrPlayerColor() const noexcept;
+
+	/*Return the opponent player color - white always starts*/
+	char getOpponentPlayerColor() const noexcept;
 
 
 	/*Plat one move in the game - each player in his turn (White starts)
@@ -70,17 +78,22 @@ private:
 	/*is the king of the current player is thretend?
 	input: string - kingCoordinate (the king of the curr to check)
 	output: is the king thretend?*/
-	bool isSelfChecked(const std::string kingCoordinate) const noexcept;
+	bool isSelfChecked(const std::string& kingCoordinate) const noexcept;
+
+	/*is the king of opponent thretened?
+	
+	output: is the king of opponent thretened? (bool)*/
+	bool isCheckedOnOpponent(const std::string& kingCoordinate) const noexcept;
 
 	/*Checks all the coordinates in the vector are nullptr (no pieces on the way)
 	input: vector<string> - moves (the moves to check if nullptr)
 	output: is all the moves are null (the way is clear)*/
 	bool isWayClear(const std::vector<std::string> moves) const noexcept;
 
-	/*Get the current king to and return it
-	input: none
+	/*Get the king to and return it
+	input: bool - isMyKing (get the current king?) - if false - return opponant king
 	output: the King piece*/
-	Piece* getKing() const noexcept;
+	Piece* getKing(const bool isMyKing) const noexcept;
 
 	/*get the coordinate of the piece
 	input: Piece - piece (the piece to get the coords)

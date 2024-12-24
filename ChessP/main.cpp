@@ -55,5 +55,5 @@ void main()
 		std::cout << "Do you want to exit the game? enter 0 to continue, any other key to exit" << std::endl;
 		//checking if user want to play another move//
 		std::cin >> toExit;
-	} while (toExit == "0");
+	} while (toExit == "0" && errorCode != 8);
 }

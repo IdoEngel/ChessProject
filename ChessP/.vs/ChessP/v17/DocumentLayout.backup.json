@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Board.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\main.cpp",
+              "RelativeDocumentMoniker": "main.cpp",
+              "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\main.cpp*",
+              "RelativeToolTip": "main.cpp*",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAADkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-24T15:47:07.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Game.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Game.h",
+              "RelativeDocumentMoniker": "Game.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Game.h",
+              "RelativeToolTip": "Game.h",
+              "ViewState": "AgIAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-24T15:46:35.206Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Board.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Board.h",
+              "RelativeDocumentMoniker": "Board.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Board.h",
+              "RelativeToolTip": "Board.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-24T15:45:23.903Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

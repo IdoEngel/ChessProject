@@ -140,7 +140,7 @@ const char* Board::what() const noexcept {
 }
 
 bool Board::movePeice(const std::string& coordinate) noexcept {
-	bool happend = false;
+	bool isCode8 = false;
 
 	intArr points = Board::strToCoords(coordinate);
 	int srcRow = points.get()->at(SRC_START_INDEX);
@@ -154,14 +154,19 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 		isPositionValid(coordinate);
 	}
 	catch (const Board& e) { // error - move is valid
-		happend = true;
+
+		// the dst coord is white or black king
+		if (this->_pieces[dstRow][dstColumn]->getType() == B_KING_CHAR ||
+			this->_pieces[dstRow][dstColumn]->getType() == W_KING_CHAR) {
+			isCode8 = true;
+		}
 		delete this->_pieces[dstRow][dstColumn]; //delete if needed
 		this->_pieces[dstRow][dstColumn] = this->_pieces[srcRow][srcColumn];
 		this->_pieces[srcRow][srcColumn] = nullptr;
 		p = this->_pieces[srcRow][srcColumn];
 	}
 
-	return happend;
+	return isCode8;
 }
 
 std::string Board::isPositionValid(const std::string& coordinate) {

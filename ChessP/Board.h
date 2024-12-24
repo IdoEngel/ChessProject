@@ -80,7 +80,7 @@ public:
 
 	/*Movrs the peice to the coordinate loction and return true, if its valid - if not - do noting and return false
 	input: string - coordinate (coordinate with src and dst)
-	output: is the move occured?*/
+	output: is the move ended the game? (code 8 happend?)*/
 	bool movePeice(const std::string& coordinate) noexcept;
 
 	/*Check if the src position the and dst position of the 'coordinate' is valid
