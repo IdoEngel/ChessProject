@@ -83,7 +83,7 @@ private:
 	/*is the king of opponent thretened?
 	input: string - kingCoordinate (the king to check)
 	output: is the king of opponent thretened? (bool)*/
-	bool isCheckedOnOpponent(const std::string& kingCoordinate) const noexcept;
+	bool isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept;
 
 	/*Checks all the coordinates in the vector are nullptr (no pieces on the way)
 	input: vector<string> - moves (the moves to check if nullptr)
