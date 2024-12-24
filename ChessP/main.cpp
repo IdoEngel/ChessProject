@@ -7,7 +7,6 @@ void main()
 	Game g;
 	bool isValid = true;
 	int errorCode =0;
-	std::string toExit;
 	do
 	{
 		std::cout << "Enter the coordinates of the source square and the destination square:" << std::endl;
@@ -52,8 +51,5 @@ void main()
 			std::cout << "Checkmate!" << std::endl;
 			std::cout << g << std::endl;
 		}
-		std::cout << "Do you want to exit the game? enter 0 to continue, any other key to exit" << std::endl;
-		//checking if user want to play another move//
-		std::cin >> toExit;
-	} while (toExit == "0");
+	} while (errorCode != 8);
 }
