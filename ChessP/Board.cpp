@@ -271,3 +271,4 @@ std::string Board::coordsToStr(const int row, const int column) {
 std::string Board::coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn) {
 	return (Board::coordsToStr(srcRow, srcColumn) + Board::coordsToStr(dstRow, dstColumn)); // use the function for one coord twice
 }
+
