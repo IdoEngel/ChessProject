@@ -177,11 +177,10 @@ std::string Game::play(const std::string& coordinates) noexcept {
 
 	if (code == CODE_0 || code == CODE_1) { // code "0" - no errors found
 		
-		
 		if (this->_board->movePeice(coordinates)) { //returns if the king was eaten
 			code = CODE_8;
 		}
-		this->_numOfMoves++; //next turn only if code 0 (successe)
+		this->_numOfMoves++; //next turn only if code 0 or 1 (successe)
 	}
 
 	return code;
@@ -228,7 +227,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 			code = CODE_4;
 		}
 		//code 1 (valid) - check if check on other player
-		else if (isCheckedOnOpponent(getCoordinatesOfPiece(getKing(OPPO_KING)))) {
+		else if (isCheckedOnOpponent(getCoordinatesOfPiece(getKing(OPPO_KING)), coordinats)) {
 			code = CODE_1;
 		}
 	}
@@ -282,8 +281,11 @@ bool Game::isSelfChecked(const std::string& kingCoordinate) const noexcept {
 	return isCheck;
 }
 
-bool Game::isCheckedOnOpponent(const std::string& kingCoordinate) const noexcept {
+bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
 	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - 2);
+	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - 2);
+	std::string pieceSrc = pieceCoords.substr(0, 2);
+
 	bool isCheck = false;
 	std::string fullCoord = "";
 	std::vector<std::string> allMoves;
@@ -291,7 +293,7 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate) const noexcept
 	intArr coords;
 	int rowPiece = 0;
 	int columnPiece = 0;
-	Piece* p = nullptr;
+	Piece* piece = nullptr;
 
 	int row = 0;
 	int column = 0;
@@ -309,7 +311,7 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate) const noexcept
 				// make sure the piece is not the same color as the king
 				//((IS_BLACK_PIECE(this->_board->getPiece(rowPiece, columnPiece)->getType()) && IS_BLACK_PIECE(this->getCurrPlayerColor())) ||
 				isCurrTurnMatchColorSelected(this->_board->getPiece(rowPiece, columnPiece))) {
-				p = this->_board->getPiece(rowPiece, columnPiece);
+				piece = this->_board->getPiece(rowPiece, columnPiece);
 
 				fullCoord = Board::coordsToStr(row, column) + kingDest;
 				allMoves = this->_board->getPiece(rowPiece, columnPiece)->possibleMoves(fullCoord);
@@ -324,6 +326,22 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate) const noexcept
 			}
 		}
 	}
+
+	//check if the curr play coused check
+	coords = Board::strToCoords(pieceSrc);
+	rowPiece = coords.get()->at(SRC_START_INDEX);
+	columnPiece = coords.get()->at(SRC_START_INDEX + 1);
+
+	piece = this->_board->getPiece(rowPiece, columnPiece);
+	allMoves = piece->possibleMoves(pieceDest + kingDest);
+
+	if (allMoves.size() != 0 && isWayClear(allMoves)) {
+		isCheck = true;
+	}
+
+	//clear the vector
+	allMoves.clear();
+	allMoves.resize(0);
 
 	return isCheck;
 }
