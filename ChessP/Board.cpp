@@ -157,8 +157,8 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 
 		// the dst coord is white or black king
 		if (this->_pieces[dstRow][dstColumn] != nullptr &&
-			this->_pieces[dstRow][dstColumn]->getType() == B_KING_CHAR ||
-			this->_pieces[dstRow][dstColumn]->getType() == W_KING_CHAR) {
+			(this->_pieces[dstRow][dstColumn]->getType() == B_KING_CHAR ||
+			this->_pieces[dstRow][dstColumn]->getType() == W_KING_CHAR)) {
 			isCode8 = true;
 		}
 		delete this->_pieces[dstRow][dstColumn]; //delete if needed
