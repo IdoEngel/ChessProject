@@ -21,7 +21,6 @@ Board::Board(const bool forException) : _isForException(forException) {
 		this->_pieces = nullptr;
 	}
 }
-
 //Board::Board(const Board& other) : _isForException(other._isForException) {
 //	if (!this->_isForException) {
 //
@@ -65,7 +64,6 @@ Board::~Board() {
 		delete[] this->_pieces; // free the placeholder of the 2d part
 	}
 }
-
 
 //Helping funcs
 

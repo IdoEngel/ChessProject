@@ -11,10 +11,9 @@ Game::Game(const bool forException) :
 	else {
 		this->_ifForException = true;
 	}
-
 }
-
-Game::~Game() {
+Game::~Game() 
+{
 	delete this->_board;
 }
 //Helping/getters functions
@@ -27,7 +26,8 @@ char Game::getCurrPlayerColor() const noexcept {
 	return (this->_numOfMoves % 2 == 0 ? this->_playes[0].getColor() : this->_playes[1].getColor());
 }
 
-char Game::getOpponentPlayerColor() const noexcept {
+char Game::getOpponentPlayerColor() const noexcept 
+{
 	return (this->_numOfMoves % 2 == 0 ? this->_playes[1].getColor() : this->_playes[0].getColor());
 }
 

@@ -20,7 +20,6 @@ enum class PieceType
 	ROOK, KNIGTH, BISHOP, QUEEN, KING, BISHOP2, KNIGTH2, ROOK2
 };
 
-
 #define NUM_OF_PIECES 64
 #define ROW_COLUMN 8
 #define FIRST_ROW_OF_SOLDIERS 2

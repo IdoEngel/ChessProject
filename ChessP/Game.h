@@ -35,6 +35,8 @@ public:
 	//Distractor
 	~Game();
 
+
+
 	//Getter - Hard Copy
 	Board getBoard() const noexcept;
 
