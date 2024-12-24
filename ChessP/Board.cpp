@@ -156,7 +156,8 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 	catch (const Board& e) { // error - move is valid
 
 		// the dst coord is white or black king
-		if (this->_pieces[dstRow][dstColumn]->getType() == B_KING_CHAR ||
+		if (this->_pieces[dstRow][dstColumn] != nullptr &&
+			this->_pieces[dstRow][dstColumn]->getType() == B_KING_CHAR ||
 			this->_pieces[dstRow][dstColumn]->getType() == W_KING_CHAR) {
 			isCode8 = true;
 		}

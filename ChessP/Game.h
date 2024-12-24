@@ -81,7 +81,7 @@ private:
 	bool isSelfChecked(const std::string& kingCoordinate) const noexcept;
 
 	/*is the king of opponent thretened?
-	
+	input: string - kingCoordinate (the king to check)
 	output: is the king of opponent thretened? (bool)*/
 	bool isCheckedOnOpponent(const std::string& kingCoordinate) const noexcept;
 
