@@ -224,7 +224,18 @@ Piece* Board::getPiece(const int row, const int column) const {
 	return this->_pieces[row][column];
 }
 
+std::string Board::coordsToStr(const int row, const int column) {
+	std::string coord = "";
 
+	coord += (char)(row + TO_CHAR);
+	coord += std::to_string(column + 1);
+
+	return coord;
+}
+
+std::string Board::coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn) {
+	return (Board::coordsToStr(srcRow, srcColumn) + Board::coordsToStr(dstRow, dstColumn)); // use the function for one coord twice
+}
 
 intArr Board::strToCoords(const std::string& coords) {
 	intArr points = std::make_unique<std::vector<int>>(coords.length());
@@ -258,17 +269,3 @@ intArr Board::strToCoords(const std::string& coords) {
 
 	return points;
 }
-
-std::string Board::coordsToStr(const int row, const int column) {
-	std::string coord = "";
-
-	coord += (char)(row + TO_CHAR);
-	coord += std::to_string(column + 1);
-
-	return coord;
-}
-
-std::string Board::coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn) {
-	return (Board::coordsToStr(srcRow, srcColumn) + Board::coordsToStr(dstRow, dstColumn)); // use the function for one coord twice
-}
-

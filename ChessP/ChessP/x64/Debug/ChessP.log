@@ -1,10 +1,20 @@
 ﻿  Board.cpp
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Board.cpp(156,22): warning C4101: 'e': unreferenced local variable
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Board.cpp(156,22): warning C4101: 'e': unreferenced local variable
   Game.cpp
+<<<<<<< HEAD
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(138,19): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(204,22): warning C4101: 'e': unreferenced local variable
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(343,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(357,35): warning C4101: 'e': unreferenced local variable
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(379,34): warning C4101: 'e': unreferenced local variable
+=======
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(138,19): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(203,22): warning C4101: 'e': unreferenced local variable
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(361,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(375,35): warning C4101: 'e': unreferenced local variable
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\Game.cpp(397,34): warning C4101: 'e': unreferenced local variable
+  main.cpp
+C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\main.cpp(4,6): warning C4326: return type of 'main' should be 'int' instead of 'void'
+>>>>>>> 9fd79e8b592d9be6e41edf9dc9441052933cdb91
   Generating Code...
-  ChessP.vcxproj -> C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\x64\Debug\ChessP.exe
+  ChessP.vcxproj -> C:\Users\Cyber_User\Desktop\All\Year Two\Cpp\ChessProject\ChessP\x64\Debug\ChessP.exe
