@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAADQAAAAAAAAAAAAAADkAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-24T15:47:07.429Z",
               "EditorCaption": ""
@@ -47,8 +47,7 @@
               "RelativeToolTip": "Game.h",
               "ViewState": "AgIAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-24T15:46:35.206Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-24T15:46:35.206Z"
             },
             {
               "$type": "Document",
@@ -60,8 +59,7 @@
               "RelativeToolTip": "Board.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-24T15:45:23.903Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-24T15:45:23.903Z"
             }
           ]
         }
