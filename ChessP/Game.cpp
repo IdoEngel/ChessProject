@@ -176,9 +176,9 @@ std::string Game::play(const std::string& coordinates) noexcept {
 	code = this->codeForGraphics(coordinates);
 
 	if (code == CODE_0 || code == CODE_1) { // code "0" - no errors found
-
-		// code 8 part one - checkmate on opponent
-		if (this->_board->movePeice(coordinates)) {
+		
+		
+		if (this->_board->movePeice(coordinates)) { //returns if the king was eaten
 			code = CODE_8;
 		}
 		this->_numOfMoves++; //next turn only if code 0 (successe)
