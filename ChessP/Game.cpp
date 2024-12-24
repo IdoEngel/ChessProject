@@ -401,3 +401,4 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 
 	return isClear;
 }
+
