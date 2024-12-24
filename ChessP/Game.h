@@ -105,4 +105,3 @@ private:
 	output: the len of the vector of passible moves*/
 	int lenOfPassibleMoves(const std::string& coord) const noexcept;
 };
-
