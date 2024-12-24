@@ -9,22 +9,8 @@ void main()
 	int errorCode =0;
 	do
 	{
-		do
-		{
-			std::cout << "Enter the coordinates of the source square and the destination square:" << std::endl;
-			//getting the coords from the user//
-			std::cin >> coords;
-			if (coords.length() != 4 ||
-				coords[0] < 'a' || coords[0] > 'h' ||
-				coords[1] < '1' || coords[1] > '8' ||
-				coords[2] < 'a' || coords[2] > 'h' ||
-				coords[3] < '1' || coords[3] > '8')
-			{
-				std::cout << "Invalid coords! try again!" << std::endl;
-				isValid = false;
-			}
-		} while (!isValid);
-		//trying to make a move with the coords//
+		std::cout << "Enter the coordinates of the source square and the destination square:" << std::endl;
+		std::cin >> coords;
 		errorCode = std::stoi(g.play(coords));
 		switch (errorCode)   //checking what is the return value
 		{

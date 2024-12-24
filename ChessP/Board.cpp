@@ -170,15 +170,8 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 
 std::string Board::isPositionValid(const std::string& coordinate) {
 	std::string errCode = "";
-	bool isValid = true;
-
-	//int srcRow = (int)(coordinate[0] - TO_CHAR);
-	//int srcColumn = (int)(coordinate[1] - NUM_STR_TO_INT) - 1; // fix the index
-	//int dstRow = (int)(coordinate[2] - TO_CHAR);
-	//int dstColumn = (int)(coordinate[3] - NUM_STR_TO_INT) - 1; // fix the index
 
 	intArr points = Board::strToCoords(coordinate);
-
 	int srcRow = points.get()->at(SRC_START_INDEX);
 	int srcColumn = points.get()->at(SRC_START_INDEX + 1);
 	int dstRow = points.get()->at(DST_START_INDEX);
@@ -186,20 +179,19 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 
 	// check options for making the move invalid
 	if (srcRow == srcColumn && dstRow == dstColumn) { // error code 7 - same coordinate
-		isValid = false;
 		errCode = CODE_7;
 	}
 	// error code 5 - index out of range
-	else if (!(ROW_COLUMN >= srcRow || ROW_COLUMN >= srcColumn || ROW_COLUMN >= dstRow || ROW_COLUMN >= dstColumn || // more then passible
-		srcRow < 0 || srcColumn < 0 || dstRow < 0 || dstColumn < 0)) { // less then passible
+	else if (!(srcRow >= 0 && srcRow < ROW_COLUMN &&
+		srcColumn >= 0 && srcColumn < ROW_COLUMN &&
+		dstRow >= 0 && dstRow < ROW_COLUMN &&
+		dstColumn >= 0 && dstColumn < ROW_COLUMN)) { // less then passible
 
-		isValid = false;
 		errCode = CODE_5;
 	}
 	//code 2 - src coord is empty (part one of code 2)
 	else if (this->_pieces[srcRow][srcColumn] == nullptr) {
 		errCode = CODE_2;
-		isValid = false;
 	}
 	// error code 3 - dst coord with piece of the same color
 	else if (this->_pieces[dstRow][dstColumn] != nullptr && this->_pieces[srcRow][srcColumn] != nullptr &&
@@ -207,7 +199,6 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 		(IS_BLACK_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_BLACK_PIECE(this->_pieces[srcRow][srcColumn]->getType()) ||
 			(IS_WHITE_PIECE(this->_pieces[dstRow][dstColumn]->getType()) && IS_WHITE_PIECE(this->_pieces[srcRow][srcColumn]->getType())))) {
 
-		isValid = false;
 		errCode = CODE_3;
 	}
 	else { // not error board-related found (RAISE error)
