@@ -9,6 +9,9 @@
 #include "Pipe.h"
 
 #define PLAYERS_IN_GAME 2
+#define NO_ENOUGH_PIECES_TO_PROTECT_KING 2
+#define TAKE_TWO_CHARS 2
+#define NOT_THE_LAST_TWO_CHARS 2
 #define ROW_COLUMN 8
 #define EMPTY '#'
 
@@ -23,6 +26,10 @@
 
 #define MY_KING true
 #define OPPO_KING false //opponant king
+#define KING_MOVING true
+#define KING_NOT_MOVING false
+#define ONLY_SELF_ON_THE_WAY true
+#define NOT_ONLY_SELF_ON_THE_WAY false
 
 class Game : std::exception {
 public:
@@ -78,9 +85,10 @@ private:
 	bool isCurrTurnMatchColorSelected(const Piece* piece) const noexcept;
 
 	/*is the king of the current player is thretend?
-	input: string - kingCoordinate (the king of the curr to check)
+	input: string - kingCoordinate (the king of the curr to check), pieceCoord (the piece want to move in the turn)
+		bool - isKingPlaying (true - the king is moving, false - other piece)
 	output: is the king thretend?*/
-	bool isSelfChecked(const std::string& kingCoordinate, const bool isKingPlaying = false) const noexcept;
+	bool isSelfChecked(const std::string& kingCoordinate, const std::string& pieceCoord, const bool isKingPlaying = false) const noexcept;
 
 	/*is the king of opponent thretened?
 	input: string - kingCoordinate (the king to check)
@@ -106,4 +114,10 @@ private:
 	input: string - coord (the coord of the piece to create the passible
 	output: the len of the vector of passible moves*/
 	int lenOfPassibleMoves(const std::string& coord) const noexcept;
+
+	/*Check and return how many pieces on the way
+	input: vector<string> - way (the way to check and count)
+		bool - onlySelfPieces (true - count only pieces of curr player, false - count all)
+	output: the number of pieces on the way*/
+	unsigned int howManyOnTheWay(const std::vector<std::string> way, const bool onlySelfPieces) const noexcept;
 };

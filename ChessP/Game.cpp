@@ -218,12 +218,12 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 		}
 		//code 4 - self check (first part - if king is moving)
 		else if ((((type == W_KING_CHAR) || (type == B_KING_CHAR))) && //if this is a king, continue to the check
-			isSelfChecked(coordinats, true)) { //getting the king of the current player
+			isSelfChecked(coordinats, coordinats, KING_MOVING)) { //getting the king of the current player
 			code = CODE_4;
 		}
 		// code 4 - self check (second part - if the king mo moving) - UNCHECKED
 		else if ((!((type == W_KING_CHAR) || (type == B_KING_CHAR))) && // not the king
-			(isSelfChecked(getCoordinatesOfPiece(getKing(MY_KING))))) {
+			(isSelfChecked(getCoordinatesOfPiece(getKing(MY_KING)), coordinats))) {
 			code = CODE_4;
 		}
 		//code 1 (valid) - check if check on other player
@@ -236,9 +236,9 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 }
 
 bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
-	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - 2);
-	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - 2);
-	std::string pieceSrc = pieceCoords.substr(0, 2);
+	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS);
+	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - NOT_THE_LAST_TWO_CHARS);
+	std::string pieceSrc = pieceCoords.substr(0, TAKE_TWO_CHARS);
 
 	bool isCheck = false;
 	std::string fullCoord = "";
@@ -301,16 +301,18 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 }
 
 
-bool Game::isSelfChecked(const std::string& kingCoordinate, const bool isKingPlaying) const noexcept {
-	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - 2);
+bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& pieceCoord, const bool isKingPlaying) const noexcept {
+	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS);
 	bool isCheck = false;
 	std::string fullCoord = "";
 	std::string lastMove = "";
+	std::string srcCurrPiece = "";
 	std::vector<std::string> allMoves;
 
 	intArr coords;
 	int rowPiece = 0;
 	int columnPiece = 0;
+	int i = 0;
 	Piece* p = nullptr;
 
 	int row = 0;
@@ -361,6 +363,18 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const bool isKingPla
 					}
 				}
 
+				//check if con move the piece (maybe protect the king?)
+				if (howManyOnTheWay(allMoves, NOT_ONLY_SELF_ON_THE_WAY) <= NO_ENOUGH_PIECES_TO_PROTECT_KING && // not enough piece to protect
+					!isKingPlaying) {
+
+					srcCurrPiece = pieceCoord.substr(0, TAKE_TWO_CHARS);
+					
+					for (i = 0; i < allMoves.size(); i++) {
+						if (srcCurrPiece == allMoves.at(i)) { // is src is equ - block the way to the king - cannot move
+							isCheck = true;
+						}
+					}
+				}
 				//clear the vector
 				allMoves.clear();
 				allMoves.resize(0);
@@ -427,4 +441,38 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 	
 
 	return isClear;
+}
+
+unsigned int Game::howManyOnTheWay(const std::vector<std::string> way, const bool onlySelfPieces) const noexcept {
+	intArr coord;
+	int row = 0;
+	int column = 0;
+	int count = 0;
+
+	int i = 0;
+	
+	//skip if not enogh len to the 'way' var
+	try {
+		for (i = 0; i < way.size(); i++) {
+			//get coord in nums
+			coord = Board::strToCoords(way[i]);
+			row = coord.get()->at(SRC_START_INDEX);
+			column = coord.get()->at(SRC_START_INDEX + 1);
+
+			//count only the self pieces
+			if (this->_board->getPiece(row, column) != nullptr &&
+				onlySelfPieces && isCurrTurnMatchColorSelected(this->_board->getPiece(row, column))) {
+				count++;
+			}
+			//count all (both colors)
+			else if (this->_board->getPiece(row, column) != nullptr) {
+				count++;
+			}
+		}
+	}
+	catch (std::out_of_range& e) {
+		//...skiping
+	}
+
+	return count;
 }
