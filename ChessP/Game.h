@@ -78,7 +78,7 @@ private:
 	/*is the king of the current player is thretend?
 	input: string - kingCoordinate (the king of the curr to check)
 	output: is the king thretend?*/
-	bool isSelfChecked(const std::string& kingCoordinate) const noexcept;
+	bool isSelfChecked(const std::string& kingCoordinate, const bool isKingPlaying = false) const noexcept;
 
 	/*is the king of opponent thretened?
 	input: string - kingCoordinate (the king to check)
@@ -105,4 +105,3 @@ private:
 	output: the len of the vector of passible moves*/
 	int lenOfPassibleMoves(const std::string& coord) const noexcept;
 };
-

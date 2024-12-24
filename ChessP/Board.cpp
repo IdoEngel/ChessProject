@@ -269,3 +269,4 @@ intArr Board::strToCoords(const std::string& coords) {
 
 	return points;
 }
+

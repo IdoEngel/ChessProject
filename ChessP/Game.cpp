@@ -218,7 +218,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 		}
 		//code 4 - self check (first part - if king is moving)
 		else if ((((type == W_KING_CHAR) || (type == B_KING_CHAR))) && //if this is a king, continue to the check
-			isSelfChecked(coordinats)) { //getting the king of the current player
+			isSelfChecked(coordinats, true)) { //getting the king of the current player
 			code = CODE_4;
 		}
 		// code 4 - self check (second part - if the king mo moving) - UNCHECKED
@@ -301,10 +301,11 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 }
 
 
-bool Game::isSelfChecked(const std::string& kingCoordinate) const noexcept {
+bool Game::isSelfChecked(const std::string& kingCoordinate, const bool isKingPlaying) const noexcept {
 	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - 2);
 	bool isCheck = false;
 	std::string fullCoord = "";
+	std::string lastMove = "";
 	std::vector<std::string> allMoves;
 
 	intArr coords;
@@ -335,6 +336,29 @@ bool Game::isSelfChecked(const std::string& kingCoordinate) const noexcept {
 
 				if (allMoves.size() != 0 && isWayClear(allMoves)) {
 					isCheck = true;
+				}
+
+				//if king is playing - need to check that the king dont "block itself"
+				if (isKingPlaying) {
+					//try to get to the last elem, if vector is empty - skip all (using the try-block)
+					try {
+						lastMove = allMoves.at(allMoves.size() - 2);
+
+						coords = Board::strToCoords(lastMove);
+						rowPiece = coords.get()->at(SRC_START_INDEX);
+						columnPiece = coords.get()->at(SRC_START_INDEX + 1);
+
+						//check if the last move in moves is tha king that just moving
+						if (this->_board->getPiece(rowPiece, columnPiece) != nullptr && //check that not nullptr
+							//check that the king is on the last move
+							(this->_board->getPiece(rowPiece, columnPiece)->getType() == W_KING_CHAR ||
+								this->_board->getPiece(rowPiece, columnPiece)->getType() == B_KING_CHAR)) {
+							isCheck = true;
+						}
+					}
+					catch (std::out_of_range& e) {
+						//.... skiping
+					}
 				}
 
 				//clear the vector
@@ -404,4 +428,3 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 
 	return isClear;
 }
-
