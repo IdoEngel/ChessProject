@@ -10,9 +10,19 @@ void main()
 {
 	Game* g = nullptr;
 	std::string coords;
+	std::string isGraphic;
 
 	try {
-		 g = new Game(PLAYING_ON_GRAPHICS);
+		std::cout << "Do you want to run on Graphic or on Console? Enter 0 for Graphic, other key for console" << std::endl;
+		std::cin >> isGraphic;
+		if (isGraphic == "0")
+		{
+			g = new Game(PLAYING_ON_GRAPHICS);
+		}
+		else
+		{
+			g = new Game(PLAYING_ON_CONSOLE);
+		} 
 	}
 	catch (const PipeException& e) {
 		std::cout << e.what();
