@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Knight.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Knight.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Rook.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Rook.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Knight.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Knight.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\main.cpp",
-              "RelativeDocumentMoniker": "main.cpp",
-              "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\main.cpp",
-              "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAnAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Rook.cpp",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Rook.cpp",
+              "RelativeDocumentMoniker": "Rook.cpp",
+              "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Rook.cpp",
+              "RelativeToolTip": "Rook.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-24T15:47:07.429Z",
+              "WhenOpened": "2024-12-25T16:58:46.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Knight.cpp",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Knight.cpp",
+              "RelativeDocumentMoniker": "Knight.cpp",
+              "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Knight.cpp",
+              "RelativeToolTip": "Knight.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-25T16:57:30.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Knight.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Knight.h",
+              "RelativeDocumentMoniker": "Knight.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Knight.h",
+              "RelativeToolTip": "Knight.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-25T16:57:25.895Z",
               "EditorCaption": ""
             }
           ]
