@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <stdexcept>
+#include <thread>
 #include <iostream>
+#include "PipeException.h"
 #include "Board.h"
 #include "Player.h"
 #include "Pipe.h"
@@ -13,6 +15,7 @@
 #define TAKE_TWO_CHARS 2
 #define NOT_THE_LAST_TWO_CHARS 2
 #define ROW_COLUMN 8
+#define TOO_MANY_TRYEIS 30
 #define EMPTY '#'
 
 #define WHITE_STR "W"
@@ -24,6 +27,14 @@
 #define CODE_6 "6"
 #define CODE_8 "8"
 
+#define FIRST_MSG_TO_PIPE "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0"
+
+enum class codes {
+	CODE0, CODE1, CODE2, CODE3, CODE4, CODE5, CODE6, CODE7, CODE8
+};
+
+#define PLAYING_ON_CONSOLE false
+#define PLAYING_ON_GRAPHICS true
 #define MY_KING true
 #define OPPO_KING false //opponant king
 #define KING_MOVING true
@@ -33,16 +44,15 @@
 
 class Game : std::exception {
 public:
+
 	/*Constractor - creates an instance of the class with the board peices in the defualt position
 	input: bool - forException (if instace created for excption no need to create all the peices, just the function 'what'.
 		Default value if 'false' - creating all the instance)
 	output: none*/
-	Game(const bool forException = false);
+	Game(const bool onGraphics, const bool forException = false);
 
 	//Distractor
 	~Game();
-
-
 
 	//Getter - Hard Copy
 	Board getBoard() const noexcept;
@@ -53,11 +63,10 @@ public:
 	/*Return the opponent player color - white always starts*/
 	char getOpponentPlayerColor() const noexcept;
 
-
-	/*Plat one move in the game - each player in his turn (White starts)
+	/*General play one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
 	output: none*/
-	std::string play(const std::string& coordinates) noexcept;
+	std::string play() noexcept;
 
 	/*prints the board by lines to the console
 	OPERATOR << FUNCTION*/
@@ -72,11 +81,31 @@ public:
 	input: none
 	output: msg error - "B" - if black won; "W" - if white won*/
 	const char* what() const noexcept override;
+
+protected:
+
+	/*Play one move in the game - each player in his turn (White starts)
+	input: string - coordinates (the coordintas to move to)
+	output: none*/
+	std::string playGraphics();
+
+	/*Play one move in the game - each player in his turn (White starts)
+	input: string - coordinates (the coordintas to move to)
+	output: none*/
+	std::string playConsole() noexcept;
+
+	/*Gets a code and return the error in a pretty way
+	input: string - code (the code to convert)
+	output: pretty string of the code*/
+	static std::string prettyCodes(const std::string& code) noexcept;
+
 private:
 	unsigned int _numOfMoves;
 	bool _ifForException;
+	bool _onGraphics;
 	Board* _board;
 	Player _playes[PLAYERS_IN_GAME];
+	Pipe* _pipe;
 
 	/*Check if the current turn is the same color as the selected piece
 	* input: Piece - piece (the piece to check)
@@ -120,4 +149,9 @@ private:
 		bool - onlySelfPieces (true - count only pieces of curr player, false - count all)
 	output: the number of pieces on the way*/
 	unsigned int howManyOnTheWay(const std::vector<std::string> way, const bool onlySelfPieces) const noexcept;
+
+	/*Connect to pipe
+	input: Pipe - p (the pipe to connect)
+	output: is connected?*/
+	bool connectToPipe() noexcept;
 };
