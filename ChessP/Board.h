@@ -43,8 +43,8 @@ enum class PieceType
 #define W_ROOK_CHAR 'R'
 #define B_ROOK_CHAR 'r'
 
-#define W_KNIGHT_CHAR 'K'
-#define B_KNIGHT_CHAR 'k'
+#define W_KNIGHT_CHAR 'N'
+#define B_KNIGHT_CHAR 'n'
 
 #define W_BISHOP_CHAR 'B'
 #define B_BISHOP_CHAR 'b'
