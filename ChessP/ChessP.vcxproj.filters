@@ -39,7 +39,7 @@
     <ClInclude Include="King.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Knigth.h">
+    <ClInclude Include="Knight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Piece.h">
@@ -54,7 +54,7 @@
     <ClInclude Include="Pawn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PipeException.h">
+    <ClInclude Include="Exceptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -90,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

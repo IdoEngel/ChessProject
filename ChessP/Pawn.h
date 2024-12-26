@@ -1,11 +1,11 @@
 #pragma once
 #include "Piece.h"
 
-class Pown : public Piece
+class Pawn : public Piece
 {
 public:
-	Pown(const std::string& position, const char type);   //constractor//
-	~Pown();   //distractor//
+	Pawn(const std::string& position, const char type);   //constractor//
+	~Pawn();   //distractor//
 	/*
 	 returns the possible way to dst, points of the way in a vector.
 	*/

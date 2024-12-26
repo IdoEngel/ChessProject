@@ -2,17 +2,12 @@
 
 //Constractor/Destractor
 
-Game::Game(const bool onGraphics, const bool forException) :
-	_board(new Board(forException)), _numOfMoves(0), _ifForException(forException), _onGraphics(onGraphics){
+Game::Game(const bool onGraphics) :
+	_board(new Board()), _numOfMoves(0), _onGraphics(onGraphics){
 
-	//create a boad
-	if (!forException) {
-		this->_playes[0] = Player(WHITE);
-		this->_playes[1] = Player(BLACK);
-	}
-	else {
-		this->_ifForException = true;
-	}
+	//create the players
+	this->_playes[0] = Player(WHITE);
+	this->_playes[1] = Player(BLACK);
 
 	//on graphics
 	if (onGraphics) {
@@ -22,7 +17,7 @@ Game::Game(const bool onGraphics, const bool forException) :
 		if (!connectToPipe()) {
 			delete this->_board;
 			delete this->_pipe;
-			throw PipeException();
+			throw ChessExceptions::PipeException();
 		}
 		else { //send the first msg to the pipe
 			this->_pipe->sendMessageToGraphics((char*)FIRST_MSG_TO_PIPE);
@@ -33,17 +28,15 @@ Game::Game(const bool onGraphics, const bool forException) :
 	}
 
 }
+
 Game::~Game() 
 {
 	this->_pipe->close();
 	delete this->_pipe;
 	delete this->_board;
 }
-//Helping/getters functions
 
-Board Game::getBoard() const noexcept {
-	return Board(this->_board);
-}
+//Helping/getters functions
 
 char Game::getCurrPlayerColor() const noexcept {
 	return (this->_numOfMoves % 2 == 0 ? this->_playes[0].getColor() : this->_playes[1].getColor());
@@ -94,7 +87,6 @@ Piece* Game::getKing(const bool isMyKing) const noexcept {
 	return king;
 }
 
-
 std::string Game::getCoordinatesOfPiece(const Piece* piece) const noexcept { //MAYBE transfer to Board (?)
 	char type = piece->getType();
 	std::string coordinates = "";
@@ -128,6 +120,7 @@ std::string Game::getCoordinatesOfPiece(const Piece* piece) const noexcept { //M
 bool Game::isCurrTurnMatchColorSelected(const Piece* piece) const noexcept {
 	bool isVal = false;
 
+	//if nullptr - connot be black or while
 	if (piece != nullptr) {
 		if (this->_numOfMoves % 2 == 0) {
 			isVal = IS_WHITE_PIECE(piece->getType());
@@ -146,12 +139,8 @@ int Game::lenOfPassibleMoves(const std::string& coord) const noexcept {
 	Piece* piece = nullptr;
 	std::vector<std::string> moves;
 
-	//get only the part with the coordinate to the curr position of the piece
-	//srcRow = (int)(coord[0] - TO_CHAR);
-	//srcColumn = (int)(coord[1] - NUM_STR_TO_INT) - 1;
-
+	//get the coords
 	intArr points = Board::strToCoords(coord);
-
 	srcRow = points.get()->at(SRC_START_INDEX);
 	srcColumn = points.get()->at(SRC_START_INDEX + 1);
 
@@ -222,7 +211,7 @@ std::string Game::playGraphics() {
 
 	// if code 8 - game over (raise an error typed game)
 	if (code == CODE_8) {
-		throw Game(true);
+		throw ChessExceptions::GameExcption();
 	}
 
 	
@@ -255,10 +244,6 @@ std::string Game::playConsole() noexcept {
 	return Game::prettyCodes(code);
 }
 
-const char* Game::what() const noexcept {
-	return (this->_numOfMoves % 2 == 0 ? WHITE_STR : BLACK_STR);
-}
-
 std::string Game::codeForGraphics(const std::string& coordinats) const noexcept {
 	char type = ' ';
 	intArr points;
@@ -269,7 +254,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 	try {
 		code = this->_board->isPositionValid(coordinats);
 	}
-	catch (const Board& e) { // error - move is valid (no errors found)
+	catch (const ChessExceptions::NoBoardErrors& e) { // error - move is valid (no errors found)
 		points = Board::strToCoords(coordinats);
 		row = points.get()->at(SRC_START_INDEX);
 		column = points.get()->at(SRC_START_INDEX + 1);
@@ -306,7 +291,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 
 bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
 	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS);
-	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - NOT_THE_LAST_TWO_CHARS);
+	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - NOT_THE_LAST_TWO_CHARS); 
 	std::string pieceSrc = pieceCoords.substr(0, TAKE_TWO_CHARS);
 
 	bool isCheck = false;
@@ -369,9 +354,8 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 	return isCheck;
 }
 
-
 bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& pieceCoord, const bool isKingPlaying) const noexcept {
-	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS);
+	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS); //get the dest of the king
 	bool isCheck = false;
 	std::string fullCoord = "";
 	std::string lastMove = "";
@@ -398,7 +382,6 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 				//make sure the piece is not the king
 				Board::coordsToStr(row, column) != kingDest &&
 				// make sure the piece is not the same color as the king
-				//((IS_BLACK_PIECE(this->_board->getPiece(rowPiece, columnPiece)->getType()) && IS_BLACK_PIECE(this->getCurrPlayerColor())) ||
 				!isCurrTurnMatchColorSelected(this->_board->getPiece(rowPiece, columnPiece))) {
 				p = this->_board->getPiece(rowPiece, columnPiece);
 
@@ -427,7 +410,7 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 							isCheck = true;
 						}
 					}
-					catch (std::out_of_range& e) {
+					catch (const std::out_of_range& e) {
 						//.... skiping
 					}
 				}
@@ -454,8 +437,6 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 	return isCheck;
 }
 
-
-
 bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 	bool isClear = true;
 
@@ -470,8 +451,6 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 	int i = 0;
 	int size = moves.size();
 	for (i = 0; i < moves.size() - 1; i++) { // not include the ladt index
-		/*dstRow = (int)(moves[i][0] - TO_CHAR);
-		dstColumn = (int)(moves[i][1] - NUM_STR_TO_INT) - 1;*/
 		try {
 			points = Board::strToCoords(moves.at(i));
 
@@ -539,7 +518,7 @@ unsigned int Game::howManyOnTheWay(const std::vector<std::string> way, const boo
 			}
 		}
 	}
-	catch (std::out_of_range& e) {
+	catch (const std::out_of_range& e) {
 		//...skiping
 	}
 
@@ -588,6 +567,7 @@ bool Game::connectToPipe() noexcept {
 
 	srand(time_t(NULL));
 	
+	//try 30 times - stop if connected
 	while (!isConnect && counter < TOO_MANY_TRYEIS) {
 		counter++;
 		Sleep(5000);

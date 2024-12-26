@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <thread>
 #include <iostream>
-#include "PipeException.h"
+#include "Exceptions.h"
 #include "Board.h"
 #include "Player.h"
 #include "Pipe.h"
@@ -42,20 +42,17 @@ enum class codes {
 #define ONLY_SELF_ON_THE_WAY true
 #define NOT_ONLY_SELF_ON_THE_WAY false
 
-class Game : std::exception {
+class Game{
 public:
 
 	/*Constractor - creates an instance of the class with the board peices in the defualt position
 	input: bool - forException (if instace created for excption no need to create all the peices, just the function 'what'.
 		Default value if 'false' - creating all the instance)
 	output: none*/
-	Game(const bool onGraphics, const bool forException = false);
+	Game(const bool onGraphics);
 
 	//Distractor
 	~Game();
-
-	//Getter - Hard Copy
-	Board getBoard() const noexcept;
 
 	/*Return the current player color - white always starts*/
 	char getCurrPlayerColor() const noexcept;
@@ -77,11 +74,6 @@ public:
 	output: the code for graphics*/
 	std::string codeForGraphics(const std::string& coordinats) const noexcept;
 
-	/*RAISE if the someone won the game
-	input: none
-	output: msg error - "B" - if black won; "W" - if white won*/
-	const char* what() const noexcept override;
-
 protected:
 
 	/*Play one move in the game - each player in his turn (White starts)
@@ -101,7 +93,6 @@ protected:
 
 private:
 	unsigned int _numOfMoves;
-	bool _ifForException;
 	bool _onGraphics;
 	Board* _board;
 	Player _playes[PLAYERS_IN_GAME];

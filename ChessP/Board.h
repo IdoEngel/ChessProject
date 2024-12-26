@@ -5,11 +5,12 @@
 #include <exception>
 #include <memory>
 
+#include "Exceptions.h"
 #include "Piece.h"
 #include "Bishop.h"
 #include "King.h"
-#include "Knigth.h"
 #include "Pawn.h"
+#include "Knight.h"
 #include "Queen.h"
 #include "Rook.h"
 
@@ -62,14 +63,14 @@ enum class PieceType
 #define CODE_2 "2"
 #define CODE_3 "3"
 
-class Board : std::exception {
+class Board {
 public:
 
 	/*Constractor - creates an instance of the class with the board peices in the defualt position
 	input: bool - forException (if instace created for excption no need to create all the peices, just the function 'what'.
 		Default value if 'false' - creating the peaces)
 	output: none*/
-	Board(const bool forException = false);
+	Board();
 
 	/*Copy constractor for return types in functions*/
 	//Board(const Board& other);
@@ -92,11 +93,6 @@ public:
 	*/
 	Piece* getPiece(const int row, const int column) const;
 
-	/*RAISE if the 'isPositionValid' not found an error
-	input: none
-	output: msg error - "No error codes found"*/
-	const char* what() const noexcept override;
-
 	static intArr strToCoords(const std::string& coords);
 
 	static std::string coordsToStr(const int row, const int column);
@@ -111,7 +107,5 @@ protected:
 
 private:
 	Piece*** _pieces;
-	const bool _isForException;
-
 };
 

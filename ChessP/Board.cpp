@@ -1,125 +1,92 @@
 #include "Board.h"
 
 //Constractors/Distractors
-Board::Board(const bool forException) : _isForException(forException) {
+Board::Board() {
 
-	if (!forException) { // if not for exception
+	this->_pieces = new Piece * *[ROW_COLUMN];
 
-		this->_pieces = new Piece * *[ROW_COLUMN];
-
-		int row = 0; // crreate a 2d arr
-		int col = 0;
-		for (row = 0; row < ROW_COLUMN; row++) {
-			this->_pieces[row] = new Piece * [ROW_COLUMN];
-			for (col = 0; col < ROW_COLUMN; col++) {
-				this->_pieces[row][col] = nullptr;
-			}
+	int row = 0; // crreate a 2d arr
+	int col = 0;
+	for (row = 0; row < ROW_COLUMN; row++) {
+		this->_pieces[row] = new Piece * [ROW_COLUMN];
+		for (col = 0; col < ROW_COLUMN; col++) {
+			this->_pieces[row][col] = nullptr;
 		}
-		createDefault();
 	}
-	else {
-		this->_pieces = nullptr;
-	}
+	createDefault();
 }
-//Board::Board(const Board& other) : _isForException(other._isForException) {
-//	if (!this->_isForException) {
-//
-//		// create the 2d arr
-//		this->_pieces = new Piece**[ROW_COLUMN];
-//		int row = 0; // crreate a 2d arr
-//		for (row = 0; row < ROW_COLUMN; row++) {
-//			this->_pieces[row] = new Piece*[ROW_COLUMN];
-//		}
-//
-//		// copy the pieces
-//		int column = 0; // like 2d arr
-//		for (row = 0; row < ROW_COLUMN; row++) {
-//			for (column = 0; column < ROW_COLUMN; column++) {
-//				this->_pieces[row][column] = other._pieces[row][column];
-//			}
-//		}
-//	}
-//	else {
-//		this->_pieces = nullptr;
-//	}
-//}
+
 
 Board::~Board() {
 	int row = 0;
 	int column = 0;
 
-	if (!this->_isForException) { // if for excption - nothing to free
-		// free individual pieces
-		for (row = 0; row < ROW_COLUMN; row++) {
-			for (column = 0; column < ROW_COLUMN; column++) {
-				delete this->_pieces[row][column]; // can 'free' nullptr
-			}
+	// free individual pieces
+	for (row = 0; row < ROW_COLUMN; row++) {
+		for (column = 0; column < ROW_COLUMN; column++) {
+			delete this->_pieces[row][column]; // can 'free' nullptr
 		}
-
-		// free the 2d part of the _pieces var
-		for (row = 0; row < ROW_COLUMN; row++) {
-			delete[] this->_pieces[row];
-		}
-
-		delete[] this->_pieces; // free the placeholder of the 2d part
 	}
+
+	// free the 2d part of the _pieces var
+	for (row = 0; row < ROW_COLUMN; row++) {
+		delete[] this->_pieces[row];
+	}
+
+	delete[] this->_pieces; // free the placeholder of the 2d part
+
 }
 
 //Helping funcs
 
 void Board::createDefault() {
+	intArr numVals;
+	std::string coord = "";
 	PieceType dict;
 
 	int row = 0;
 	int column = 0; // like 2d arr
 	for (row = 0; row < ROW_COLUMN; row++) {
 		for (column = 0; column < ROW_COLUMN; column++) {
+			numVals = Board::strToCoords(Board::coordsToStr(row, column)); //calling to the strToCoords func to get the right coords
+
+			coord = Board::coordsToStr(numVals.get()->at(SRC_START_INDEX), numVals.get()->at(SRC_START_INDEX+1)); //get the right index in str format
 
 			// if the place of pown
 			if (FIRST_ROW_OF_SOLDIERS == row + 1) { // black
-				//this->_pieces[row][column] = new Pown(Board::coordsToStr(row, column), B_PAWN_CHAR);
-				this->_pieces[row][column] = nullptr;
+				this->_pieces[row][column] = new Pawn(coord, B_PAWN_CHAR);
 			}
 			else if (SECOND_ROW_OF_SOLDIERS == row + 1) { //white
-				//this->_pieces[row][column] = new Pown(Board::coordsToStr(row, column), B_PAWN_CHAR);
-				this->_pieces[row][column] = nullptr;
+				this->_pieces[row][column] = new Pawn(coord, B_PAWN_CHAR);
 			}
 			else if (FIRST_ROW == row + 1 || LAST_ROW == row + 1) { // all other pieces, black or white
 
-				dict = (PieceType)column;
+				dict = static_cast<PieceType>(column);
 				switch (dict)
 				{
 				case PieceType::ROOK:
-					this->_pieces[row][column] = new Rook(Board::coordsToStr(row, column), (FIRST_ROW == row + 1 ? B_ROOK_CHAR : W_ROOK_CHAR));
-					//this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Rook(coord, (FIRST_ROW == row + 1 ? B_ROOK_CHAR : W_ROOK_CHAR));
 					break;
 				case PieceType::KNIGTH:
-					//this->_pieces[row][column] = new Knigth(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
-					this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Knight(coord, (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
 					break;
 				case PieceType::BISHOP:
-					this->_pieces[row][column] = new Bishop(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
-					//this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
 					break;
 				case PieceType::QUEEN:
-					this->_pieces[row][column] = new Queen(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
-					//this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Queen(coord, (FIRST_ROW == row+1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
 					break;
 				case PieceType::KING:
-					this->_pieces[row][column] = new King(Board::coordsToStr(row, column), (FIRST_ROW == row + 1 ? B_KING_CHAR : W_KING_CHAR));
-					//this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new King(coord, (FIRST_ROW == row + 1 ? B_KING_CHAR : W_KING_CHAR));
 					break;
 				case PieceType::BISHOP2:
-					this->_pieces[row][column] = new Bishop(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
-					//this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
 					break;
 				case PieceType::KNIGTH2:
-					//this->_pieces[row][column] = new Knigth(Board::coordsToStr(row, column), (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
-					this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Knight(coord, (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
 					break;
 				case PieceType::ROOK2:
-					this->_pieces[row][column] = new Rook(Board::coordsToStr(row, column), (FIRST_ROW == row + 1 ? B_ROOK_CHAR : W_ROOK_CHAR));
-					//this->_pieces[row][column] = nullptr;
+					this->_pieces[row][column] = new Rook(coord, (FIRST_ROW == row + 1 ? B_ROOK_CHAR : W_ROOK_CHAR));
 					break;
 				}
 			}
@@ -130,12 +97,7 @@ void Board::createDefault() {
 	}
 }
 
-
 //Logic funcs
-
-const char* Board::what() const noexcept {
-	return "No error codes in the possition check are found";
-}
 
 bool Board::movePeice(const std::string& coordinate) noexcept {
 	bool isCode8 = false;
@@ -145,13 +107,12 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 	int srcColumn = points.get()->at(SRC_START_INDEX + 1);
 	int dstRow = points.get()->at(DST_START_INDEX);
 	int dstColumn = points.get()->at(DST_START_INDEX + 1);
-	Piece* p;
 
 	// check if the move is valid
 	try {
-		isPositionValid(coordinate);
+		isPositionValid(coordinate); //check again the basic errors - just in case
 	}
-	catch (const Board& e) { // error - move is valid
+	catch (const ChessExceptions::NoBoardErrors& e) { // error - move is valid
 
 		// the dst coord is white or black king
 		if (this->_pieces[dstRow][dstColumn] != nullptr &&
@@ -159,10 +120,12 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 			this->_pieces[dstRow][dstColumn]->getType() == W_KING_CHAR)) {
 			isCode8 = true;
 		}
+		//switch the coord in the new one
+		this->_pieces[srcRow][srcColumn]->setPosition(Board::coordsToStr(dstRow, dstColumn));
+		//do the switching
 		delete this->_pieces[dstRow][dstColumn]; //delete if needed
 		this->_pieces[dstRow][dstColumn] = this->_pieces[srcRow][srcColumn];
 		this->_pieces[srcRow][srcColumn] = nullptr;
-		p = this->_pieces[srcRow][srcColumn];
 	}
 
 	return isCode8;
@@ -171,6 +134,7 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 std::string Board::isPositionValid(const std::string& coordinate) {
 	std::string errCode = "";
 
+	//get the coords
 	intArr points = Board::strToCoords(coordinate);
 	int srcRow = points.get()->at(SRC_START_INDEX);
 	int srcColumn = points.get()->at(SRC_START_INDEX + 1);
@@ -202,12 +166,11 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 		errCode = CODE_3;
 	}
 	else { // not error board-related found (RAISE error)
-		throw Board(true);
+		throw ChessExceptions::NoBoardErrors();
 	}
 
 	return errCode;
 }
-
 
 Piece* Board::getPiece(const int row, const int column) const {
 	return this->_pieces[row][column];
@@ -252,9 +215,6 @@ intArr Board::strToCoords(const std::string& coords) {
 		points.get()->push_back(arr[DST_START_INDEX + 1]);
 		points.get()->push_back(arr[DST_START_INDEX]);
 	}
-
-
-
 
 	return points;
 }

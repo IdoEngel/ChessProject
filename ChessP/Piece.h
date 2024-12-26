@@ -21,6 +21,10 @@ public:
 	pure virtual function - returns the possible way to dst, points of the way in a vector.
 	*/
 	virtual std::vector<std::string> possibleMoves(const std::string& dstPosition) = 0;
+	//this func checks if the dst is diagnolly left to src by 1 square//
+	static bool isDiagnollyLeft(const std::string& dstPosition);
+	//this func checks if the dst is diagnolly right to src by 1 square//
+	static bool isDiagnollyRight(const std::string& dstPosition);
 private:
 	std::string _position;
 	char _type;
