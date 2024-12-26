@@ -12,7 +12,7 @@ void main()
 	std::string coords;
 
 	try {
-		 g = new Game(PLAYING_ON_GRAPHICS);
+		 g = new Game(PLAYING_ON_CONSOLE);
 	}
 	catch (const PipeException& e) {
 		std::cout << e.what();
