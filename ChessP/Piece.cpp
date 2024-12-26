@@ -20,8 +20,8 @@ char Piece::getType() const
 {
 	return this->_type;  //returning the type//
 }
-//this func checks if the dst is diagnolly right to src by 1 square//
-bool Piece::isDiagnollyRight(const std::string& dstPosition)
+//this func checks if the dst is diagnolly right to src by 1 square, for white player//
+bool Piece::isDiagnollyRightW(const std::string& dstPosition)
 {
 	if (dstPosition[START_POSITION_LETTER] + 1 == dstPosition[DST_POSITION_LETTER] &&
 		dstPosition[START_POSITION_NUMBER] + 1 == dstPosition[DST_POSITION_NUMBER])
@@ -33,11 +33,37 @@ bool Piece::isDiagnollyRight(const std::string& dstPosition)
 		return false;
 	}
 }
-//this func checks if the dst is diagnolly left to src by 1 square//
-bool Piece::isDiagnollyLeft(const std::string& dstPosition)
+//this func checks if the dst is diagnolly left to src by 1 square, for white player//
+bool Piece::isDiagnollyLeftW(const std::string& dstPosition)
 {
 	if (dstPosition[START_POSITION_LETTER] - 1 == dstPosition[DST_POSITION_LETTER] &&
 		dstPosition[START_POSITION_NUMBER] + 1 == dstPosition[DST_POSITION_NUMBER])
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+//this func checks if the dst is diagnolly left to src by 1 square, for black player//
+bool Piece::isDiagnollyLeftB(const std::string& dstPosition)
+{
+	if (dstPosition[START_POSITION_LETTER] - 1 == dstPosition[DST_POSITION_LETTER] &&
+		dstPosition[START_POSITION_NUMBER] - 1 == dstPosition[DST_POSITION_NUMBER])
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+//this func checks if the dst is diagnolly right to src by 1 square, for black player//
+bool Piece::isDiagnollyRightB(const std::string& dstPosition)
+{
+	if (dstPosition[START_POSITION_LETTER] + 1 == dstPosition[DST_POSITION_LETTER] &&
+		dstPosition[START_POSITION_NUMBER] - 1 == dstPosition[DST_POSITION_NUMBER])
 	{
 		return true;
 	}
