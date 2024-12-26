@@ -145,4 +145,9 @@ private:
 	input: Pipe - p (the pipe to connect)
 	output: is connected?*/
 	bool connectToPipe() noexcept;
+
+	/*Check if the pawn movement is valid
+	input: string - coords (the coords of the movement
+	output: is valid?*/
+	bool isPawnMoveValid(const std::string& coords) const noexcept;
 };

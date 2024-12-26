@@ -265,7 +265,17 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 		if (!isCurrTurnMatchColorSelected(this->_board->getPiece(row, column))) {
 			code = CODE_2;
 		}
-		// code 6 - the move of the piece is valid
+		// code 6 - the move of the piece is valid - part 1 (Pawn only)
+		else if ((this->_board->getPiece(row, column)->getType() == W_PAWN_CHAR || this->_board->getPiece(row, column)->getType() == B_PAWN_CHAR) && //check if pawn
+			//check basic movement 
+			((!isWayClear(this->_board->getPiece(row, column)->possibleMoves(coordinats)) ||
+			(lenOfPassibleMoves(coordinats) == 0)) ||
+			//check specific pawn movement
+			!isPawnMoveValid(coordinats)))
+		{
+			code = CODE_6;
+		}
+		// code 6 - the move of the piece is valid - part 2 (all other pieces)
 		else if (!isWayClear(this->_board->getPiece(row, column)->possibleMoves(coordinats)) ||
 			(lenOfPassibleMoves(coordinats) == 0)) { // invalid move (logicly)
 			code = CODE_6;
@@ -489,6 +499,50 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 	
 
 	return isClear;
+}
+
+bool Game::isPawnMoveValid(const std::string& coords) const noexcept {
+	bool isValid = true;
+
+	intArr intCoords;
+	int srcRow = 0;
+	int srcColumn = 0;
+	int dstRow = 0;
+	int dstColumn = 0;
+
+	intCoords = Board::strToCoords(coords);
+	srcRow = intCoords.get()->at(SRC_START_INDEX);
+	srcColumn = intCoords.get()->at(SRC_START_INDEX + 1);
+	dstRow = intCoords.get()->at(DST_START_INDEX);
+	dstColumn = intCoords.get()->at(DST_START_INDEX + 1);
+
+	// if special move has occurd
+	if (Piece::isDiagnollyLeft(coords) || Piece::isDiagnollyLeft(coords)) {
+		// if nullptr no piece wan eaten - false movement
+		if (this->_board->getPiece(dstRow, dstColumn) == nullptr) {
+			isValid = false;
+		}
+	}
+
+	// check each color seperatly
+	if (this->_board->getPiece(srcRow, srcColumn)->getType() == W_PAWN_CHAR) {
+		if (srcRow < dstRow) { //didt move backwords
+			isValid = false;
+		}
+		else if (SECOND_ROW_OF_SOLDIERS != srcRow+1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
+			isValid = false;
+		}
+	}
+	else if (this->_board->getPiece(srcRow, srcColumn)->getType() == B_PAWN_CHAR) {
+		if (srcRow > dstRow) { //didt move backwords
+			isValid = false;
+		}
+		else if (FIRST_ROW_OF_SOLDIERS != srcRow+1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
+			isValid = false;
+		}
+	}
+
+	return isValid;
 }
 
 unsigned int Game::howManyOnTheWay(const std::vector<std::string> way, const bool onlySelfPieces) const noexcept {
