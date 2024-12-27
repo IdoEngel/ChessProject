@@ -1,5 +1,4 @@
-﻿  Bishop.cpp
-  Board.cpp
+﻿  Board.cpp
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Board.cpp(115,47): warning C4101: 'e': unreferenced local variable
   Game.cpp
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(150,19): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
@@ -8,27 +7,15 @@ C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Gam
       __declspec(nothrow), throw(), noexcept(true), or noexcept was specified on the function
   
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(257,47): warning C4101: 'e': unreferenced local variable
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(423,38): warning C4101: 'e': unreferenced local variable
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(462,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(474,35): warning C4101: 'e': unreferenced local variable
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(496,34): warning C4101: 'e': unreferenced local variable
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(520,13): error C2039: 'isDiagnollyLeft': is not a member of 'Piece'
-      C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Piece.h(9,7):
-      see declaration of 'Piece'
-  
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(520,13): error C3861: 'isDiagnollyLeft': identifier not found
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(520,47): error C2039: 'isDiagnollyLeft': is not a member of 'Piece'
-      C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Piece.h(9,7):
-      see declaration of 'Piece'
-  
+C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(428,38): warning C4101: 'e': unreferenced local variable
+C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(547,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(562,35): warning C4101: 'e': unreferenced local variable
+C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(584,34): warning C4101: 'e': unreferenced local variable
+C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(664,34): warning C4101: 'e': unreferenced local variable
   King.cpp
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(520,47): error C3861: 'isDiagnollyLeft': identifier not found
-  Knight.cpp
-  Pawn.cpp
-  Piece.cpp
-  Queen.cpp
-  Rook.cpp
   main.cpp
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\main.cpp(9,6): warning C4326: return type of 'main' should be 'int' instead of 'void'
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\main.cpp(38,46): warning C4101: 'e': unreferenced local variable
+  Pawn.cpp
   Generating Code...
+  ChessP.vcxproj -> C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\x64\Debug\ChessP.exe
