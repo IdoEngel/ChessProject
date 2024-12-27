@@ -606,11 +606,14 @@ bool Game::isPawnMoveValid(const std::string& coords) const noexcept {
 
 	// if special move has occurd
 	if (Piece::isDiagnollyLeftW(coords) || Piece::isDiagnollyLeftB(coords) ||
-		Piece::isDiagnollyRightW(coords) || Piece::isDiagnollyRightB(coords)){
+		Piece::isDiagnollyRightW(coords) || Piece::isDiagnollyRightB(coords)) {
 		// if nullptr no piece wan eaten - false movement
 		if (this->_board->getPiece(dstRow, dstColumn) == nullptr) {
 			isValid = false;
 		}
+	}
+	else if (this->_board->getPiece(dstRow, dstColumn) != nullptr) { //not going diagnolly and the dest is not nullptr
+		isValid = false;
 	}
 
 	// check each color seperatly
