@@ -121,9 +121,15 @@ private:
 	bool isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept;
 
 	/*Is the curr player did a checkmate?
+	* calc after all the calls from Game::isCheckmateINNER()
 	input: input: string - kingCoordinate (the king to check), pieceCoord (the curr piece movement
 	output: is checkmate done? (bool)*/
 	bool isCheckmate(const std::string& kingCoordinate, const std::string& pieceCoord) const noexcept;
+
+	/*Is the curr player did a checkmate?
+	input: input: string - kingCoordinate (the king to check), pieceCoord (the curr piece movement
+	output: is checkmate done? (bool)*/
+	bool isCheckmateINNER(const std::string& kingCoordinate, const std::string& pieceCoord) const noexcept;
 
 	/*Checks all the coordinates in the vector are nullptr (no pieces on the way)
 	input: vector<string> - moves (the moves to check if nullptr), ignore (the piece to ignore - if exist [Default of none]), 

@@ -454,10 +454,50 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 
 bool Game::isCheckmate(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
 	//in the calling func - allready checked that at leat check has occured
+	bool overall = false;
+	intArr coords;
+	int row = 0;
+	int column = 0;
 
-	/*TODO:
-	1) add func that will return the allWays type by it self
-	2) what will happen when the king is moving? (recoorsive? new func?)*/
+	std::string king = "";
+	std::string piece = "";
+
+	/*Checking the all the coods the king cam go to*/
+
+	//first (normal coords) check
+	king = kingCoordinate;
+	piece = pieceCoords;
+	overall = isCheckmateINNER(king, piece);
+
+	//second check
+	coords = Board::strToCoords(king);
+	row = coords.get()->at(SRC_START_INDEX);
+	column = coords.get()->at(SRC_START_INDEX + 1);
+
+	if (Board::isCoordsValid(row + 1, column) && this->_board->getPiece(row + 1, column) == nullptr) {
+		overall = overall && isCheckmateINNER(Board::coordsToStr(row + 1, column), piece);
+	}
+
+	//third check
+	if (Board::isCoordsValid(row, column + 1) && this->_board->getPiece(row, column + 1) == nullptr) {
+		overall = overall && isCheckmateINNER(Board::coordsToStr(row, column + 1), piece);
+	}
+
+	//4th
+	if (Board::isCoordsValid(row, column - 1) && this->_board->getPiece(row, column - 1) == nullptr) {
+		overall = overall && isCheckmateINNER(Board::coordsToStr(row, column - 1), piece);
+	}
+
+	//5th
+	if (Board::isCoordsValid(row - 1, column) && this->_board->getPiece(row - 1, column) == nullptr) {
+		overall = overall && isCheckmateINNER(Board::coordsToStr(row - 1, column), piece);
+	}
+
+	return overall;
+}
+
+bool Game::isCheckmateINNER(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
+	//in the calling func - allready checked that at leat check has occured
 
 	bool isCheckmate = false;
 
@@ -494,8 +534,8 @@ bool Game::isCheckmate(const std::string& kingCoordinate, const std::string& pie
 				!((this->_board->getPiece(currRow, currColumn)->getType() == B_KING_CHAR) || (this->_board->getPiece(currRow, currColumn)->getType() == W_KING_CHAR))) { //not the king
 
 				currPiece = this->_board->getPiece(currRow, currColumn);
-				moves = currPiece->possibleMoves(coordsStr);
-				allWaysToKing.get()->push_back({ {moves}, currPiece->getType(), isWayClear(moves, pieceSrc, pieceDest)}); //collect all the ways
+				moves = currPiece->possibleMoves(coordsStr + kingCoordinate);
+				allWaysToKing.get()->push_back({ {moves}, currPiece->getType(), isWayClear(moves, pieceSrc, pieceDest) }); //collect all the ways
 
 			}
 
@@ -505,7 +545,7 @@ bool Game::isCheckmate(const std::string& kingCoordinate, const std::string& pie
 	if (numOfClearWays(allWaysToKing) > 1) { //more then one way - cannot stop in one move
 		isCheckmate = true;
 	}
-	
+
 	/*Only one clear way now - if not, does not matter what will happen here, the checkmate allready marked as true*/
 
 	//finding the clear vector
@@ -781,5 +821,4 @@ bool Game::canAnyOfPiecesOfOppoBlockTheWay(const std::vector<std::string>& wayTo
 
 	return canBlockTheWay;
 }
-
 

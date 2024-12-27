@@ -146,10 +146,7 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 		errCode = CODE_7;
 	}
 	// error code 5 - index out of range
-	else if (!(srcRow >= 0 && srcRow < ROW_COLUMN &&
-		srcColumn >= 0 && srcColumn < ROW_COLUMN &&
-		dstRow >= 0 && dstRow < ROW_COLUMN &&
-		dstColumn >= 0 && dstColumn < ROW_COLUMN)) { // less then passible
+	else if (!Board::isCoordsValid(srcRow, srcColumn, dstRow, dstColumn)) { // less then passible
 
 		errCode = CODE_5;
 	}
@@ -217,4 +214,11 @@ intArr Board::strToCoords(const std::string& coords) {
 	}
 
 	return points;
+}
+
+bool Board::isCoordsValid(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn) noexcept {
+	return ((srcRow >= 0 && srcRow < ROW_COLUMN &&
+		srcColumn >= 0 && srcColumn < ROW_COLUMN &&
+		dstRow >= 0 && dstRow < ROW_COLUMN &&
+		dstColumn >= 0 && dstColumn < ROW_COLUMN));
 }

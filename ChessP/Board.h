@@ -99,6 +99,8 @@ public:
 
 	static std::string coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn);
 
+	static bool isCoordsValid(const int srcRow, const int srcColumn, const int dstRow = 0, const int dstColumn = 0) noexcept;
+
 protected:
 
 	/*Create default board (all pieces in the loction of starting game)
