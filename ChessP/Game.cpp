@@ -3,7 +3,7 @@
 //Constractor/Destractor
 
 Game::Game(const bool onGraphics) :
-	_board(new Board()), _numOfMoves(0), _onGraphics(onGraphics){
+	_board(new Board()), _numOfMoves(0), _onGraphics(onGraphics) {
 
 	//create the players
 	this->_playes[0] = Player(WHITE);
@@ -29,7 +29,7 @@ Game::Game(const bool onGraphics) :
 
 }
 
-Game::~Game() 
+Game::~Game()
 {
 	this->_pipe->close();
 	delete this->_pipe;
@@ -42,7 +42,7 @@ char Game::getCurrPlayerColor() const noexcept {
 	return (this->_numOfMoves % 2 == 0 ? this->_playes[0].getColor() : this->_playes[1].getColor());
 }
 
-char Game::getOpponentPlayerColor() const noexcept 
+char Game::getOpponentPlayerColor() const noexcept
 {
 	return (this->_numOfMoves % 2 == 0 ? this->_playes[1].getColor() : this->_playes[0].getColor());
 }
@@ -214,7 +214,7 @@ std::string Game::playGraphics() {
 		throw ChessExceptions::GameExcption();
 	}
 
-	
+
 	this->_pipe->sendMessageToGraphics((char*)code.c_str());
 	return Game::prettyCodes(code);
 }
@@ -229,7 +229,7 @@ std::string Game::playConsole() noexcept {
 	code = this->codeForGraphics(coordinates);
 
 	if (code == CODE_0 || code == CODE_1) { // code "0" - no errors found
-		
+
 		if (this->_board->movePeice(coordinates)) { //returns if the king was eaten
 			code = CODE_8;
 		}
@@ -269,9 +269,9 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 		else if ((this->_board->getPiece(row, column)->getType() == W_PAWN_CHAR || this->_board->getPiece(row, column)->getType() == B_PAWN_CHAR) && //check if pawn
 			//check basic movement 
 			((!isWayClear(this->_board->getPiece(row, column)->possibleMoves(coordinats)) ||
-			(lenOfPassibleMoves(coordinats) == 0)) ||
-			//check specific pawn movement
-			!isPawnMoveValid(coordinats)))
+				(lenOfPassibleMoves(coordinats) == 0)) ||
+				//check specific pawn movement
+				!isPawnMoveValid(coordinats)))
 		{
 			code = CODE_6;
 		}
@@ -294,6 +294,11 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 		else if (isCheckedOnOpponent(getCoordinatesOfPiece(getKing(OPPO_KING)), coordinats)) {
 			code = CODE_1;
 		}
+		//code 8 - checkmate
+		else if (isCheckedOnOpponent(getCoordinatesOfPiece(getKing(OPPO_KING)), coordinats) && //check on opponent must be done
+			isCheckmate(getCoordinatesOfPiece(getKing(OPPO_KING)), coordinats)) {
+			code = CODE_8;
+		}
 	}
 
 	return code;
@@ -301,7 +306,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 
 bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
 	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS);
-	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - NOT_THE_LAST_TWO_CHARS); 
+	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - NOT_THE_LAST_TWO_CHARS);
 	std::string pieceSrc = pieceCoords.substr(0, TAKE_TWO_CHARS);
 
 	bool isCheck = false;
@@ -327,8 +332,8 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 				//make sure the piece is not the king
 				Board::coordsToStr(row, column) != kingDest &&
 				// make sure the piece is not the same color as the king
-				//((IS_BLACK_PIECE(this->_board->getPiece(rowPiece, columnPiece)->getType()) && IS_BLACK_PIECE(this->getCurrPlayerColor())) ||
 				isCurrTurnMatchColorSelected(this->_board->getPiece(rowPiece, columnPiece))) {
+
 				piece = this->_board->getPiece(rowPiece, columnPiece);
 
 				fullCoord = Board::coordsToStr(row, column) + kingDest;
@@ -430,7 +435,7 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 					!isKingPlaying) {
 
 					srcCurrPiece = pieceCoord.substr(0, TAKE_TWO_CHARS);
-					
+
 					for (i = 0; i < allMoves.size(); i++) {
 						if (srcCurrPiece == allMoves.at(i)) { // is src is equ - block the way to the king - cannot move
 							isCheck = true;
@@ -447,7 +452,87 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 	return isCheck;
 }
 
-bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
+bool Game::isCheckmate(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
+	//in the calling func - allready checked that at leat check has occured
+	bool isNotCheckmate = false;
+
+	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS);
+	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - NOT_THE_LAST_TWO_CHARS);
+	std::string pieceSrc = pieceCoords.substr(0, TAKE_TWO_CHARS);
+
+
+	intArr coords = Board::strToCoords(kingCoordinate);
+	int kingRow = coords.get()->at(SRC_START_INDEX);
+	int kingColumn = coords.get()->at(SRC_START_INDEX + 1);
+
+	coords = Board::strToCoords(pieceCoords);
+	int srcRow = coords.get()->at(SRC_START_INDEX);
+	int srcColumn = coords.get()->at(SRC_START_INDEX + 1);
+	int dstRow = coords.get()->at(DST_START_INDEX);
+	int dstColumn = coords.get()->at(DST_START_INDEX + 1);
+
+	int currRow = 0;
+	int currColumn = 0;
+
+	Piece* movingPiece = this->_board->getPiece(srcRow, srcColumn);
+	Piece* king;
+	std::vector<std::string> currMoves;
+	std::vector<std::vector<std::string>> allMoves;
+
+	int row = 0;
+	int column = 0;
+	for (row = 0; row < ROW_COLUMN; row++) {
+		for (column = 0; column < ROW_COLUMN; column++) {
+
+			//get real coords
+			coords = Board::strToCoords(Board::coordsToStr(row, column));
+			currRow = coords.get()->at(SRC_START_INDEX);
+			currColumn = coords.get()->at(SRC_START_INDEX + 1);
+
+			//curr piece is of opponent
+			if (this->_board->getPiece(currRow, currColumn) != nullptr && //piece exist
+				!isCurrTurnMatchColorSelected(this->_board->getPiece(currRow, currColumn)) && //piece of opponent
+				!((this->_board->getPiece(currRow, currColumn)->getType() == B_KING_CHAR) || (this->_board->getPiece(currRow, currColumn)->getType() == W_KING_CHAR))) { //not the king
+
+				//check if can eat the threating piece
+				currMoves = this->_board->getPiece(currRow, currColumn)->possibleMoves(Board::coordsToStr(currRow, currColumn) + kingDest);
+				if (isWayClear(currMoves, /*ignore*/pieceSrc)) { // if the way clear and, ignore the curr position of the piece that will move
+					isNotCheckmate = false;
+				}
+				//clear the vector
+				currMoves.clear();
+				currMoves.resize(0);
+
+				// check if can block the way to the king
+
+
+			}
+			//curr piece is of curr player
+			else if (this->_board->getPiece(currRow, currColumn) != nullptr && //piece exist
+				isCurrTurnMatchColorSelected(this->_board->getPiece(currRow, currColumn)) && //piece of curr
+				!((this->_board->getPiece(currRow, currColumn)->getType() == B_KING_CHAR) || (this->_board->getPiece(currRow, currColumn)->getType() == W_KING_CHAR))) { //not the king
+
+			}
+
+			//clear the vector
+			currMoves.clear();
+			currMoves.resize(0);
+
+		}
+	}
+
+	//check if the king can move (if cannot - chackmate
+	king = getKing(OPPO_KING);
+	coords = Board::strToCoords(getCoordinatesOfPiece(king));
+	currRow = coords.get()->at(SRC_START_INDEX);
+	currColumn = coords.get()->at(SRC_START_INDEX + 1);
+
+	//check if the king is bloacked
+
+	return !isNotCheckmate;
+}
+
+bool Game::isWayClear(std::vector<std::string> moves, const std::string& ignore) const noexcept {
 	bool isClear = true;
 
 	int dstRow = 0;
@@ -457,11 +542,14 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 
 	/*Not including the last index because the last contains the coord that might be
 	with piece that the curr player can eat - check later*/
-	
+
 	int i = 0;
 	int size = moves.size();
 	for (i = 0; i < moves.size() - 1; i++) { // not include the ladt index
+
 		try {
+			if (moves.at(i) == ignore) { continue; } //if the same as ignore - next iteration
+
 			points = Board::strToCoords(moves.at(i));
 
 			dstRow = points.get()->at(SRC_START_INDEX);
@@ -480,7 +568,7 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 	//check last index
 	//get the last coord and the piece inside it
 	try {
-	
+
 		points = Board::strToCoords(moves.at(moves.size() - 1));
 
 		dstRow = points.get()->at(SRC_START_INDEX);
@@ -496,7 +584,7 @@ bool Game::isWayClear(std::vector<std::string> moves) const noexcept {
 	catch (const std::out_of_range& e) {
 		//none - catch if the vector is empty
 	}
-	
+
 
 	return isClear;
 }
@@ -517,7 +605,8 @@ bool Game::isPawnMoveValid(const std::string& coords) const noexcept {
 	dstColumn = intCoords.get()->at(DST_START_INDEX + 1);
 
 	// if special move has occurd
-	if (Piece::isDiagnollyLeft(coords) || Piece::isDiagnollyLeft(coords)) {
+	if (Piece::isDiagnollyLeftW(coords) || Piece::isDiagnollyLeftB(coords) ||
+		Piece::isDiagnollyRightW(coords) || Piece::isDiagnollyRightB(coords)){
 		// if nullptr no piece wan eaten - false movement
 		if (this->_board->getPiece(dstRow, dstColumn) == nullptr) {
 			isValid = false;
@@ -529,7 +618,7 @@ bool Game::isPawnMoveValid(const std::string& coords) const noexcept {
 		if (srcRow < dstRow) { //didt move backwords
 			isValid = false;
 		}
-		else if (SECOND_ROW_OF_SOLDIERS != srcRow+1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
+		else if (SECOND_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
 			isValid = false;
 		}
 	}
@@ -537,7 +626,7 @@ bool Game::isPawnMoveValid(const std::string& coords) const noexcept {
 		if (srcRow > dstRow) { //didt move backwords
 			isValid = false;
 		}
-		else if (FIRST_ROW_OF_SOLDIERS != srcRow+1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
+		else if (FIRST_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
 			isValid = false;
 		}
 	}
@@ -552,7 +641,7 @@ unsigned int Game::howManyOnTheWay(const std::vector<std::string> way, const boo
 	unsigned int count = 0;
 
 	int i = 0;
-	
+
 	//skip if not enogh len to the 'way' var
 	try {
 		for (i = 0; i < way.size(); i++) {
@@ -588,7 +677,7 @@ std::string Game::prettyCodes(const std::string& code) noexcept {
 		ret = "valid: next turn..";
 		break;
 	case codes::CODE1:   //valid move, player made check on opponent//
-		ret =  "Check on opponent!";
+		ret = "Check on opponent!";
 		break;
 	case codes::CODE2:   //error code 2 - src square doesnt have a piece for curr player//
 		ret = "Error! no curr player piece in src square!";
@@ -603,7 +692,7 @@ std::string Game::prettyCodes(const std::string& code) noexcept {
 		ret = "Error! invalid indexes for squares!";
 		break;
 	case codes::CODE6:   //error code 6 - invalid movement of the chosen piece//
-		ret =  "Error! Invalid movement of curr piece!";
+		ret = "Error! Invalid movement of curr piece!";
 		break;
 	case codes::CODE7:  //error code 7 - same src and dst squares//
 		ret = "Error! src square and dst square are equal!";
@@ -620,7 +709,7 @@ bool Game::connectToPipe() noexcept {
 	unsigned int counter = 0;
 
 	srand(time_t(NULL));
-	
+
 	//try 30 times - stop if connected
 	while (!isConnect && counter < TOO_MANY_TRYEIS) {
 		counter++;

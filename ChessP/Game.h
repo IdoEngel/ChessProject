@@ -42,7 +42,7 @@ enum class codes {
 #define ONLY_SELF_ON_THE_WAY true
 #define NOT_ONLY_SELF_ON_THE_WAY false
 
-class Game{
+class Game {
 public:
 
 	/*Constractor - creates an instance of the class with the board peices in the defualt position
@@ -111,14 +111,19 @@ private:
 	bool isSelfChecked(const std::string& kingCoordinate, const std::string& pieceCoord, const bool isKingPlaying = false) const noexcept;
 
 	/*is the king of opponent thretened?
-	input: string - kingCoordinate (the king to check)
+	input: string - kingCoordinate (the king to check), pieceCoords (the piece want to move in the turn)
 	output: is the king of opponent thretened? (bool)*/
 	bool isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept;
 
+	/*Is the curr player did a checkmate?
+	input: input: string - kingCoordinate (the king to check), pieceCoord (the curr piece movement
+	output: is checkmate done? (bool)*/
+	bool isCheckmate(const std::string& kingCoordinate, const std::string& pieceCoord) const noexcept;
+
 	/*Checks all the coordinates in the vector are nullptr (no pieces on the way)
-	input: vector<string> - moves (the moves to check if nullptr)
+	input: vector<string> - moves (the moves to check if nullptr), ignore (the piece to ignore - if exist [Default of none])
 	output: is all the moves are null (the way is clear)*/
-	bool isWayClear(const std::vector<std::string> moves) const noexcept;
+	bool isWayClear(const std::vector<std::string> moves, const std::string& ignore = "") const noexcept;
 
 	/*Get the king to and return it
 	input: bool - isMyKing (get the current king?) - if false - return opponant king
@@ -150,4 +155,5 @@ private:
 	input: string - coords (the coords of the movement
 	output: is valid?*/
 	bool isPawnMoveValid(const std::string& coords) const noexcept;
+
 };

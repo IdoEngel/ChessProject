@@ -50,14 +50,14 @@ void Board::createDefault() {
 		for (column = 0; column < ROW_COLUMN; column++) {
 			numVals = Board::strToCoords(Board::coordsToStr(row, column)); //calling to the strToCoords func to get the right coords
 
-			coord = Board::coordsToStr(numVals.get()->at(SRC_START_INDEX), numVals.get()->at(SRC_START_INDEX+1)); //get the right index in str format
+			coord = Board::coordsToStr(numVals.get()->at(SRC_START_INDEX), numVals.get()->at(SRC_START_INDEX + 1)); //get the right index in str format
 
 			// if the place of pown
 			if (FIRST_ROW_OF_SOLDIERS == row + 1) { // black
 				this->_pieces[row][column] = new Pawn(coord, B_PAWN_CHAR);
 			}
 			else if (SECOND_ROW_OF_SOLDIERS == row + 1) { //white
-				this->_pieces[row][column] = new Pawn(coord, B_PAWN_CHAR);
+				this->_pieces[row][column] = new Pawn(coord, W_PAWN_CHAR);
 			}
 			else if (FIRST_ROW == row + 1 || LAST_ROW == row + 1) { // all other pieces, black or white
 
@@ -68,22 +68,22 @@ void Board::createDefault() {
 					this->_pieces[row][column] = new Rook(coord, (FIRST_ROW == row + 1 ? B_ROOK_CHAR : W_ROOK_CHAR));
 					break;
 				case PieceType::KNIGTH:
-					this->_pieces[row][column] = new Knight(coord, (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
+					this->_pieces[row][column] = new Knight(coord, (FIRST_ROW == row + 1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
 					break;
 				case PieceType::BISHOP:
-					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
+					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row + 1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
 					break;
 				case PieceType::QUEEN:
-					this->_pieces[row][column] = new Queen(coord, (FIRST_ROW == row+1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
+					this->_pieces[row][column] = new Queen(coord, (FIRST_ROW == row + 1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
 					break;
 				case PieceType::KING:
 					this->_pieces[row][column] = new King(coord, (FIRST_ROW == row + 1 ? B_KING_CHAR : W_KING_CHAR));
 					break;
 				case PieceType::BISHOP2:
-					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row+1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
+					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row + 1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
 					break;
 				case PieceType::KNIGTH2:
-					this->_pieces[row][column] = new Knight(coord, (FIRST_ROW == row+1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
+					this->_pieces[row][column] = new Knight(coord, (FIRST_ROW == row + 1 ? B_KNIGHT_CHAR : W_KNIGHT_CHAR));
 					break;
 				case PieceType::ROOK2:
 					this->_pieces[row][column] = new Rook(coord, (FIRST_ROW == row + 1 ? B_ROOK_CHAR : W_ROOK_CHAR));
@@ -117,7 +117,7 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 		// the dst coord is white or black king
 		if (this->_pieces[dstRow][dstColumn] != nullptr &&
 			(this->_pieces[dstRow][dstColumn]->getType() == B_KING_CHAR ||
-			this->_pieces[dstRow][dstColumn]->getType() == W_KING_CHAR)) {
+				this->_pieces[dstRow][dstColumn]->getType() == W_KING_CHAR)) {
 			isCode8 = true;
 		}
 		//switch the coord in the new one
@@ -218,4 +218,3 @@ intArr Board::strToCoords(const std::string& coords) {
 
 	return points;
 }
-
