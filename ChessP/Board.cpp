@@ -142,7 +142,7 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 	int dstColumn = points.get()->at(DST_START_INDEX + 1);
 
 	// check options for making the move invalid
-	if (srcRow == srcColumn && dstRow == dstColumn) { // error code 7 - same coordinate
+	if (srcRow == dstRow && srcColumn == dstColumn) { // error code 7 - same coordinate
 		errCode = CODE_7;
 	}
 	// error code 5 - index out of range
