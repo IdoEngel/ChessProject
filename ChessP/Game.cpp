@@ -339,7 +339,7 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 				fullCoord = Board::coordsToStr(row, column) + kingDest;
 				allMoves = this->_board->getPiece(rowPiece, columnPiece)->possibleMoves(fullCoord);
 
-				if (allMoves.size() != 0 && isWayClear(allMoves)) {
+				if (allMoves.size() != 0 && isWayClear(allMoves, pieceSrc, pieceDest)) {
 					isCheck = true;
 				}
 
@@ -358,7 +358,7 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 	piece = this->_board->getPiece(rowPiece, columnPiece);
 	allMoves = piece->possibleMoves(pieceDest + kingDest);
 
-	if (allMoves.size() != 0 && isWayClear(allMoves)) {
+	if (allMoves.size() != 0 && isWayClear(allMoves, pieceSrc, pieceDest)) {
 		isCheck = true;
 	}
 
@@ -454,34 +454,31 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 
 bool Game::isCheckmate(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
 	//in the calling func - allready checked that at leat check has occured
-	bool isNotCheckmate = false;
 
-	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS);
+	/*TODO:
+	1) add func that will return the allWays type by it self
+	2) what will happen when the king is moving? (recoorsive? new func?)*/
+
+	bool isCheckmate = false;
+
 	std::string pieceDest = pieceCoords.substr(pieceCoords.size() - NOT_THE_LAST_TWO_CHARS);
 	std::string pieceSrc = pieceCoords.substr(0, TAKE_TWO_CHARS);
 
-
-	intArr coords = Board::strToCoords(kingCoordinate);
-	int kingRow = coords.get()->at(SRC_START_INDEX);
-	int kingColumn = coords.get()->at(SRC_START_INDEX + 1);
-
-	coords = Board::strToCoords(pieceCoords);
-	int srcRow = coords.get()->at(SRC_START_INDEX);
-	int srcColumn = coords.get()->at(SRC_START_INDEX + 1);
-	int dstRow = coords.get()->at(DST_START_INDEX);
-	int dstColumn = coords.get()->at(DST_START_INDEX + 1);
+	intArr coords;
+	std::string coordsStr = "";
 
 	int currRow = 0;
 	int currColumn = 0;
 
-	Piece* movingPiece = this->_board->getPiece(srcRow, srcColumn);
-	Piece* king;
-	std::vector<std::string> currMoves;
-	std::vector<std::vector<std::string>> allMoves;
+	Piece* currPiece = nullptr;
+	std::vector<std::string> moves;
+	std::vector<std::string>* theClearVector = nullptr;
+	allWays allWaysToKing = std::make_unique<std::vector<std::tuple<std::vector<std::string>, char, bool> >>();
 
 	int row = 0;
 	int column = 0;
 	for (row = 0; row < ROW_COLUMN; row++) {
+
 		for (column = 0; column < ROW_COLUMN; column++) {
 
 			//get real coords
@@ -489,50 +486,46 @@ bool Game::isCheckmate(const std::string& kingCoordinate, const std::string& pie
 			currRow = coords.get()->at(SRC_START_INDEX);
 			currColumn = coords.get()->at(SRC_START_INDEX + 1);
 
-			//curr piece is of opponent
+			coordsStr = Board::coordsToStr(row, column);
+
+			//curr piece is of the pieces that can win
 			if (this->_board->getPiece(currRow, currColumn) != nullptr && //piece exist
-				!isCurrTurnMatchColorSelected(this->_board->getPiece(currRow, currColumn)) && //piece of opponent
+				isCurrTurnMatchColorSelected(this->_board->getPiece(currRow, currColumn)) && //piece of the one that can win
 				!((this->_board->getPiece(currRow, currColumn)->getType() == B_KING_CHAR) || (this->_board->getPiece(currRow, currColumn)->getType() == W_KING_CHAR))) { //not the king
 
-				//check if can eat the threating piece
-				currMoves = this->_board->getPiece(currRow, currColumn)->possibleMoves(Board::coordsToStr(currRow, currColumn) + kingDest);
-				if (isWayClear(currMoves, /*ignore*/pieceSrc)) { // if the way clear and, ignore the curr position of the piece that will move
-					isNotCheckmate = false;
-				}
-				//clear the vector
-				currMoves.clear();
-				currMoves.resize(0);
-
-				// check if can block the way to the king
-
+				currPiece = this->_board->getPiece(currRow, currColumn);
+				moves = currPiece->possibleMoves(coordsStr);
+				allWaysToKing.get()->push_back({ {moves}, currPiece->getType(), isWayClear(moves, pieceSrc, pieceDest)}); //collect all the ways
 
 			}
-			//curr piece is of curr player
-			else if (this->_board->getPiece(currRow, currColumn) != nullptr && //piece exist
-				isCurrTurnMatchColorSelected(this->_board->getPiece(currRow, currColumn)) && //piece of curr
-				!((this->_board->getPiece(currRow, currColumn)->getType() == B_KING_CHAR) || (this->_board->getPiece(currRow, currColumn)->getType() == W_KING_CHAR))) { //not the king
-
-			}
-
-			//clear the vector
-			currMoves.clear();
-			currMoves.resize(0);
 
 		}
 	}
 
-	//check if the king can move (if cannot - chackmate
-	king = getKing(OPPO_KING);
-	coords = Board::strToCoords(getCoordinatesOfPiece(king));
-	currRow = coords.get()->at(SRC_START_INDEX);
-	currColumn = coords.get()->at(SRC_START_INDEX + 1);
+	if (numOfClearWays(allWaysToKing) > 1) { //more then one way - cannot stop in one move
+		isCheckmate = true;
+	}
+	
+	/*Only one clear way now - if not, does not matter what will happen here, the checkmate allready marked as true*/
 
-	//check if the king is bloacked
+	//finding the clear vector
+	int i = 0;
+	for (i = 0; i < allWaysToKing.get()->size(); i++) {
 
-	return !isNotCheckmate;
+		if (std::get<IS_CLEAR>(allWaysToKing.get()->at(i))) { //if way clear - this is the one that care about
+			theClearVector = &std::get<VECTOR>(allWaysToKing.get()->at(i));
+		}
+	}
+
+	/*Can the opponent (the one that can lose) block the way?*/
+	if (theClearVector != nullptr && !canAnyOfPiecesOfOppoBlockTheWay(*theClearVector, pieceSrc, pieceDest)) { //if cannot - checkmate
+		isCheckmate = true;
+	}
+
+	return isCheckmate;
 }
 
-bool Game::isWayClear(std::vector<std::string> moves, const std::string& ignore) const noexcept {
+bool Game::isWayClear(const std::vector<std::string>& moves, const std::string& ignore, const std::string& takeIntoCount) const noexcept {
 	bool isClear = true;
 
 	int dstRow = 0;
@@ -549,6 +542,10 @@ bool Game::isWayClear(std::vector<std::string> moves, const std::string& ignore)
 
 		try {
 			if (moves.at(i) == ignore) { continue; } //if the same as ignore - next iteration
+
+			if (moves.at(i) == takeIntoCount) { // check if the way in going through coords that will not be empty
+				isClear = false;
+			}
 
 			points = Board::strToCoords(moves.at(i));
 
@@ -637,7 +634,7 @@ bool Game::isPawnMoveValid(const std::string& coords) const noexcept {
 	return isValid;
 }
 
-unsigned int Game::howManyOnTheWay(const std::vector<std::string> way, const bool onlySelfPieces) const noexcept {
+unsigned int Game::howManyOnTheWay(const std::vector<std::string>& way, const bool onlySelfPieces) const noexcept {
 	intArr coord;
 	int row = 0;
 	int column = 0;
@@ -722,3 +719,67 @@ bool Game::connectToPipe() noexcept {
 
 	return isConnect;
 }
+
+unsigned int Game::numOfClearWays(const allWays& ways) const noexcept {
+	unsigned int numOfWays = 0;
+
+	int i = 0;
+	for (i = 0; i < ways.get()->size(); i++) {
+
+		if (std::get<IS_CLEAR>(ways.get()->at(i))) {
+			numOfWays++;
+		}
+	}
+
+	return numOfWays;
+}
+
+bool Game::canAnyOfPiecesOfOppoBlockTheWay(const std::vector<std::string>& wayToBlock, const std::string& ignore, const std::string& takeIntoCount) const noexcept{
+	bool canBlockTheWay = false;
+
+	std::vector<std::string> moves; // ways of each to the target
+	intArr coords;
+	std::string coordsStr = "";
+
+	int currRow = 0;
+	int currColumn = 0;
+
+	int row = 0;
+	int column = 0;
+	for (row = 0; row < ROW_COLUMN; row++) {
+		for (column = 0; column < ROW_COLUMN; column++) {
+
+			//get real coords
+			coords = Board::strToCoords(Board::coordsToStr(row, column));
+			currRow = coords.get()->at(SRC_START_INDEX);
+			currColumn = coords.get()->at(SRC_START_INDEX + 1);
+
+			coordsStr = Board::coordsToStr(row, column);
+
+			if (this->_board->getPiece(currRow, currColumn) != nullptr && //piece exist
+				!isCurrTurnMatchColorSelected(this->_board->getPiece(currRow, currColumn)) && //piece of opponent (the one that can lose)
+				!((this->_board->getPiece(currRow, currColumn)->getType() == B_KING_CHAR) || (this->_board->getPiece(currRow, currColumn)->getType() == W_KING_CHAR))) { //not the king
+
+				//check for every valid piece (piece of opponent) if can move to any of the points that can block the way
+				int i = 0;
+				for (i = 0; i < wayToBlock.size(); i++) {
+					moves = this->_board->getPiece(currRow, currColumn)->possibleMoves(coordsStr + wayToBlock.at(i)); //get the moves from curr to move on the way
+
+					// if way exists and clear - can block
+					if (moves.size() != 0 && isWayClear(moves, ignore, takeIntoCount)) {
+						canBlockTheWay = true;
+					}
+
+					//clear the vector
+					moves.clear();
+					moves.resize(0);
+				}
+			}
+
+		}
+	}
+
+	return canBlockTheWay;
+}
+
+

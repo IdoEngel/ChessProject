@@ -33,6 +33,11 @@ enum class codes {
 	CODE0, CODE1, CODE2, CODE3, CODE4, CODE5, CODE6, CODE7, CODE8
 };
 
+using allWays = std::unique_ptr<std::vector<std::tuple<std::vector<std::string>, char, bool> >>;
+#define VECTOR 0
+#define TYPE_OF_PIECE 1
+#define IS_CLEAR 2
+
 #define PLAYING_ON_CONSOLE false
 #define PLAYING_ON_GRAPHICS true
 #define MY_KING true
@@ -121,9 +126,10 @@ private:
 	bool isCheckmate(const std::string& kingCoordinate, const std::string& pieceCoord) const noexcept;
 
 	/*Checks all the coordinates in the vector are nullptr (no pieces on the way)
-	input: vector<string> - moves (the moves to check if nullptr), ignore (the piece to ignore - if exist [Default of none])
+	input: vector<string> - moves (the moves to check if nullptr), ignore (the piece to ignore - if exist [Default of none]), 
+		takeIntoCount (if way contains this - way not clear [Default of none])
 	output: is all the moves are null (the way is clear)*/
-	bool isWayClear(const std::vector<std::string> moves, const std::string& ignore = "") const noexcept;
+	bool isWayClear(const std::vector<std::string>& moves, const std::string& ignore = "", const std::string& takeIntoCount = "") const noexcept;
 
 	/*Get the king to and return it
 	input: bool - isMyKing (get the current king?) - if false - return opponant king
@@ -144,7 +150,7 @@ private:
 	input: vector<string> - way (the way to check and count)
 		bool - onlySelfPieces (true - count only pieces of curr player, false - count all)
 	output: the number of pieces on the way*/
-	unsigned int howManyOnTheWay(const std::vector<std::string> way, const bool onlySelfPieces) const noexcept;
+	unsigned int howManyOnTheWay(const std::vector<std::string>& way, const bool onlySelfPieces) const noexcept;
 
 	/*Connect to pipe
 	input: Pipe - p (the pipe to connect)
@@ -155,5 +161,16 @@ private:
 	input: string - coords (the coords of the movement
 	output: is valid?*/
 	bool isPawnMoveValid(const std::string& coords) const noexcept;
+
+	/*Count the number of clear way there are in the allWays var
+	input: allWays - ways (the ways to count
+	output: num of clear ways*/
+	unsigned int numOfClearWays(const allWays& ways) const noexcept;
+
+	/*Can any of pieces of opoonent block the way that given? (the opponent tries to block the way)
+	input: vector<string> - wayToBlock (the way to try to block)
+		string - ignore (ignore when checking), takeIntoCount (take into count when checking)
+	output: can block the way?*/
+	bool canAnyOfPiecesOfOppoBlockTheWay(const std::vector<std::string>& wayToBlock, const std::string& ignore = "", const std::string& takeIntoCount = "") const noexcept;
 
 };
