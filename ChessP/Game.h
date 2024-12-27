@@ -46,6 +46,8 @@ using allWays = std::unique_ptr<std::vector<std::tuple<std::vector<std::string>,
 #define KING_NOT_MOVING false
 #define ONLY_SELF_ON_THE_WAY true
 #define NOT_ONLY_SELF_ON_THE_WAY false
+#define FOR_SELF_CHECK true
+#define FOR_OPPO_CHECK false
 
 class Game {
 public:
@@ -68,7 +70,7 @@ public:
 	/*General play one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
 	output: none*/
-	std::string play() noexcept;
+	std::string play();
 
 	/*prints the board by lines to the console
 	OPERATOR << FUNCTION*/
@@ -134,8 +136,9 @@ private:
 	/*Checks all the coordinates in the vector are nullptr (no pieces on the way)
 	input: vector<string> - moves (the moves to check if nullptr), ignore (the piece to ignore - if exist [Default of none]), 
 		takeIntoCount (if way contains this - way not clear [Default of none])
+		bool - forSelfCheck (if for self check - the last index should be the opoosite)
 	output: is all the moves are null (the way is clear)*/
-	bool isWayClear(const std::vector<std::string>& moves, const std::string& ignore = "", const std::string& takeIntoCount = "") const noexcept;
+	bool isWayClear(const std::vector<std::string>& moves, const bool forSelfCheck, const std::string& ignore = "", const std::string& takeIntoCount = "") const noexcept;
 
 	/*Get the king to and return it
 	input: bool - isMyKing (get the current king?) - if false - return opponant king

@@ -18,7 +18,7 @@ typedef std::unique_ptr<std::vector<int>> intArr;
 
 enum class PieceType
 {
-	ROOK, KNIGTH, BISHOP, QUEEN, KING, BISHOP2, KNIGTH2, ROOK2
+	ROOK, KNIGTH, BISHOP, KING, QUEEN, BISHOP2, KNIGTH2, ROOK2
 };
 
 #define NUM_OF_PIECES 64

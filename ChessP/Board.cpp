@@ -73,11 +73,11 @@ void Board::createDefault() {
 				case PieceType::BISHOP:
 					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row + 1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
 					break;
-				case PieceType::QUEEN:
-					this->_pieces[row][column] = new Queen(coord, (FIRST_ROW == row + 1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
-					break;
 				case PieceType::KING:
 					this->_pieces[row][column] = new King(coord, (FIRST_ROW == row + 1 ? B_KING_CHAR : W_KING_CHAR));
+					break;
+				case PieceType::QUEEN:
+					this->_pieces[row][column] = new Queen(coord, (FIRST_ROW == row + 1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
 					break;
 				case PieceType::BISHOP2:
 					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row + 1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));

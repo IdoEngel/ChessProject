@@ -181,7 +181,7 @@ std::ostream& operator<<(std::ostream& os, const Game& g) {
 	return os;
 }
 
-std::string Game::play() noexcept {
+std::string Game::play() {
 	std::string pCode = "";
 
 	//Choose the right func to run
@@ -238,7 +238,7 @@ std::string Game::playConsole() noexcept {
 
 	// if code 8 - game over (raise an error typed game)
 	if (code == CODE_8) {
-		throw Game(true);
+		throw ChessExceptions::GameExcption();
 	}
 
 	return Game::prettyCodes(code);
@@ -268,7 +268,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 		// code 6 - the move of the piece is valid - part 1 (Pawn only)
 		else if ((this->_board->getPiece(row, column)->getType() == W_PAWN_CHAR || this->_board->getPiece(row, column)->getType() == B_PAWN_CHAR) && //check if pawn
 			//check basic movement 
-			((!isWayClear(this->_board->getPiece(row, column)->possibleMoves(coordinats)) ||
+			((!isWayClear(this->_board->getPiece(row, column)->possibleMoves(coordinats), FOR_OPPO_CHECK) ||
 				(lenOfPassibleMoves(coordinats) == 0)) ||
 				//check specific pawn movement
 				!isPawnMoveValid(coordinats)))
@@ -276,7 +276,7 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 			code = CODE_6;
 		}
 		// code 6 - the move of the piece is valid - part 2 (all other pieces)
-		else if (!isWayClear(this->_board->getPiece(row, column)->possibleMoves(coordinats)) ||
+		else if (!isWayClear(this->_board->getPiece(row, column)->possibleMoves(coordinats), FOR_OPPO_CHECK) ||
 			(lenOfPassibleMoves(coordinats) == 0)) { // invalid move (logicly)
 			code = CODE_6;
 		}
@@ -339,7 +339,7 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 				fullCoord = Board::coordsToStr(row, column) + kingDest;
 				allMoves = this->_board->getPiece(rowPiece, columnPiece)->possibleMoves(fullCoord);
 
-				if (allMoves.size() != 0 && isWayClear(allMoves, pieceSrc, pieceDest)) {
+				if (allMoves.size() != 0 && isWayClear(allMoves, FOR_OPPO_CHECK, pieceSrc, pieceDest)) {
 					isCheck = true;
 				}
 
@@ -356,9 +356,16 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 	columnPiece = coords.get()->at(SRC_START_INDEX + 1);
 
 	piece = this->_board->getPiece(rowPiece, columnPiece);
-	allMoves = piece->possibleMoves(pieceDest + kingDest);
+	//check if pawn
+	if (piece->getType() == W_PAWN_CHAR || piece->getType() == B_PAWN_CHAR && isPawnMoveValid(pieceSrc + kingDest)) {
+		allMoves = piece->possibleMoves(pieceDest + kingDest);
+	}
+	else if (piece->getType() != W_PAWN_CHAR && piece->getType() != B_PAWN_CHAR) {
+		allMoves = piece->possibleMoves(pieceDest + kingDest);
+	}
+	
 
-	if (allMoves.size() != 0 && isWayClear(allMoves, pieceSrc, pieceDest)) {
+	if (allMoves.size() != 0 && isWayClear(allMoves, FOR_OPPO_CHECK, pieceSrc, pieceDest)) {
 		isCheck = true;
 	}
 
@@ -371,6 +378,9 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 
 bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& pieceCoord, const bool isKingPlaying) const noexcept {
 	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS); //get the dest of the king
+	std::string pieceSrc = pieceCoord.substr(0, TAKE_TWO_CHARS);;
+	std::string pieceDest = pieceCoord.substr(pieceCoord.size() - NOT_THE_LAST_TWO_CHARS);
+
 	bool isCheck = false;
 	std::string fullCoord = "";
 	std::string lastMove = "";
@@ -403,7 +413,20 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 				fullCoord = Board::coordsToStr(row, column) + kingDest;
 				allMoves = this->_board->getPiece(rowPiece, columnPiece)->possibleMoves(fullCoord);
 
-				if (allMoves.size() != 0 && isWayClear(allMoves)) {
+				if (//make sure this is not pawn
+					(this->_board->getPiece(rowPiece, columnPiece)->getType() != W_PAWN_CHAR && 
+					this->_board->getPiece(rowPiece, columnPiece)->getType() != B_PAWN_CHAR) &&
+					//check move
+					allMoves.size() != 0 && isWayClear(allMoves, FOR_SELF_CHECK, pieceSrc, pieceDest)) {
+					isCheck = true;
+				}
+				else if ((this->_board->getPiece(rowPiece, columnPiece)->getType() == W_PAWN_CHAR ||
+					this->_board->getPiece(rowPiece, columnPiece)->getType() == B_PAWN_CHAR) &&
+					//check move
+					allMoves.size() != 0 && isWayClear(allMoves, FOR_OPPO_CHECK, pieceSrc, pieceDest) &&
+					//pawn spesicif move
+					isPawnMoveValid(fullCoord)) {
+
 					isCheck = true;
 				}
 
@@ -535,7 +558,7 @@ bool Game::isCheckmateINNER(const std::string& kingCoordinate, const std::string
 
 				currPiece = this->_board->getPiece(currRow, currColumn);
 				moves = currPiece->possibleMoves(coordsStr + kingCoordinate);
-				allWaysToKing.get()->push_back({ {moves}, currPiece->getType(), isWayClear(moves, pieceSrc, pieceDest) }); //collect all the ways
+				allWaysToKing.get()->push_back({ {moves}, currPiece->getType(), isWayClear(moves, FOR_OPPO_CHECK, pieceSrc, pieceDest) }); //collect all the ways
 
 			}
 
@@ -565,7 +588,7 @@ bool Game::isCheckmateINNER(const std::string& kingCoordinate, const std::string
 	return isCheckmate;
 }
 
-bool Game::isWayClear(const std::vector<std::string>& moves, const std::string& ignore, const std::string& takeIntoCount) const noexcept {
+bool Game::isWayClear(const std::vector<std::string>& moves, const bool forSelfCheck, const std::string& ignore, const std::string& takeIntoCount) const noexcept {
 	bool isClear = true;
 
 	int dstRow = 0;
@@ -614,8 +637,13 @@ bool Game::isWayClear(const std::vector<std::string>& moves, const std::string& 
 		lastPiece = this->_board->getPiece(dstRow, dstColumn);
 
 		//check
-		if (lastPiece != nullptr && isCurrTurnMatchColorSelected(lastPiece)) { //if match - cannot get to the dest (base case is "isClear = true"
-			isClear = false;
+		if (lastPiece != nullptr) { //if match - cannot get to the dest (base case is "isClear = true"
+			if (forSelfCheck && !isCurrTurnMatchColorSelected(lastPiece)) {
+				isClear = false;
+			}
+			else if (!forSelfCheck && isCurrTurnMatchColorSelected(lastPiece)) {
+				isClear = false;
+			}
 		}
 	}
 	catch (const std::out_of_range& e) {
@@ -806,7 +834,7 @@ bool Game::canAnyOfPiecesOfOppoBlockTheWay(const std::vector<std::string>& wayTo
 					moves = this->_board->getPiece(currRow, currColumn)->possibleMoves(coordsStr + wayToBlock.at(i)); //get the moves from curr to move on the way
 
 					// if way exists and clear - can block
-					if (moves.size() != 0 && isWayClear(moves, ignore, takeIntoCount)) {
+					if (moves.size() != 0 && isWayClear(moves, FOR_OPPO_CHECK, ignore, takeIntoCount)) {
 						canBlockTheWay = true;
 					}
 
