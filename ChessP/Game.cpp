@@ -219,7 +219,7 @@ std::string Game::playGraphics() {
 	return Game::prettyCodes(code);
 }
 
-std::string Game::playConsole() noexcept {
+std::string Game::playConsole() {
 	// start turn - choose coords
 	std::cout << "Enter the coordinates of the source square and the destination square:" << std::endl;
 	std::string coordinates = "";

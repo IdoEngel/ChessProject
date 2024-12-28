@@ -83,6 +83,8 @@ public:
 
 protected:
 
+
+
 	/*Play one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
 	output: none*/
@@ -91,7 +93,7 @@ protected:
 	/*Play one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
 	output: none*/
-	std::string playConsole() noexcept;
+	std::string playConsole();
 
 	/*Gets a code and return the error in a pretty way
 	input: string - code (the code to convert)
