@@ -36,7 +36,7 @@ enum class codes {
 	CODE0, CODE1, CODE2, CODE3, CODE4, CODE5, CODE6, CODE7, CODE8
 };
 
-using allWays = std::unique_ptr<std::vector<std::tuple<std::vector<std::string>, char, bool, int, std::string> >>;
+using allWays = std::shared_ptr<std::vector<std::tuple<std::vector<std::string>, char, bool, int, std::string> >>;
 #define VECTOR 0
 #define TYPE_OF_PIECE 1
 #define IS_CLEAR 2

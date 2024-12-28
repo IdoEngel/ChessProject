@@ -432,7 +432,7 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 
 allWays Game::getBoardPiecesInfo(const bool forSelfCheck, const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept {
 
-	allWays waysRet = std::make_unique<std::vector<std::tuple<std::vector<std::string>, char, bool, int, std::string> >>();
+	allWays waysRet = std::make_shared<std::vector<std::tuple<std::vector<std::string>, char, bool, int, std::string> >>();
 	std::vector<std::string> moves;
 	std::vector<std::string> currMoves; //moves of moving piece
 	Piece* piece;
@@ -581,7 +581,7 @@ bool Game::isCheckmateINNER(const std::string& kingCoordinate, const std::string
 	Piece* currPiece = nullptr;
 	std::vector<std::string> moves;
 	std::vector<std::string>* theClearVector = nullptr;
-	allWays allWaysToKing = std::make_unique<std::vector<std::tuple<std::vector<std::string>, char, bool, int, std::string> >>();
+	allWays allWaysToKing = std::make_shared<std::vector<std::tuple<std::vector<std::string>, char, bool, int, std::string> >>();
 
 	int row = 0;
 	int column = 0;

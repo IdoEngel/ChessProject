@@ -14,7 +14,7 @@
 #include "Queen.h"
 #include "Rook.h"
 
-typedef std::unique_ptr<std::vector<int>> intArr;
+typedef std::shared_ptr<std::vector<int>> intArr;
 
 enum class PieceType
 {

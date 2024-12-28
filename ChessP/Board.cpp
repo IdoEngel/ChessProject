@@ -191,7 +191,7 @@ std::string Board::coordsToStr(const int srcRow, const int srcColumn, const int 
 }
 
 intArr Board::strToCoords(const std::string& coords) {
-	intArr points = std::make_unique<std::vector<int>>(coords.length());
+	intArr points = std::make_shared<std::vector<int>>(coords.length());
 	int arr[LEN_OF_TWO_COORDS] = { 0 };
 	int point = 0;
 
