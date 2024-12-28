@@ -355,15 +355,22 @@ bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::str
 }
 
 bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& pieceCoord, const bool isKingPlaying) const noexcept {
+	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS); 
+	std::string pieceDest = pieceCoord.substr(pieceCoord.size() - NOT_THE_LAST_TWO_CHARS); 
+	std::string pieceSrc = pieceCoord.substr(0, TAKE_TWO_CHARS);
+
 	bool isChecked = false;
 
 	int loopLen = 0;
 	int lastVectorLen = 0;
 	int rowPiece = 0;
 	int columnPiece = 0;
+	int numOfThreats = 0;
+	int saveIndexThreating = 0;
 
 	std::string lastMove = "";
 	std::string srcCurrPiece = "";
+	std::string dstOfThreating = "";
 	intArr coords;
 
 	allWays ways = getBoardPiecesInfo(FOR_SELF_CHECK, kingCoordinate, pieceCoord);
@@ -372,6 +379,12 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 
 	int i = 0;
 	for (i = 0; i < loopLen; i++) {
+
+		if (std::get<LEN_OF_VECTOR>(ways.get()->at(i)) != 0 && //path exist
+			std::get<IS_CLEAR>(ways.get()->at(i))) { //the way is clear
+			numOfThreats++;
+			saveIndexThreating = i;
+		}
 
 		if (//make sure not pawn
 			(std::get<TYPE_OF_PIECE>(ways.get()->at(i)) != W_PAWN_CHAR && std::get<TYPE_OF_PIECE>(ways.get()->at(i)) != B_PAWN_CHAR) &&
@@ -410,6 +423,8 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 			catch (const std::out_of_range& e) {
 				//.... skiping
 			}
+
+			//king cannot go to a place that will make self chceck
 		}
 
 		if (howManyOnTheWay(std::get<VECTOR>(ways.get()->at(i)), NOT_ONLY_SELF_ON_THE_WAY) <= NO_ENOUGH_PIECES_TO_PROTECT_KING &&
@@ -425,6 +440,14 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 
 		}
 		
+	}
+
+	//is curr eated the threatenning peace
+	dstOfThreating = std::get<FULL_COORD>(ways.get()->at(saveIndexThreating));
+	if (numOfThreats == 1 && //if more then one - cannot eat end del the threat
+		//if the dest of the moving piece is the only threating piece
+		dstOfThreating.substr(0, TAKE_TWO_CHARS) == pieceCoord.substr(pieceCoord.size() - NOT_THE_LAST_TWO_CHARS)) { 
+		isChecked = false;
 	}
 
 	return isChecked;
@@ -494,27 +517,29 @@ allWays Game::getBoardPiecesInfo(const bool forSelfCheck, const std::string& kin
 	}
 
 	// add the moving piece in its dest
-	coords = Board::strToCoords(pieceSrc);
-	rowPiece = coords.get()->at(SRC_START_INDEX);
-	columnPiece = coords.get()->at(SRC_START_INDEX + 1);
+	if (!forSelfCheck) {
+		coords = Board::strToCoords(pieceSrc);
+		rowPiece = coords.get()->at(SRC_START_INDEX);
+		columnPiece = coords.get()->at(SRC_START_INDEX + 1);
 
-	piece = (*this->_board)(rowPiece, columnPiece);
-	moves = piece->possibleMoves(pieceDest + kingDest);
-
-	if (piece->getType() != W_PAWN_CHAR && piece->getType() != B_PAWN_CHAR) { //if not pawn
-
+		piece = (*this->_board)(rowPiece, columnPiece);
 		moves = piece->possibleMoves(pieceDest + kingDest);
 
-		waysRet.get()->push_back({ {moves}, piece->getType(),
-			isWayClear(moves, forSelfCheck, pieceSrc, pieceDest), static_cast<int>(moves.size()), fullCoord });
-	}
-	else if ((piece->getType() == W_PAWN_CHAR || piece->getType() == B_PAWN_CHAR) &&
-		isPawnMoveValid(pieceDest + kingDest, piece)) { //if pawn
+		if (piece->getType() != W_PAWN_CHAR && piece->getType() != B_PAWN_CHAR) { //if not pawn
 
-		moves = piece->possibleMoves(pieceDest + kingDest);
+			moves = piece->possibleMoves(pieceDest + kingDest);
 
-		waysRet.get()->push_back({ {moves}, piece->getType(),
-			isWayClear(moves, forSelfCheck, pieceSrc, pieceDest), static_cast<int>(moves.size()), fullCoord });
+			waysRet.get()->push_back({ {moves}, piece->getType(),
+				isWayClear(moves, forSelfCheck, pieceSrc, pieceDest), static_cast<int>(moves.size()), fullCoord });
+		}
+		else if ((piece->getType() == W_PAWN_CHAR || piece->getType() == B_PAWN_CHAR) &&
+			isPawnMoveValid(pieceDest + kingDest, piece)) { //if pawn
+
+			moves = piece->possibleMoves(pieceDest + kingDest);
+
+			waysRet.get()->push_back({ {moves}, piece->getType(),
+				isWayClear(moves, forSelfCheck, pieceSrc, pieceDest), static_cast<int>(moves.size()), fullCoord });
+		}
 	}
 
 	return waysRet;

@@ -25,6 +25,7 @@ int main()
 		}
 	}
 	catch (const ChessExceptions::PipeException& e) {
+		delete g;
 		std::cout << e.what();
 		std::exit(0);
 	}
