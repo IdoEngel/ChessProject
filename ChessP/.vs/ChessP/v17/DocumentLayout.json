@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Pipe.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Pipe.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Pawn.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{CD7F5ADA-9940-433E-BBE8-FD8FFD104D95}|ChessP.vcxproj|solutionrelative:Pawn.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -19,6 +23,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Pipe.h",
+              "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Pipe.h",
+              "RelativeDocumentMoniker": "Pipe.h",
+              "ToolTip": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Pipe.h",
+              "RelativeToolTip": "Pipe.h",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAAF8AAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-27T10:11:34.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Pawn.cpp",
               "DocumentMoniker": "C:\\Users\\Cyber_User\\OneDrive\\Desktop\\magshimim\\cpp\\week7\\ChessProject\\ChessP\\Pawn.cpp",
               "RelativeDocumentMoniker": "Pawn.cpp",

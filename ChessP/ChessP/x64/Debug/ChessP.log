@@ -11,11 +11,7 @@ C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Gam
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(547,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(562,35): warning C4101: 'e': unreferenced local variable
 C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(584,34): warning C4101: 'e': unreferenced local variable
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(664,34): warning C4101: 'e': unreferenced local variable
-  King.cpp
-  main.cpp
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\main.cpp(9,6): warning C4326: return type of 'main' should be 'int' instead of 'void'
-C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\main.cpp(38,46): warning C4101: 'e': unreferenced local variable
+C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\Game.cpp(667,34): warning C4101: 'e': unreferenced local variable
   Pawn.cpp
   Generating Code...
   ChessP.vcxproj -> C:\Users\Cyber_User\OneDrive\Desktop\magshimim\cpp\week7\ChessProject\ChessP\x64\Debug\ChessP.exe
