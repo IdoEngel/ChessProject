@@ -169,7 +169,11 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 	return errCode;
 }
 
-Piece* Board::getPiece(const int row, const int column) const {
+//Piece* Board::getPiece(const int row, const int column) const {
+//	return this->_pieces[row][column];
+//}
+
+Piece* Board::operator() (const size_t row, const size_t column) noexcept {
 	return this->_pieces[row][column];
 }
 

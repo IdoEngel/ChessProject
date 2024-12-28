@@ -6,7 +6,7 @@
 #define PLAYING_ON_CONSOLE false
 #define PLAYING_ON_GRAPHICS true
 
-void main()
+int main()
 {
 	Game* g = nullptr;
 	std::string coords;
@@ -40,4 +40,6 @@ void main()
 	}
 
 	delete g;
+
+	return 0;
 }

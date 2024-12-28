@@ -1,7 +1,10 @@
 //game.h
 #pragma once
 
+#include <memory>
 #include <vector>
+#include <tuple>
+#include <string>
 #include <stdexcept>
 #include <thread>
 #include <iostream>
@@ -33,10 +36,12 @@ enum class codes {
 	CODE0, CODE1, CODE2, CODE3, CODE4, CODE5, CODE6, CODE7, CODE8
 };
 
-using allWays = std::unique_ptr<std::vector<std::tuple<std::vector<std::string>, char, bool> >>;
+using allWays = std::unique_ptr<std::vector<std::tuple<std::vector<std::string>, char, bool, int, std::string> >>;
 #define VECTOR 0
 #define TYPE_OF_PIECE 1
 #define IS_CLEAR 2
+#define LEN_OF_VECTOR 3
+#define FULL_COORD 4
 
 #define PLAYING_ON_CONSOLE false
 #define PLAYING_ON_GRAPHICS true
@@ -83,7 +88,11 @@ public:
 
 protected:
 
-
+    /*returns a allWays datatype with all the info needed to make decisions
+    input: bool forSelfCheck (change the behavior if self)
+    string - kingCoordinate (coord of the king), pieceCoords (the moving piece coords)
+    output: allWays datatype with all the data (unique_ptr)*/
+    allWays getBoardPiecesInfo(const bool forSelfCheck, const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept;
 
 	/*Play one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
@@ -170,8 +179,9 @@ private:
 
 	/*Check if the pawn movement is valid
 	input: string - coords (the coords of the movement
+		Piece - take (when the coord is for the future -need a one what valid)
 	output: is valid?*/
-	bool isPawnMoveValid(const std::string& coords) const noexcept;
+	bool isPawnMoveValid(const std::string& coords, const Piece* take = nullptr ) const noexcept;
 
 	/*Count the number of clear way there are in the allWays var
 	input: allWays - ways (the ways to count
