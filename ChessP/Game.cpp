@@ -470,7 +470,15 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 			//pawn check
 			isPawnMoveValid(std::get<FULL_COORD>(ways.get()->at(i)), nullptr, true)) {
 
-			isChecked = true;
+			if (std::get<TYPE_OF_PIECE>(ways.get()->at(i)) == W_PAWN_CHAR &&
+				(Piece::isDiagnollyLeftW(std::get<FULL_COORD>(ways.get()->at(i))) || Piece::isDiagnollyRightW(std::get<FULL_COORD>(ways.get()->at(i))))) {
+				isChecked = true;
+			}
+
+			if (std::get<TYPE_OF_PIECE>(ways.get()->at(i)) == B_PAWN_CHAR &&
+				(Piece::isDiagnollyLeftB(std::get<FULL_COORD>(ways.get()->at(i))) || Piece::isDiagnollyRightB(std::get<FULL_COORD>(ways.get()->at(i))))) {
+				isChecked = true;
+			}
 		}
 
 		//if king is playing - need to check that the king dont "block itself"

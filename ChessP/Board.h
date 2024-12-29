@@ -95,17 +95,26 @@ public:
 	output: the error code if occured*/
 	std::string isPositionValid(const std::string& coordinate);
 
-	/*Get the peice in the loction mention
-	*/
-	//Piece* getPiece(const int row, const int column) const;
-
+	/*get coords in str and return int arr of them
+	input: string - coords (the coords to convert)
+	output the intArr */
 	static intArr strToCoords(const std::string& coords);
 
+	/*get the string value of the coords
+	input: int {row, column}
+	output: string of the coord*/
 	static std::string coordsToStr(const int row, const int column);
 
+	/*get the string value of the coords
+	input: int {row, column, row, column}
+	output: string of the coord*/
 	static std::string coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn);
 
+	/*is the coords entered valid?
+	input: int {row, column, row = 0, column = 0}
+	output: is the coords valid?*/
 	static bool isCoordsValid(const int srcRow, const int srcColumn, const int dstRow = 0, const int dstColumn = 0) noexcept;
+
 	void didRookOrKingMoved(const int srcRow, const int srcCol);
 	bool _bKingMoved;
 	bool _wKingMoved;
