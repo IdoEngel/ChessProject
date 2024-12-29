@@ -14,6 +14,12 @@ Board::Board() {
 		}
 	}
 	createDefault();
+	this->_bKingMoved = false;
+	this->_bRookLeftMoved = false;
+	this->_bRookRigthMoved = false;
+	this->_wKingMoved = false;
+	this->_wRookLeftMoved = false;
+	this->_wRookRigthMoved = false;
 }
 
 
@@ -120,6 +126,7 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 				this->_pieces[dstRow][dstColumn]->getType() == W_KING_CHAR)) {
 			isCode8 = true;
 		}
+		didRookOrKingMoved(srcRow, srcColumn);
 		//switch the coord in the new one
 		this->_pieces[srcRow][srcColumn]->setPosition(Board::coordsToStr(dstRow, dstColumn));
 		//do the switching
@@ -129,6 +136,34 @@ bool Board::movePeice(const std::string& coordinate) noexcept {
 	}
 
 	return isCode8;
+}
+void Board::didRookOrKingMoved(const int srcRow, const int srcCol)
+{
+	char type = this->_pieces[srcRow][srcCol]->getType();
+	if (type == W_KING_CHAR)
+	{
+		this->_wKingMoved = true;
+	}
+	else if (type == B_KING_CHAR)
+	{
+		this->_bKingMoved = true;
+	}
+	else if (type == W_ROOK_CHAR && srcCol == 0 && srcRow == 0)
+	{
+		this->_wRookLeftMoved = true;
+	}
+	else if (type == W_ROOK_CHAR && srcCol == 7 && srcRow == 0)
+	{
+		this->_wRookRigthMoved = true;
+	}
+	else if (type == B_ROOK_CHAR && srcCol == 0 && srcRow == 7)
+	{
+		this->_bRookLeftMoved = true;
+	}
+	else if (type == B_ROOK_CHAR && srcCol == 7 && srcRow == 7)
+	{
+		this->_bRookRigthMoved = true;
+	}
 }
 
 std::string Board::isPositionValid(const std::string& coordinate) {
