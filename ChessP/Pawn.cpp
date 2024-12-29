@@ -69,7 +69,7 @@ std::vector<std::string> Pawn::possibleMoves(const std::string& dstPosition)
 		//getting the 2 squares of the way to the dst//
 		currSquare[START_POSITION_NUMBER] += 1;
 		this->_way.push_back(currSquare);
-		currSquare[START_POSITION_NUMBER] += 2;
+		currSquare[START_POSITION_NUMBER] += 1;
 		this->_way.push_back(currSquare);
 	}
 	//checking if the dst square is 2 squares above the src square, for black//
@@ -79,7 +79,7 @@ std::vector<std::string> Pawn::possibleMoves(const std::string& dstPosition)
 		//getting the 2 squares of the way to the dst//
 		currSquare[START_POSITION_NUMBER] -= 1;
 		this->_way.push_back(currSquare);
-		currSquare[START_POSITION_NUMBER] -= 2;
+		currSquare[START_POSITION_NUMBER] -= 1;
 		this->_way.push_back(currSquare);
 	}
 	return this->_way;
