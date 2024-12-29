@@ -178,10 +178,11 @@ private:
 	bool connectToPipe() noexcept;
 
 	/*Check if the pawn movement is valid
-	input: string - coords (the coords of the movement
-		Piece - take (when the coord is for the future -need a one what valid)
-	output: is valid?*/
-	bool isPawnMoveValid(const std::string& coords, const Piece* take = nullptr) const noexcept;
+		input: string - coords (the coords of the movement
+			Piece - take (when the coord is for the future -need a one what valid)
+			bool - ignoreNull (ignore if checking the eating in selfcheck)
+		output: is valid?*/
+	bool isPawnMoveValid(const std::string& coords, const Piece* take = nullptr, const bool ignoreNull = false) const noexcept;
 
 	/*Count the number of clear way there are in the allWays var
 	input: allWays - ways (the ways to count
@@ -194,4 +195,5 @@ private:
 	output: can block the way?*/
 	bool canAnyOfPiecesOfOppoBlockTheWay(const std::vector<std::string>& wayToBlock, const std::string& ignore = "", const std::string& takeIntoCount = "") const noexcept;
 
+	bool isCastlingValid(const std::string& coordinats);
 };

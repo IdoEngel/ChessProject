@@ -106,13 +106,18 @@ public:
 	static std::string coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn);
 
 	static bool isCoordsValid(const int srcRow, const int srcColumn, const int dstRow = 0, const int dstColumn = 0) noexcept;
-
+	void didRookOrKingMoved(const int srcRow, const int srcCol);
+	bool _bKingMoved;
+	bool _wKingMoved;
+	bool _bRookLeftMoved;
+	bool _bRookRigthMoved;
+	bool _wRookLeftMoved;
+	bool _wRookRigthMoved;
 protected:
 
 	/*Create default board (all pieces in the loction of starting game)
 	No input or output*/
 	void createDefault();
-
 private:
 	Piece*** _pieces;
 };

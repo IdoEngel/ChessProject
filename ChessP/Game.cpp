@@ -303,6 +303,78 @@ std::string Game::codeForGraphics(const std::string& coordinats) const noexcept 
 
 	return code;
 }
+bool Game::isCastlingValid(const std::string& coordinats)
+{
+	std::string srcsquare = std::string(1, coordinats[START_POSITION_LETTER]) + coordinats[START_POSITION_NUMBER];
+	std::string dstSquare = std::string(1, coordinats[DST_POSITION_LETTER]) + coordinats[DST_POSITION_NUMBER];
+	std::string newCoords;
+	char color = getCurrPlayerColor();
+	if (color == WHITE)
+	{
+		if (srcsquare != "d1")
+		{
+			return false;
+		}
+		else if (this->_board->_wKingMoved)
+		{
+			return false;
+		}
+		else if (dstSquare == "a1")
+		{
+			if (this->_board->_wRookLeftMoved)
+			{
+				return false;
+			}
+			else
+			{
+				newCoords = dstSquare + srcsquare;
+			}
+		}
+		else if (dstSquare == "h1")
+		{
+			if (this->_board->_wRookRigthMoved)
+			{
+				return false;
+			}
+		}
+		else if (dstSquare != "a1" && dstSquare != "h1")
+		{
+			return false;
+		}
+
+	}
+	else if (color == BLACK)
+	{
+		if (srcsquare != "d8")
+		{
+			return false;
+		}
+		else if (this->_board->_bKingMoved)
+		{
+			return false;
+		}
+		else if (dstSquare == "a8")
+		{
+			if (this->_board->_bRookLeftMoved)
+			{
+				return false;
+			}
+		}
+		else if (dstSquare == "h8")
+		{
+			if (this->_board->_wRookRigthMoved)
+			{
+				return false;
+			}
+		}
+		else if (dstSquare != "a8" && dstSquare != "h8")
+		{
+			return false;
+		}
+	}
+
+
+}
 
 bool Game::isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoord) const noexcept {
 	std::string kingDest = kingCoordinate.substr(kingCoordinate.size() - NOT_THE_LAST_TWO_CHARS);
@@ -379,7 +451,7 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 
 	int i = 0;
 	for (i = 0; i < loopLen; i++) {
-
+		
 		if (std::get<LEN_OF_VECTOR>(ways.get()->at(i)) != 0 && //path exist
 			std::get<IS_CLEAR>(ways.get()->at(i))) { //the way is clear
 			numOfThreats++;
@@ -396,7 +468,7 @@ bool Game::isSelfChecked(const std::string& kingCoordinate, const std::string& p
 			//check move
 			std::get<LEN_OF_VECTOR>(ways.get()->at(i)) != 0 && std::get<IS_CLEAR>(ways.get()->at(i)) &&
 			//pawn check
-			isPawnMoveValid(std::get<FULL_COORD>(ways.get()->at(i)))) {
+			isPawnMoveValid(std::get<FULL_COORD>(ways.get()->at(i)), nullptr, true)) {
 
 			isChecked = true;
 		}
@@ -727,7 +799,7 @@ bool Game::isWayClear(const std::vector<std::string>& moves, const bool forSelfC
 	return isClear;
 }
 
-bool Game::isPawnMoveValid(const std::string& coords, const Piece* take) const noexcept {
+bool Game::isPawnMoveValid(const std::string& coords, const Piece* take, const bool ignoreNull) const noexcept {
 	bool isValid = true;
 
 	intArr intCoords;
@@ -749,7 +821,7 @@ bool Game::isPawnMoveValid(const std::string& coords, const Piece* take) const n
 	// if special move has occurd
 	if (moveDiagmal) {
 		// if nullptr no piece wan eaten - false movement
-		if ((*this->_board)(dstRow, dstColumn) == nullptr) {
+		if ((*this->_board)(dstRow, dstColumn) == nullptr && !ignoreNull) {
 			isValid = false;
 		}
 	}
@@ -757,46 +829,46 @@ bool Game::isPawnMoveValid(const std::string& coords, const Piece* take) const n
 		isValid = false;
 	}
 
-	/*take - when the coord is for the future -need a one what valid*/
-	if (take == nullptr) {
+	// take - when the coord is for the future - need a one what valid //
+		if (take == nullptr) {
 
-		// check each color seperatly
-		if ((*this->_board)(srcRow, srcColumn)->getType() == W_PAWN_CHAR) {
-			if (srcRow < dstRow) { //didt move backwords
-				isValid = false;
+			// check each color seperatly
+			if ((*this->_board)(srcRow, srcColumn)->getType() == W_PAWN_CHAR) {
+				if (srcRow < dstRow) { //didt move backwords
+					isValid = false;
+				}
+				else if (SECOND_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
+					isValid = false;
+				}
 			}
-			else if (SECOND_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
-				isValid = false;
-			}
-		}
-		else if ((*this->_board)(srcRow, srcColumn)->getType() == B_PAWN_CHAR) {
-			if (srcRow > dstRow) { //didt move backwords
-				isValid = false;
-			}
-			else if (FIRST_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
-				isValid = false;
-			}
-		}
-	}
-	else {
-		// check each color seperatly
-		if (take->getType() == W_PAWN_CHAR) {
-			if (srcRow < dstRow) { //didt move backwords 
-				isValid = false;
-			}
-			else if (SECOND_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
-				isValid = false;
+			else if ((*this->_board)(srcRow, srcColumn)->getType() == B_PAWN_CHAR) {
+				if (srcRow > dstRow) { //didt move backwords
+					isValid = false;
+				}
+				else if (FIRST_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
+					isValid = false;
+				}
 			}
 		}
-		else if (take->getType() == B_PAWN_CHAR) {
-			if (srcRow > dstRow) { //didt move backwords 
-				isValid = false;
+		else {
+			// check each color seperatly
+			if (take->getType() == W_PAWN_CHAR) {
+				if (srcRow < dstRow) { //didt move backwords 
+					isValid = false;
+				}
+				else if (SECOND_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
+					isValid = false;
+				}
 			}
-			else if (FIRST_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
-				isValid = false;
+			else if (take->getType() == B_PAWN_CHAR) {
+				if (srcRow > dstRow) { //didt move backwords 
+					isValid = false;
+				}
+				else if (FIRST_ROW_OF_SOLDIERS != srcRow + 1 && (std::abs(srcRow - dstRow) > 1)) { //no more then one sqr at a time
+					isValid = false;
+				}
 			}
 		}
-	}
 
 	return isValid;
 }
