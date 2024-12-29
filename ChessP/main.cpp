@@ -8,6 +8,9 @@
 
 void main()
 {
+	Piece* p = new Knight("", ' ');
+	std::vector<std::string> a = p->possibleMoves("a3b5");
+
 	Game* g = nullptr;
 	std::string coords;
 	std::string isGraphic;
