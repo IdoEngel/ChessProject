@@ -565,9 +565,11 @@ allWays Game::getBoardPiecesInfo(const bool forSelfCheck, const std::string& kin
 
 				piece = (*this->_board)(rowPiece, columnPiece);
 				typeDel = piece->getType();
-				if ((piece->getType() == W_PAWN_CHAR || piece->getType() == B_PAWN_CHAR) &&
-					!isPawnMoveValid(fullCoord)) {
-					moves.resize(0);
+				if ((piece->getType() == W_PAWN_CHAR || piece->getType() == B_PAWN_CHAR)) {
+					//if for self - can move diagnal to eat the future king
+					if ((!forSelfCheck && !isPawnMoveValid(fullCoord)) || (forSelfCheck && !isPawnMoveValid(fullCoord, nullptr, true))) {
+						moves.resize(0);
+					}
 				}
 
 				//if for self-check
