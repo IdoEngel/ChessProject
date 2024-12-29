@@ -14,11 +14,11 @@
 #include "Queen.h"
 #include "Rook.h"
 
-typedef std::unique_ptr<std::vector<int>> intArr;
+typedef std::shared_ptr<std::vector<int>> intArr;
 
 enum class PieceType
 {
-	ROOK, KNIGTH, BISHOP, QUEEN, KING, BISHOP2, KNIGTH2, ROOK2
+	ROOK, KNIGTH, BISHOP, KING, QUEEN, BISHOP2, KNIGTH2, ROOK2
 };
 
 #define NUM_OF_PIECES 64
@@ -34,8 +34,13 @@ enum class PieceType
 #define DST_START_INDEX 2
 #define LEN_OF_TWO_COORDS 4
 
-#define IS_WHITE_PIECE(piece) (piece >= 'A' && piece <= 'Z')
-#define IS_BLACK_PIECE(piece) (piece >= 'a' && piece <= 'z')
+constexpr bool IS_WHITE_PIECE(char piece) {
+	return piece >= 'A' && piece <= 'Z';
+}
+
+constexpr bool IS_BLACK_PIECE(char piece) {
+	return piece >= 'a' && piece <= 'z';
+}
 
 #define W_PAWN_CHAR 'P'
 #define B_PAWN_CHAR 'p'
@@ -72,9 +77,6 @@ public:
 	output: none*/
 	Board();
 
-	/*Copy constractor for return types in functions*/
-	//Board(const Board& other);
-
 	//Distractor
 	~Board();
 
@@ -82,6 +84,10 @@ public:
 	input: string - coordinate (coordinate with src and dst)
 	output: is the move ended the game? (code 8 happend?)*/
 	bool movePeice(const std::string& coordinate) noexcept;
+
+	/*operator to get elememnt form the _pieces.
+	can return a nullptr*/
+	Piece* operator() (const size_t row, const size_t column) noexcept;
 
 	/*Check if the src position the and dst position of the 'coordinate' is valid
 		if not valid retrun the error - if valid RAISE an excpion (typed Board)
@@ -91,13 +97,15 @@ public:
 
 	/*Get the peice in the loction mention
 	*/
-	Piece* getPiece(const int row, const int column) const;
+	//Piece* getPiece(const int row, const int column) const;
 
 	static intArr strToCoords(const std::string& coords);
 
 	static std::string coordsToStr(const int row, const int column);
 
 	static std::string coordsToStr(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn);
+
+	static bool isCoordsValid(const int srcRow, const int srcColumn, const int dstRow = 0, const int dstColumn = 0) noexcept;
 
 protected:
 

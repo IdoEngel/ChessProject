@@ -1,7 +1,10 @@
 //game.h
 #pragma once
 
+#include <memory>
 #include <vector>
+#include <tuple>
+#include <string>
 #include <stdexcept>
 #include <thread>
 #include <iostream>
@@ -33,6 +36,13 @@ enum class codes {
 	CODE0, CODE1, CODE2, CODE3, CODE4, CODE5, CODE6, CODE7, CODE8
 };
 
+using allWays = std::shared_ptr<std::vector<std::tuple<std::vector<std::string>, char, bool, int, std::string> >>;
+#define VECTOR 0
+#define TYPE_OF_PIECE 1
+#define IS_CLEAR 2
+#define LEN_OF_VECTOR 3
+#define FULL_COORD 4
+
 #define PLAYING_ON_CONSOLE false
 #define PLAYING_ON_GRAPHICS true
 #define MY_KING true
@@ -41,6 +51,8 @@ enum class codes {
 #define KING_NOT_MOVING false
 #define ONLY_SELF_ON_THE_WAY true
 #define NOT_ONLY_SELF_ON_THE_WAY false
+#define FOR_SELF_CHECK true
+#define FOR_OPPO_CHECK false
 
 class Game {
 public:
@@ -63,7 +75,7 @@ public:
 	/*General play one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
 	output: none*/
-	std::string play() noexcept;
+	std::string play();
 
 	/*prints the board by lines to the console
 	OPERATOR << FUNCTION*/
@@ -76,6 +88,12 @@ public:
 
 protected:
 
+	/*returns a allWays datatype with all the info needed to make decisions
+	input: bool forSelfCheck (change the behavior if self)
+	string - kingCoordinate (coord of the king), pieceCoords (the moving piece coords)
+	output: allWays datatype with all the data (unique_ptr)*/
+	allWays getBoardPiecesInfo(const bool forSelfCheck, const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept;
+
 	/*Play one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
 	output: none*/
@@ -84,7 +102,7 @@ protected:
 	/*Play one move in the game - each player in his turn (White starts)
 	input: string - coordinates (the coordintas to move to)
 	output: none*/
-	std::string playConsole() noexcept;
+	std::string playConsole();
 
 	/*Gets a code and return the error in a pretty way
 	input: string - code (the code to convert)
@@ -116,14 +134,22 @@ private:
 	bool isCheckedOnOpponent(const std::string& kingCoordinate, const std::string& pieceCoords) const noexcept;
 
 	/*Is the curr player did a checkmate?
+	* calc after all the calls from Game::isCheckmateINNER()
 	input: input: string - kingCoordinate (the king to check), pieceCoord (the curr piece movement
 	output: is checkmate done? (bool)*/
 	bool isCheckmate(const std::string& kingCoordinate, const std::string& pieceCoord) const noexcept;
 
+	/*Is the curr player did a checkmate?
+	input: input: string - kingCoordinate (the king to check), pieceCoord (the curr piece movement
+	output: is checkmate done? (bool)*/
+	bool isCheckmateINNER(const std::string& kingCoordinate, const std::string& pieceCoord) const noexcept;
+
 	/*Checks all the coordinates in the vector are nullptr (no pieces on the way)
-	input: vector<string> - moves (the moves to check if nullptr), ignore (the piece to ignore - if exist [Default of none])
+	input: vector<string> - moves (the moves to check if nullptr), ignore (the piece to ignore - if exist [Default of none]),
+		takeIntoCount (if way contains this - way not clear [Default of none])
+		bool - forSelfCheck (if for self check - the last index should be the opoosite)
 	output: is all the moves are null (the way is clear)*/
-	bool isWayClear(const std::vector<std::string> moves, const std::string& ignore = "") const noexcept;
+	bool isWayClear(const std::vector<std::string>& moves, const bool forSelfCheck, const std::string& ignore = "", const std::string& takeIntoCount = "") const noexcept;
 
 	/*Get the king to and return it
 	input: bool - isMyKing (get the current king?) - if false - return opponant king
@@ -144,7 +170,7 @@ private:
 	input: vector<string> - way (the way to check and count)
 		bool - onlySelfPieces (true - count only pieces of curr player, false - count all)
 	output: the number of pieces on the way*/
-	unsigned int howManyOnTheWay(const std::vector<std::string> way, const bool onlySelfPieces) const noexcept;
+	unsigned int howManyOnTheWay(const std::vector<std::string>& way, const bool onlySelfPieces) const noexcept;
 
 	/*Connect to pipe
 	input: Pipe - p (the pipe to connect)
@@ -153,7 +179,19 @@ private:
 
 	/*Check if the pawn movement is valid
 	input: string - coords (the coords of the movement
+		Piece - take (when the coord is for the future -need a one what valid)
 	output: is valid?*/
-	bool isPawnMoveValid(const std::string& coords) const noexcept;
+	bool isPawnMoveValid(const std::string& coords, const Piece* take = nullptr) const noexcept;
+
+	/*Count the number of clear way there are in the allWays var
+	input: allWays - ways (the ways to count
+	output: num of clear ways*/
+	unsigned int numOfClearWays(const allWays& ways) const noexcept;
+
+	/*Can any of pieces of opoonent block the way that given? (the opponent tries to block the way)
+	input: vector<string> - wayToBlock (the way to try to block)
+		string - ignore (ignore when checking), takeIntoCount (take into count when checking)
+	output: can block the way?*/
+	bool canAnyOfPiecesOfOppoBlockTheWay(const std::vector<std::string>& wayToBlock, const std::string& ignore = "", const std::string& takeIntoCount = "") const noexcept;
 
 };

@@ -73,11 +73,11 @@ void Board::createDefault() {
 				case PieceType::BISHOP:
 					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row + 1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
 					break;
-				case PieceType::QUEEN:
-					this->_pieces[row][column] = new Queen(coord, (FIRST_ROW == row + 1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
-					break;
 				case PieceType::KING:
 					this->_pieces[row][column] = new King(coord, (FIRST_ROW == row + 1 ? B_KING_CHAR : W_KING_CHAR));
+					break;
+				case PieceType::QUEEN:
+					this->_pieces[row][column] = new Queen(coord, (FIRST_ROW == row + 1 ? B_QUEEN_CHAR : W_QUEEN_CHAR));
 					break;
 				case PieceType::BISHOP2:
 					this->_pieces[row][column] = new Bishop(coord, (FIRST_ROW == row + 1 ? B_BISHOP_CHAR : W_BISHOP_CHAR));
@@ -146,10 +146,7 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 		errCode = CODE_7;
 	}
 	// error code 5 - index out of range
-	else if (!(srcRow >= 0 && srcRow < ROW_COLUMN &&
-		srcColumn >= 0 && srcColumn < ROW_COLUMN &&
-		dstRow >= 0 && dstRow < ROW_COLUMN &&
-		dstColumn >= 0 && dstColumn < ROW_COLUMN)) { // less then passible
+	else if (!Board::isCoordsValid(srcRow, srcColumn, dstRow, dstColumn)) { // less then passible
 
 		errCode = CODE_5;
 	}
@@ -172,7 +169,11 @@ std::string Board::isPositionValid(const std::string& coordinate) {
 	return errCode;
 }
 
-Piece* Board::getPiece(const int row, const int column) const {
+//Piece* Board::getPiece(const int row, const int column) const {
+//	return this->_pieces[row][column];
+//}
+
+Piece* Board::operator() (const size_t row, const size_t column) noexcept {
 	return this->_pieces[row][column];
 }
 
@@ -190,7 +191,7 @@ std::string Board::coordsToStr(const int srcRow, const int srcColumn, const int 
 }
 
 intArr Board::strToCoords(const std::string& coords) {
-	intArr points = std::make_unique<std::vector<int>>(coords.length());
+	intArr points = std::make_shared<std::vector<int>>(coords.length());
 	int arr[LEN_OF_TWO_COORDS] = { 0 };
 	int point = 0;
 
@@ -217,4 +218,11 @@ intArr Board::strToCoords(const std::string& coords) {
 	}
 
 	return points;
+}
+
+bool Board::isCoordsValid(const int srcRow, const int srcColumn, const int dstRow, const int dstColumn) noexcept {
+	return ((srcRow >= 0 && srcRow < ROW_COLUMN &&
+		srcColumn >= 0 && srcColumn < ROW_COLUMN &&
+		dstRow >= 0 && dstRow < ROW_COLUMN &&
+		dstColumn >= 0 && dstColumn < ROW_COLUMN));
 }
